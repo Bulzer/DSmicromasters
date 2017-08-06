@@ -1,0 +1,379 @@
+Twitter :#UCSDpython4DS
+1)UNIVERSITY COURSE CREDIT:
+   edX's MicroMasters Credential program allows MOOC learners, like you, to get credit towards courses for a Masters degree on various university campuses (affiliated with edX).  
+   Current Masters Options:
+  Currently, learners who successfully earn the MicroMasters Credential are eligible to apply for admission to the Master of Predictive Analytics program at Curtin University.
+  If a learner applies for admission to the Master of Predictive Analytics program at Curtin University, and is accepted, the MicroMasters Credential will count towards 25% (or 100 credits of the 400 credits) of the coursework required for graduation in the Curtin program.
+  Future Masters Options:
+  At UCSD, we are committed to giving learners everywhere access to the quality, state-of-the-art data science training and preparation we provide our own Masters students in San Diego.  We plan to work with other edX partner universities with appropriate Masters programs to encourage them to accept our MicroMasters courses for credit within their own programs.  We'll update this page as we do this. These courses are designed directly from our own courses on campus and we believe they serve as an excellent foundation for many Masters programs preparing data scientists.
+
+2)For those of you interested in a career in data science, this is the first course in a four-course edX MicroMasters.
+The next three courses are Statistics, Machine Learning, and Spark (data analysis for big data). 
+
+3)To receive a MicroMasters Certificate in Data Science you must receive verified certificates in the following courses:
+    Python for Data Science
+   Statistics and Probability in Data Science using Python
+   Machine Learning for Data Science
+   Big Data Analytics using Spark
+  Learners who receive their MicroMasters in Data Science Certificate are currently eligible to apply to the Master of Predictive Analytics program at Curtin University.A MicroMasters in Data Science can be converted into a maximum of 100 units in this program as directed by the Curtin program course listing below.
+    MEDA5003 Multidisciplinary Data Visualization and Interpretation (25 credits)
+    STAT5001 Statistical Probability (12.5 credits)
+    STAT5006 Statistical Data Analysis 1 (12.5 credits)
+    ISYS5007 Data Management (25 credits)
+    Elective (25 credits)
+-----------------------------------------------------------------------------
+1)why data scients like python for DS:
+   the Jupyter Notebooks make Python-based analysis more producible and repeatable
+   NumPy and Pandas to ingest and analyze data efficiently.
+   We will add the visualization libraries including Matplotlib,
+   scikit_learn to apply ML 
+   beautifulsoup to read XML and HTML type data
+2)There are five key steps in the overall process of data science,namely, (these 5 steps ar kind of an iterative process)
+     a) data acquisition, (importing raw dataset into our analytics platform) 
+      b)data preparation, (explore and visualize , perform data cleaning)
+      c)data analysis, (use statistical analysis and ML i.e feature selection,model selection and finding the result)
+      d)presentation, and (present your findings)
+      e)reporting of insights and turning these insights into data-driven actions.(purpose i.e stake holders will take actions and use these findings)
+**Though we have five steps, first step is always the purpose/reason of collecting the data i.e to solve which problem we are doing this
+a)Data Acquisition:
+   -->we may need to ingest/take data from DBs(relational and non-relational(NoSqls)),
+      text files(csv files,test files),live feeds(sensors,online platforms(twitter,live feed of weather observations)
+      
+b)Data preparation/exploration:
+    -->Correlation graphs: can be used to explore the dependencies between different variables in the data.
+    -->General trends: show you a simple graph of how the data is progressing over time.
+    -->Outliers show you the data points that are distant from other data points.Plotting outliers will help you double-check for errors in the data due to measurement.
+       In some cases, outliers that are not errors might make you find a rare event.
+    -->summary statistics(like mean,median,mode,range,standard deviation etc) :provide the numerical values to describe your data.Summary statistics are quantities that capture various characteristics of a set of values.
+       Mean and median are measures of the location of specific values.
+       Mode is the value that occurs most frequently in your data set.
+       range and standard deviation are measures of spread in your data.
+   Looking at these measures will give you an idea of the nature of your data.They can tell you if there's something wrong with your data.
+   For example, if the range of the values for age in your data includes negative numbers or a number much greater than hundred, there's something suspicious in the data
+   -->Visualization techniques: also provide quick and effective,overall, a very useful way to look at data in this preliminary analysis step.   
+      A heat map, for instance, an quickly give you an idea where the hot spots are.
+      Many different types of graphs can be used.
+         Histograms show the distribution of the data and can show skewness or unusual dispersion.
+         Boxplots are another type of plot for showing data distribution.
+         Line graphs are useful for seeing how values in your data change over time.Spikes in the data are also easy to spot.
+         Scatter plots can show correlation between two variables.
+    -->get clean/quality data
+         a)remove data with missing values
+         b)merge duplicate records(This would record a way to determine how to resolve conflicting values.Perhaps it makes sense to retain the nearer value whenever there's a conflict.)
+         c)generate best estimate for an invalid value(eg : we can assume age of an employee when there is no/invalid age given based on the time he joined the company and his role etc)
+         d)remove outliers
+    ---> get data into shape(also called as data manipulation or data pre-processing or data wrangling or data munging.)
+         a)This is the 2nd part of data preparation
+         b)Some operations for this data munging,wrangling, pre-processing includes scaling, transformation,feature selection, dimensionality reduction and data manipulation.
+         c)Scaling involves changing range of values to be between a specified range such as from zero to one.This is done to avoid having certain features with large values from dominating the results.
+         d)Feature selection can involve removing redundant or irrelevant features,combining features and creating new features.
+         e)Various transformations can be performed on the data to reduce noise and variability.One such transformation is called aggregation.Aggregate data generally results in data with less variability,which may help with the analysis in the long term.
+           Aggregating values to weekly or monthly sales figures will result in smoother data.Of course, this comes at the cost of less detailed data,so these factors must be weighed for the specific application.
+         f)A technique commonly used for dimensionality reduction is called principal component analysis(to reduce the no. of dimentions,when dataset has more dimensions)
+c)Data Analysis:
+    -->Data analysis involves building a model from your data(input data).
+    -->The main categories of analysis techniques are classification, regression, clustering,association analysis and graph analysis.
+         a)Classification:In classification,the goal is to predict the category of the input data.(Eg:predicting the weather as being sunny, rainy, windy or cloudy.if we have to classify the data into only 2 categories ==> it is called binary classification)
+         b)Regression:When your model has to predict a numeric value instead of a category,then the task becomes a regression problem.
+         c)Clustering:The goal is to organize similar items into groups.An example is grouping a company's customer base into distinct segments for more effective targeted marketing like seniors, adults and teenagers as we see here.
+         d)Association Analysis:The goal in association analysis is to come up with a set of rules to capture associations between items or events.The rules are used to determine when items or events occur together.A common application of association analysis is known as market basket analysis.which is used to understand customer purchasing behavior.For example,association analysis can reveal that banking customers who have certificate of deposit accounts, shortly CDs,also tend to be interested in other investment vehicles
+         e)Graph Analytics:This kind of data comes about when you have a lot of entities and connections between those entities like social networks.Some examples where graph analytics can be useful are exploring the spread of a disease or epidemic by analyzing hospitals and doctors' records, identification of security threats by monitoring social media, email and text data,and optimization of mobile communication network traffic to ensure data quality and reduce dropped calls.  
+         f)Modelling:Modeling starts with selecting one of these techniques we listed as the appropriate analysis technique depending on the type of problem you have.Then,you construct the model using the data that you've prepared.To validate the model,you apply it to new data samples.This is to evaluate how well the model does on data that was used to construct it.
+    -->Evaluating the model depends on the type of analysis technique you used.Let's briefly look at how to evaluate each technique.
+         a)For classification and regression you will have the correct output for each sample in your input data.Comparing the correct output and the output predicted by the model provides a way to evaluate the model.
+         b)For clustering,the groups resulting from clustering should be examined to see if they make sense for your application.
+         c)For association analysis and graph analysis some investigation will be needed to see if the results are correct.For example,network traffic delays need to be investigated to see if what your model predicts is actually happening,and whether the sources of the delays are where they are predicted to be in the real system.
+    -->After you have evaluated your model to get a sense of its performance on your data,you will be able to determine the next steps.Some questions to consider are:
+         a)should the analysis be performed with more data in order to get better model performance? 
+         b)Would using different data help? For example, in your clustering results,is it difficult to distinguish customers from distinct regions? Or would adding zip codes to your input data to help generate final grain customer segments is needed?
+         c)Do the analysis results suggest a more detailed look at some aspect of the problem?For example, predicting sunny weather gives very good results but rainy weather predictions are just so so.This means you should take a closer look at your examples for rainy weather.Perhaps there are some anomalies in those samples or perhaps there are some missing data that needs to be included in order to completely capture rainy weather.
+       The ideal situation would be that your model performs very well with respect to success criteria that were determined when you defined a problem at the beginning of the project.
+
+d)Reporting Insites/Presenting:
+   Techs generally used for visualizations:
+                  1)R,
+                  2)Python,
+                  3)D3 is a JavaScript library for producing interactive web-based visualizations and data-driven comments,
+                  4)Leaflet is a lightweight, mobile-friendly JavaScript library to create interactive maps.
+                  5)Lastly, Tableau and Google Charts allow you to create visualizations in your profiles so you can share them or put them on a site or a blog, and they provide cross-platform compatibility to mobile devices.
+                  6)Timeline is a JavaScript library that allows you to create timelines over these results.
+
+-------------------------------------------------------------------------------------------
+Python :
+--------------
+Basics:
+-------
+Python uses indentation of code rather than brackets.
+Python uses dynamic typing.(i.e we dont need to specify the data type of a variable while declaring Eg: we can directly give X= 1 while in java/C we have to give it as int X= 1; ==> python uses dynamically typed)
+Python doesn't use semicolons at the end of statements.
+Everything in Python is an object.
+Q)what do we mean by objects?
+In programming, an object is something that can hold data and often has methods associated with it.We'll actually be working with more complex objects like lists later this week.
+==> when you say x = 3,Python will create a PyIntObject with a value of three and then have your variable x point to that object(i.e PyIntObject{ value = 3 } ) 
+   *x is created on the stack,and the PyIntObject with the value of three will be created on the heap.
+   **The stack holds your local variables and is managed by your program,whereas the heap holds dynamically created data and is actually managed by the operating system.
+   Now again if we are giving X=4.5 ==>a PyFloatObject with the value of 4.5 will be created.Then, x will be set to point directly to that new PyFloatObject.For those of you familiar with C or C++,no longer having anything point to an object should be a big red flag, because that's lost memory,but in Python, that's taken care of for you.The garbage collector in Python will automatically free the space associated with that first PyIntObject because nothing is pointed to it anymore.
+   
+   **we can also check if 2 variables are pointing to the same object by Using 'is' command (returns True if pointing to same object else false)
+      Eg:
+      A=3
+      B=3.0
+      A is Y ==> o/p False (since separate pyintobject and pyfloat are created)
+      if we use A==B ==> o/p = True (Since they have the same value,even though they are pointing to diff objects)
+   **Eg 2:
+      X="Hello" ==> creates a String object PyStringObject.strings in Python,similar to languages like Java, are immutable.Which means they can't be changed.Also, similar to other languages,there are built-in methods that you can call on strings.
+      Syntax to call a Method in Python:
+      variable_name.method_name(parms)
+      ==> X.lower() ==> gives hello
+      ==> now if we print X ==> we still get o/p as Hello (since strings objects are immutable)
+      ==> to change we have to give it like this X=X.lower() ==> now if we print X ==> o/p hello
+ ***Q)x = 7
+      y = x
+      x = 3
+      print(x,", ",y)
+      Options are    a)3,7 b) 7,7 c)7,3 d)3,3
+    Sol: A
+String Functions:
+-----------------
+*If we want to do something with Strings,check the documentations first,as there might be already a function written for it.
+(Link to check docs: https://docs.python.org/2/library/string.html)
+      a)lower() ==> makes everything to lower case.
+      b)capitalize() ==> makes first letter of String in Upper case.
+      c)upper() ==> makes everything to upper case.
+      d)concatenation ==> You'll start doing this with a plus symbol. Eg: 'sa' + 'sdasfaf'
+      e)Replication ==> to replicate String Eg: '12'*2 ==> o/p = 1212 (we can combine replication and concatenation Eg : '1'*3 + '2'*2 ==> o/p = 11122
+      f)Strip() (very usefull in DS to remove spaces junk etc)
+         Syntax: strip(s,[chars])
+         ==>This fn returns a copy of string with leading and trailing characters removed.If chars is omitted or none,white characters are removed
+         Eg: s = '   Extras  \n'
+             s.strip() ==> o/p = 'Extras' i.e strip gets rid of the new line and the spaces, before and after the word, extras.
+             s='***10***'
+             s.strip(*) ==> o/p = '10'
+      g)Split() (to split large strings into small)
+          Syntax : split(s,[,sep[,maxsplit]])
+          Eg: s.split(' ') ==> splits a string sentence based on white spaces
+               s.split(,) ==>splits a string sentence based on commas
+      h)Slicing : When we index into strings to get back sub strings,this is called slicing.
+           Eg: s = 'helli'
+               s[1:3] ==> o/p : 'el' i.e 1st index inclusive and 3rd index exclusive
+              *lly s[4:7] ==> no error o/p = 'i'
+              *lly -ve index ==> s[-4:-1] ==> o/p = 'ell' 
+                  How -ve index works is ==> when ever we give -ve index ==> the new index is calculated as string length plus index.
+                  i.e here -4 ==> 5+(-4) ==> 1
+                           -1 ==> 5+(-1) ==> 4 ==> s[-4:-1] becomes s[1:4]
+      i)Substring:
+         a)to check if a string is part of a string ==> Eg: s='Hello'
+                                                            'HE' in s ==> o/p = False
+                                                            'He' in s ==> o/p = True
+         b)we can use find() fn to get the position of the substring
+           Syntax: find(sub[,start[,end]]) ==> Returns the lowest index in the String where the substring is found.Returns -1 on failure.Defaults for Start and End are the entire string
+           Eg: s.find('el') ==> o/p = 1(since the lowest index of substring starts from 'e' which is at index #1)
+      j)String Formatting:
+         If we want to insert some data in a large chunk of string ==> s= 'we love {} {}.'
+                                                                       s.format('data','Analytics') ==> o/p = we love data Analytics.(i.e by default it takes them as 0th and 1st argument.
+                           It works as taking the arguments as well i.e like this ==> s = 'we love {0} {1}.'
+                                                                              ==> first word comes at 0th argument and 2nd word comes at 1st argument after we use s.format('data','Analytics') giving the o/p we love data Analytics.  
+                                                                              ==> if we give as s = 'we love {0} {1}.' ==> o/p = we love Analytics data.
+      j)Convert to Number
+         Eg: s="1234'
+             int(s) ==> o/p = 1234
+             float(s) ==> o/p = 1234.0
+             s = 'Hi'
+             int(s) ==> error
+         
+      
+      
+Common types in Python:
+----------------------
+Numeric : integers,floats,complex
+Sequence: list,tuple,range
+Binary:byte,bytearray
+True/False:bool
+Text:String
+
+For loop:
+---------
+for i in range(0,10):  ==> syntax of range = range(start,stop[,step]) i.e returns values b/w start(inclusive) and stop(exclusive i.e less than symbol kin of) and step is the increament Eg: for i in range(0,10,2) ==> o/p = 0 2 4 6 8 (since step is given as 2,default step is 1)
+    print(i)
+==> o/p = 0 1 2 3 4 5 6 7 8 9
+while Loop:
+-----------
+Works same as For Loop but comes handy in scenarios when we don't know when the condition will finish or when the increment is more complex.
+Syntax : i = 2
+         while i < 12:
+             print (i)
+             i=i+2
+
+Functions:
+----------
+**def is a key word to denote that you're defining a function here. (eg :- def ab_val(val):
+                                                                               if val < 0;
+                                                                                   return 0-val
+                                                                               return val)
+*Notice that neither the return type nor the type of the input parameter are defined.This has some advantages and disadvantages.The advantage is you don't need to write amy_abs function for ints, another for doubles,another for floats, and so on.The disadvantage is you would try to call my_abs and pass it, say a string, and that could cause problems.There may also be some issues with the expected return type.
+*If we dont return a value from a fn ==> by default it returns 'None'.
+
+
+Lists:
+------
+List in python is similar to array list in Java.
+List are Resizable i.e we can extend or reduce them anytime.
+List elements have indexes, which, like strings,start at zero.
+we can also Slice the lists llr to the Strings.
+**Lists are Mutable but Strings are not
+Index out of Range Error ==> occurs if we access an index in the list which is not present in the size of the List. Eg: List1 = [1,2,3] ==> If we ask List1[3] ==> Error-Index out of Range.
+To iterate over the list ==>use for loop i.e for i in list1: (llr to optimized for loop in Java)
+(we can also iterate like: for i in range(0,len(list1)): (llr to java normal for loop) i.e it says to iterate from 0 to length of list1
+Delete: to delete an element in list by its index ==> use POP fn Eg: List1.pop(2) ==> removes an element at 2nd index and shift other elements after 2nd index by 1.
+        to delete an element in list by its value ==> use REMOVE fn Eg :List1.remove(335667) ==>removes an element at 2nd index and shift other elements after 2nd index by 1.
+Add: to delete an element in list ==> use POP fn Eg: List1.append(1232) ==> adds an element at the end of the List with value 1232
+Adding 2 lists ==> use EXTEND fn Eg: list1.extend(list2) ==> elements of list2 are added to list1.
+  *** Be careful not to mix up append and extend.
+      Append adds an element to the end of the list.
+      Extend expands all appends all of the elements from one list into the either.
+       Eg: Say we have list2=[5,6,7] and list1= [1,2,3,4]
+       ==> list1.extend(list2) ==> print list1 ==> o/p = [1,2,3,4,5,6,7]   ==> list1 has total 7 elements those are all integers.
+       ==> list1.append(list2) ==> print list1 ==> o/p = [1,2,3,4,[5,6,7]] ==> list1 has toeal 4 elements those are 3 integers and a list
+ZIP fn : mostly used when we are dealing with 2 lists
+      Eg:for x,y in zip(list1,list2);
+             print(x,",",y)
+ Q)what if we have diff sizes of lizt and we use the zip fn as above to get x,y pairs ? 
+ Sol: Test in python and update.
+ Q)x = [10,20,30]
+   y = x
+   x[1] = 42
+   print(y)
+ Options : a) [10, 20, 30]   b)[10, 42, 30]
+ Sold : B
+ Description: this happened because Lists are Mutable unlike Strings. when we sat y=x ==> both the references point to the same Object
+              To over come this (or) to have a separate copy of Y with the present content of X ==> use Y=list(x) ==> this we even if the value of X changes over time it wont impact the value of Y.
+       *******(This issues when we have to process a value which changes time to time)(draw Memory diagrams for easy understanding and debugging)
+
+
+Tuples:
+-------
+Usually, tuples are used to put together information connected in some way.Eg: Tuple1=('Honda','Civic',2017,4)
+Tuples are a way of grouping data.They are llr to lists but they're immutable.
+We can use tuples llr to list Eg: tuple1[1] give o/p as Honda,len(tuple1) gives length of tuple,we can iterate a tuple using for loop as 'for i in tuple1:'
+I'm trying to change the year of the car to be 2018(tuple1[3]=2018).If I try this,I get an error.
+Hence I want you to take away from this video,is that tuple immutability means that you can trust it to never change.
+Immutability is important two key ways.The first, is more general as in regards to parallel computing.Parallel computing is a key facet of data science.
+**In parallel computing, data which can change make parallel computation harder because you have to make sure everyone working on the problem sees those changes.But if data can't change,you can just send copies of it to compute nodes and no one has to worry about it changing on them while they're computing.
+**Tuples can be used as keys in the dictionaries.Because the tuple doesn't change,the dictionary can organize based on its initial value without worries about the key getting changed by somebody with a reference to it.
+
+Dictionaries:
+-------------
+Dictionaries are data structures which are just Python's term for a map in Java.Hence A dictionary holds a combination of key value pairs.
+The only restriction on data types in a dict is that the key has to be immutable(like String,tuple..etc).while value can be anything(int,string,list dict ..etc)
+Creating a Dict:
+   Eg:>>>dict = {('grudge',2014):9.1,('grudge',1995):8.7} ==> here we took keys as a combination of movie name and its year of release in the form of a tuple(as keys have to be immutable and unique, while the value is their respective IMDB rating)
+   colen is used to separate a key and a value.
+   curly braces denote that it is a dictionary.
+   >>>dict[key] ==> o/p is the value of that key.
+   >>>len(dict) ==> gives the no. elements in the dictionary.
+Adding an Element to Dict:
+   Eg:just use a new key as an index,and then assign it a value. i.e dict[('cars',2009)] = 7.1
+ **There is no inherent ordering of the items in a collection and you can't trust its internal ordering not to change at any time.
+   The lack of ordering is part of the reason dictionaries offer such fast performance,but if your problem requires preserving the order in some way,dictionaries may not be ideal for your problem.
+  Q)What if you asked for a value for a key not in the dictionary?
+  Sol:That will actually cause a runtime error.
+  Q)So, what's a safer way of getting values from a dictionary if you aren't sure if the key is present?
+  Sol:There are two approaches which can help.
+      The first is to use the method get to gain access to a value for a specified key.Here, when the key is in the dictionary,you'd get back the value just as you'd expect.But if the key isn't in the dictionary,we get back the value none.
+      Eg: x=dict.get(('cars',2009)) and then we can check if X== None
+      The Second approach is you can use the keyword 'in' to test to see if a key is in a dictionary.It will return True or False
+      Eg:X=('cars',2009) in dict and then we can check if X== True/False
+ ****Depending on your use case,you'll likely want to use either get or in to test to see if a key is in the dictionary before accessing the element in the dictionary.As this might throw run time error if we try to access the element directly with out checking if the element is present or not
+ Removing the Element from Dict:
+   ==> Use the method POP to remove Eg: dict.pop(('Ghost',2016)) (** here we are giving 2 braces as we have a tuple as a key)
+   (pop will removethe element and displays the Value of that Element's key)
+   ==>we can also use del command to remove the element from a dict if we dont want the value to be displayed while deleting
+         Eg:del dict[('Ghost',2016)] (*here we gave Sq. braces)
+ Iterating Over Dict:
+ a)for i in dict :
+     print(i) ==> Prints all the Keys in the Dict.
+ b)If we want to print both Keys and Values ==> use items() fn
+  i.e >>>for keys,value in dict.items():   (or) for i,j in dict.items():
+             print(keys,":",Value)
+***You cannot mutate a dictionary object while iterating.If you do, you'll get an error at runtime.
+ Eg: for i in dict:
+         print(i)  ==> run time error(saying Dictionary changes size during iteration)
+**It's generally a bad habit in any language to mutate a data structure while iterating through it.The reason for is that the underlying data structure implementation may change its structure of the data.
+**(hence we write a separate iterator generally,below is an Eg if want to go through the entire data structure and find everything in a criteria and then remove those items?)
+      Eg:Say we are removing the movies which are made before the year 2000.
+         >>>to_remove =[]
+         >>>for i in dict:
+         >>>    if(i[1] < 2000): #checking the 2nd element(which is Year of a movie)in the Key(which is a tuple here)
+         >>>        to_remove.append(i)
+         >>>for i in to_remove
+         >>>   dict.pop(i)
+
+List and Dictionary Comprehension(using List & Dictionary to built better data structures):
+--------------------------------------------------------------------------------------------
+Python actually allows us to build lists and dictionaries in an easy way called comprehension.
+
+A)List Comprehension:
+ Suppose I want to build a list of the squares from one to 10.You're probably tempted to set up a loop for this.If you have a background in other languages.
+ But we can do it this way in pythos i.e list1= [i**2 for i in range(1,11)]   #i**2 means square of i
+ lly list2=[i for i in range(0,20,2)] ==> give all the even values b/w 0 and 20(inclusing Zero and Excluding Twenty)
+     list3=[i%2 for i in range(0,10)  ==> gives 10 values as zeroz and ones alternately
+ What if I want a list with 10 random integers between zero and five.
+ ==> >>>import random
+     >>>list4 = [random.randint(0,5) for i in range (0,10) ==> o/p = [4,3,5,5,2,4,2,5,4,3]
+B)Dictionary Comprehension:
+ The only major difference form lists comprehension is now we're specifying both the key and the value.
+ Like we'd expect, the key is on the left side of the colon and the value is on the right side.
+ Eg:>>> dict1 = {i: i**2 for i in range(1,11)}
+ Q)Build a dictionary of letters from capital A to capital Z as values and their corresponding numeric asking values as the key?
+ Sol:(hint:use CHR fn)
+ ==> >>>dict = {i: chr(i) for i in range(65,90) }  ==> o/p = {65:'A',66:'B'........,90:'Z'}
+ 
+ 
+ Sets In Python:
+ --------------
+  1)3 imp qualities of sets are 
+      a)they are unordered like dictionaries ==> fast operations can be done with them.
+      b)llr to Java Sets contain Unique values.
+      c) They support all the set operation including Union and Intersection.
+  2)we can create a set using set() fn Eg:>>>leos_colors = set(['blue','green','yellow'])  (here we are passing list as an argument)
+                                          >>>print(leos_colors) ==> o/p = {'yellow','blue','green'} (See that the o/p changes i.e not in the order we gare)
+  3)Adding an element ==> use add() fn Eg:>>>leos_colors.add('white')
+  4)Rmoving an Element ==> use remove() or discard() Eg:>>>leos_colors.remove('white') or >>>leos_colors.discard('white')
+**I generally prefer to use discard because if you try to discard an element which isn't in the set,
+   it will just do nothing.If you try to use the remove method and the element isn't in the set, it will throw an error. 
+**5)If I try to add something which is already there,it won't change the set. ==>No Error ven if we add the already existing element to as Set
+  6)Union:union gives us items that are in either set1 or set2 . Eg:>>>set3 = set1.union(set2)
+    This can be useful if we want to know all the unique items that are in two separate sets.
+  7)Intersection:To find the unique items in common,we'd use the intersect method.Eg:>>>set3 = set1.intersection(set2)
+Note:You can also use the | operator(OR operator) instead of union method. Eg: >>>set3 = set1 | set2
+     Lly can also use the & operator(Ampersands symbol) instead of union method. Eg: >>>set3 = set1 & set2
+
+Likewise, you don't have to use the intersection method.
+You can just use the ampersands symbol.
+
+Practical Demo :word count and word cloud:
+------------------------------------------
+word cloud: An image composed of words used in a particular text or subject, in which the size of each word indicates its frequency or importance.
+ 
+ 
+Questions:
+1)what is websocket service?
+Sol: similar to REST but it transfers the data in real time (i.e as soon as an event occurs it transfers data.. eg : transfering data from weather towers)
+
+Notes:
+**1)http://pythontutor.com/ (site to learn code,it shows us the visualizations of the working of the code)
+*2)x is created on the stack,and the PyIntObject with the value of three will be created on the heap.
+**3)The stack holds your local variables and is managed by your program,whereas the heap holds dynamically created data and is actually managed by the operating system.
+  4)Draw memory diagrams to Analyse the codes ==> it will be easier to understand
+  5)the colon, in loops after condition,says to execute the statements indented after this line,should that condition be true.
+**6)Lists are Mutable but Strings are not
+**7)Assuming the tuple below:
+      >>>tup1 = ('physics', 'chemistry', 1997, 2000, 2001, 1999)
+   What will be the following result of:
+   
+      >>>tup1[2]=1998
+      >>>print(tup1)
+   A)('physics', 'chemistry', 1997, 2000, 2001, 1999)
+   B)('physics', 'chemistry', 1998, 2000, 2001, 1999)
+   C)TypeError: 'tuple' object does not support item assignment correct
+  Sol : C
