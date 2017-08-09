@@ -4,5 +4,56 @@
     If someone else wants to examine your results or build on your findings,they can see exactly how you conducted the research.
     Jupyter Notebooks don't just contain your notes and process;they contain your results as well.
     And lastly, as we mentioned before,Jupyter supports Julia, Python, R,three of the most popular programming languages for conducting data science today,along with other languages.
+
 2)Getting started with Jupyter
     The first page is called the Dashboard.It basically lists the contents of the folder you launched Jupyter notebook from.
+    If you don't use the local host as the server in your laptop locally, i.e we can run the juyter in another machine also.
+    steps:
+    1)open Jupyter notebook using anaconda prompt command:'jupyter notebook'
+    2)Jupyter terminal will be opened in the browser.
+    3) create a New notebook and select Python 3
+    4)Now we have a new notebook,click on Untitled on top to name it(Intro Notebook).
+     (now if we go back to our dashboard ==>we can see our notebook created with name Intro Notebook.ipynb)
+     (In the beginning, there's sometimes some confusion as both the notebook application and the notebook are called notebook,
+       but they are separate.The notebook application, is a web application that creates the interface in the browser,
+       and executes Python and other languages' code.The notebook file is a file format with the ipynb extension that saves code, 
+       images,and text in a single document,easy enough to be shared.You probably realize this, but the Intro Notebook notebook,
+       is in a different browser tab, in your browser.)
+    5)we have to code in the code cells(rectangular cells)
+    6)Running the code: 2 ways
+        a)I can go to the toolbar on top,and push the Run button.
+        b)Or I can reclick on that cell,and press Shift+Enter simultaneously,it should run the same cell.
+     Note that this is executing code in a Python process called the kernel, so there is a kernel running
+     in the background for each open notebook or browser tab basically.The Jupyter notebook application
+     talks to the kernel to have it load data and execute code.Shift Enter, or that Play button,creates 
+     another cell just below the first one,while we are executing it,or while the kernel is executing it.
+     So we can see that a Jupyter notebook is a collection of cells, some including code.
+    7)To use the output from the one cell ==> use Underscore ==>underscore refers to the output of the last cell executed.
+        (Eg: say o/p of one cell is 120 ==>in the next cell give '_/2' ==> divides 120 by 2 and gives the quotient
+    8) 1e6 means 10 power 6
+    9) we an copy,cut and paste the code using copy,cut and paste buttons above(click thcell which we want to copy,press the copy button
+       and then click the button below which we want to paste the code and click paste button).
+       To delete a cell use cut button.
+       lly use + button to create a new cell(it will be created below the highlighted cell)
+    10)To go to different cells(shift to modal mode)==> first press 'Escape button" then You can now use the up and down arrows on your keyboard to change cells.
+        (we can do this as the notebook interface is implemented to be modal.)
+
+3) Markdown cells:Documenting Analysis with Markdown Text
+    a)create a markdown cell: first create a cell then click on the cell and change the purpose of the cell
+      from cell/code to markdown by choosing markdown from the dropdown menu on the upper right corner of this notebook.
+      (normally by default 'code' is selected we have to change it to 'markdown' )
+    ==>Now we can write text in it instead of code and run it.This is great for documenting your data analysis pipeline.
+    b)The markdown cells have support for HTML and other text formatting languages like LaTeX if you heard of that.
+        For example, we can create bullet lists==> use '*' and a space,Everything I put after this bar space is rendered into a bulleted list.
+        We could also create, for example, titles or headings for that we will use the hashtag symbol.
+        to make text bold ==>> write b/w 2 stars i.e **text**
+        to make text italics ==>> write b/w stars i.e *text*   
+    c)to write an equation in LaTex,I need to write them between two dollar symbols.
+        (LateX is a document editing language,which has a syntax for many text components
+         for scientific writing, including writing equations.)
+      ** Eg:$\int_o^\infty x^{-\alpha}$ ==> shows intgral 0 to infinity x to the power -ve alpha i.e  ∫∞ox−α
+      ===> This is very handy when we are writing a scientific / white paper etc
+
+4)Adding Images:
+    I would like to show you how an image is generated inside the Notebook in a code celland how we can use markdowns 
+    around it to explain that cell.
