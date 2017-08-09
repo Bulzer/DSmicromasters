@@ -19,3 +19,63 @@
     e)Lastly, we love Numpy because many of our favorite packages in Python rely on Numpy.In fact, Pandas which we'll be doing soon
       are built on top of Numpy.I should note that while Pandas provides higher level functionality than Numpy,
       you'll still be using Numpy as functionality at times.
+
+2)Operations:
+    a) creating a 1D array or vector or rank 1 array ==>an_array = np.array([3,33,333])(note that the values are given in sq.braces (we can also use curly braces))
+    b) type of array is <class 'numpy.ndarray'> ==>print(type(an_array)) ==> o/p = <class 'numpy.ndarray'>(i.e it is bascically an N dimentional array(N d array)
+    c) shape of array ==>print(an_array.shape) ==> o/p = (3,) (since only 1 D)
+     Note that the to know thw type we gave as 'type(variablename)' but for shape we gave as variablename.shape
+    d) access the elemest ==>an_array[0] ( note that we usd sq. braces to access the element)
+    e)Ndarrays are mutable,which means that we can switch their elements.(eg : an_array[0] = 888 ==> now array becomes as [888 33 333]
+    f)creating a rank 2 array:
+        another = np.array([[11,12,13],[21,22,23]])  (we can also create an np array using curly braces like this np.array([(2,2),(3,3)]))
+        print(another.shape) ==> o/p = (2, 3)
+        print(another[0,0],another[0,1],another[1,0]) ==> o/p = 11 12 21
+   (Question) if we gave as    np.array([[11,12,13],[21,22,23]]) ==> shape = (2,3)
+      but if we gave as  np.array([[[11,12,13],[21,22,23]]]) ==> shape = (1,2,3) 
+      what does (1,2,3) refer to ?
+    g)One of the nicest features to NumPy is the variety of library functions available to trade arrays of varying sizes
+        with different pre-filled values.
+       Eg: 1)np.zeros((2,2)) creates a 2x2 zero matrix( note the spelling and case of zeros fn)
+           2)np.full((2,2),9) if I want an array to be pre-filled with the same value ==> we will have a 2x2 matrix with all values as 9
+           3)np.eye(2,2) creates a 2x2 identity matrix ( note that we dont have more braces in fn)
+            (if we use np.eye(2,3) ==> we will get 2x3 matrix where sub matrix (2x2) is an identity matrix)
+            Therefore bascically eye() makes all the diagonal elements as 1 and others as zeros)
+           4)no.ones((1,2)) ==> will create a matrix with all values as 1
+           *(There is a trick in this i.e this is a 2x2 matrix even though we gave 1x2 matrix ==> therefore check the shape of the matrix before accessing it) 
+           5)np.random.random((2,2)) ==> creates a 2x2 matrix of random floats b/w 0 and 1
+           (This is particularly useful for algorithms which you need to random state in order to get kick started.)
+
+3)Array indexing and slicing:
+        **1)use slice indexing to access subsets of an ndarray,and recognize that using such indexing creates 
+            a second reference to the same underlying data.(i.e if we change the the element in slice ==> it will reflect in the original data structure as well)
+          2)Say we have a 3x4 matrix(an_array=np.array([[11,12,13,14],[21,22,23,24],[31,32,33,34]])) ==>slice1 = an_array[:2,1:3] ==> we get a 2x2 matrix( which just the reference of same data with indexex f its own)
+          i.e [:2,1:3] means take all the rows before row no. 2 i.e rows 0 to 2(excluding 2nd index row) and take columns 1 to 3 (excluding 3rd index column)
+                (row range,column range)
+        **3) If we want to make sure that the changes ih the slice of the original doesnt effect the original data structure
+          ==> we need to take the copy of the slice instead of the slice
+          i.e slice1 = np.arrar(an_array[:2,1:3])
+        **4)Using both integer indexing and slicing gives us a lower rank matrix/array
+            Eg:row_rank1 = an_array[1, :] ==>o/p = [21 22 23 24] ==> now check shape of row_rank1 ==> we get shape/rank = (4,) i.e is a rank 1 array/matrix
+            (i.e  just a single index,for the row and a slice for the column.By putting a colon, it means all columns.So here I'm asking for all columns of row one)
+            Because I've used a single index to access the row,I actually get back a Rank 1 array,which I could index with a single number.Using the single index is a special case because if I use slices to produce a one by four array,it will still be Rank 2, let's do that.
+            Eg: generating using slicing alone
+                    ==>row_rank2 = an_array[1:2,:] ==>o/p = [[21 22 23 24]] ==> now check shape of row_rank2 ==> we get shape/rank = (1,4) i.e is a rank 1 array/matrix
+                                                        (note that we have 2 sq braces in the o/p matrix created)
+            lly do gfor columns and try i.e [:,1] and [:, 1:2]
+  
+4) using arrays of indexes to change/ermute elements:
+        a)create an array say an_array=np.array([[11,12,13,14],[21,22,23,24],[31,32,33,34]])
+        b)create an array of indices  say col_indices = np.array ([0,1,2,0]) and row_indices= np.arrange(4)
+                                          print(col_indices) ==> o/p = [ 0 1 2 0 ] and print(row_indices) ==> o/p = [ 0 1 2 3 ]
+        c) ==> we can use an_array[row_indices,col_indices]
+        we can use it to select/chnage/modify one elemnt from each row,column,etc
+ 
+ 
+ Note:Keep this trick in mind for later in the course when we start doing Data Cleaning.
+       Slice and Array Indexing is at the heart of NumPy
+
+
+5)ndarray boolean indexing :
+        
+  
