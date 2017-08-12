@@ -76,6 +76,47 @@
        Slice and Array Indexing is at the heart of NumPy
 
 
-5)ndarray boolean indexing :
-        
+5)ndarray boolean indexing :(also called as conditional indexing)
+        a)#create a 3x2 matrix ==> >>> an_array= np.array([[11,12],[21,22],[31,32]])
+          #creating a filter which will be a boolean based on the condition
+          ==> >>> filter = (an_array > 15)
+          ==> >>> filter
+          #use the filter to get all the values greater than 15
+          ==> >>> print(an_array[filter]) #this will rturn the values which are true(make sure to use sq. braces else error)
+          #this can be done in one step as well,like this
+          ==> >>> an_array[an_array > 15]
+        b)We can have even more complex logic here.Let's try to get all the values between 20 and 30.
+          >>> an_array[(an_array > 20) & (an_array < 30)]
+        c)Or, we can even ask for even values just using the modulo symbol.
+          >>> an_array[an_array % 2 ==0]
+        d)Let's use that same conditional,but now, let's actually change the elements based on the condition.(adding 100 to even elements)
+          >>> an_array[an_array % 2 ==0] +=100
+          >>> print(an_array)
+        e)Filters are useful in many Data Science operations and other Computer Science algorithms involving matrices.
+          For example, green screening of images takes advantage of filter functions to replace green pixels in the background
+          with another image of your choice.
+          
+6)ndarray Datatypes and Operations: 
+        a)As you may expect from our introductory video on Numpy,each ndarray has its own datatype.     
+        b)>>>ex1 = np.array([11,12]) #python assigns the data type
+          >>>print(ex1.dtype)   ==> o/p = int32
+          >>>ex2 = np.array([11.0,12]) #python assigns the data type
+          >>>print(ex2.dtype)   ==> o/p = float64
+          >>>ex3 = np.array([11,12],dtype = np.int64) #you can also tell python the data type  
+        c)this is useful if we want to force a different data type in input(Eg: some fn take i/p only as integers but users give floats as well ==> use this)
+          >>>ex4 = np.array([11.1,12.7],dtype = np.int64)
+          >>>print(ex4.dtype)
+          >>>print() #prints space
+          >>>print(ex4)
+          i.e Here, I'm providing two floats to the constructor,and I'm telling it to make the type integer.Numpy will do this,it just forces the floats to drop their decimal,effectively doing the floor function.
+
+        d)arithmatic operations
+            x = np.array([[111,222],[333,444]],dtype = np.int)
+            y = np.array([[111.1,222.3],[333.2,444]],dtype = np.float64)
+            we can use operators or the fn to do arthimatic operations
+                eg: print(x + y) lly print(x-y),print(x*y),print(x/y),
+                                (OR)
+                print(np.add(x,y)),print(np.subtract(x,y))print(np.multiply(x,y)),print(np.divide(x,y)),print(np.sqrt(x)),print(np.exp(x,y))(i.e E power x)
+        For many of these operations to work,there needs to be an aligning of dimensions.In this case, the dimensions are the same, so we'll be fine.
+        But later we'll see that there's some flexibility about this constraint, when we learn about broadcasting.
   
