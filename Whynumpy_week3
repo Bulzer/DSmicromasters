@@ -119,4 +119,70 @@
                 print(np.add(x,y)),print(np.subtract(x,y))print(np.multiply(x,y)),print(np.divide(x,y)),print(np.sqrt(x)),print(np.exp(x,y))(i.e E power x)
         For many of these operations to work,there needs to be an aligning of dimensions.In this case, the dimensions are the same, so we'll be fine.
         But later we'll see that there's some flexibility about this constraint, when we learn about broadcasting.
-  
+
+7)Statistical, Sorting, and Set Operations:  
+        a)Statistics:
+            Mean/average :
+                      A number expressing the central or typical value in a set of data.
+                     The mean is found by adding up all of the given data and dividing by the number of data entries.
+            Median :The median is the middle number(the number which separates lower and higher half od a dataset).  
+                    First you arrange the numbers in order from lowest to highest, then you find the middle number by crossing off the numbers until you reach the middle.
+                    (if we have 2 middle numbers, then the median is the average/mean of those 2 middle numbers).
+            Mode :  no. with highest frequency.
+            Standard deviation(SD): is a measure of how spread out numbers are.(Deviation just means how far from the normal).
+                                    The formula is easy: it is the square root of the Variance. SD is denoted by Sigma.
+            Variance : is defined as The average of the squared differences from the Mean.
+            
+            1)create a 2x5 array with random values     >>>arr = 10 * np.random.randn(2,5)
+            COMPUTE THE MEAN FOR ALL ELEMENTS'        >>>print(arr.mean())
+            #we can also use mean() in numpy package  >>>print(np.mean(arr)) 
+            #compute the mean by row i.e find mean of each row
+                                                      >>>print(arr.mean(axis =1))
+            #compute the mean by column i.e find mean of each row
+                                                      >>>print(arr.mean(axis=0))
+            #compute sum of all elements              >>>print(arr.sum())
+            #compute median of all elements           >>>print(np.median(arr))
+            #compute median fo rows                   >>>print(np.median(arr,axis = 1)) #lly use axis = 0 for columns medians
+            #print(np.mode(arr)) (we need to fing how to get mode, till then we can use >>> from scipy import stats 
+                                                                                        >>>stats.mode(a) #where 'a' is a Numpy array
+                             
+        b)Sorting:
+            1)# create an array of 10 random elements
+              >>>unsorted = np.random.randn(10)
+              #we can sort the elements directly but sometimes, we want to avoid changing array values themselves and just get back a copy of the array, which is sorted.
+              >>>sorted = np.array(unsorted)  #copy elements of one array to another Q) how to add elements from one array to another ?
+              >>>sorted.sort()
+              >>>print(sorted)
+              >>>print(unsorted)
+              Appending data to an existing array is a natural thing to want to do. However, if you find yourself regularly
+              appending to large arrays, you'll quickly discover that NumPy doesn't easily or efficiently do this the way a python list 
+              will. You'll find that every "append" action requires re-allocation of the array memory and short-term doubling of memory 
+              requirements. So, the more general solution to the problem is to try to allocate arrays to be as large as the final output
+              of your algorithm. Then perform all your operations on sub-sets (slices) of that array.Array creation and destruction 
+              should ideally be minimized.That said, It's often unavoidable and the functions that do this are:
+              (https://stackoverflow.com/questions/5064822/how-to-add-items-into-a-numpy-array)
+              for 2-D arrays:
+                np.hstack   ==> https://docs.scipy.org/doc/numpy/reference/generated/numpy.hstack.html 
+                np.vstack  ==> https://docs.scipy.org/doc/numpy/reference/generated/numpy.vstack.html
+                np.column_stack ==> https://docs.scipy.org/doc/numpy/reference/generated/numpy.column_stack.html
+                 np.row_stack    ==> https://docs.scipy.org/doc/numpy/reference/generated/numpy.ma.row_stack.html
+              for 3-D arrays (the above plus):
+                 np.dstack  ===>https://docs.scipy.org/doc/numpy/reference/generated/numpy.dstack.html
+              for N-D arrays: 
+                 np.concatenate ==>https://docs.scipy.org/doc/numpy/reference/generated/numpy.concatenate.html     
+            2)#use unique() to get the unique elements from an numpy array
+              >>>array1 = np.array([1,2,3.21,1.,4.2,2,2,3,3,2,])
+              >>>print(np.unique(array1))
+
+        c) set Operations:
+            >>>s1 = np.array(["desk","chair","bulb"])
+            >>>s2 = np.array(["lamp","chair","bulb"])
+            >>>print( np.intersect1d(s1,s2))    ==>o/p = ['bulb' 'chair']     
+            >>>print( np.union1d(s1,s2))        ==>o/p = ['bulb' 'chair' 'desk' 'lamp']
+            >>>print( np.setdiff1d(s1,s2)) # gives the element prsent in set 1 but not in set set 2    ==>o/p = ['desk']
+            >>>print( np.in1d(s1,s2)) # gives the boolean values for the elements of set1 wrt to set 2 ==>o/p = [False  True  True]
+            
+            
+            
+            
+            
