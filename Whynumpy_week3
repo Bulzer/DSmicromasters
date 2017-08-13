@@ -208,6 +208,33 @@
                     >>>b1 = np.array([1,1])
                     >>>b2 = 1
           Answer : Yes
+    
+    9)Speed Test (ndarray vs. list)
+         a)To do this test, we'll be using Time It,to measure the execution time of our code.
+            Cell 1:>>>from timeit import Timer
+                   >>>size = 1000000
+                   >>>timeits = 1000
+                   #creating an nd_array with values 0,1,2,3....upto size-1
+                   >>>nd_array = np.arange(size) #we can also import just arrange from and use it like this #from numpy import arange use : >>>nd_array =arange(size)
+                   >>>print(type(nd_array))
+            Cell 2:#timer expexte the operation as a parameter
+                   #here we pass nd_array.sum() as parameter
+                   >>>timer_numpy = Timer("nd_array.sum()","from __main__ import nd_array")
+                   >>>print(timer_numpy)
+                   >>>print("time taken by nd_array:%f seconds" % (timer_numpy.timeit(timeits)/timeits)) o/p in milliseconds
+                   >>>print("time taken by nd_array:%f seconds" % (timer_numpy.timeit(timeits)))         o/p in seconds
+                   >>>print("time taken by nd_array:%f seconds" % (timer_numpy.timeit(10)))
+                   #timeit() method in timeit package take parameter called to repead the code that many no.of times
+            Cell 3:#create a list with values 0,1,2,3... upto siz-1
+                   >>>a_list = list(range(size))
+            Cell 4:>>>timer_list = Timer("sum(a_list)","from __main__ import a_list")
+                   >>>print(timer_list)
+                   >>>print("time taken by list:%f seconds" % (timer_list.timeit(timeits)))
+          From these outputs we can conclude that Numpy arrays are way more faster than the Lists.
+   10)Satellite Image Example:
+                   
+          
+
             
             
             
