@@ -187,5 +187,27 @@
                  1)they are equal, or
                  2)one of them is 1 (i.e a scalar or a 1x1 array)
            If these conditions are not met, a ValueError: frames are not aligned exception is thrown, indicating that the arrays have incompatible shapes. The size of the resulting array is the maximum size along each dimension of the input arrays.
+        (OR)' ValueError: operands could not be broadcast together with shapes'  is thrown
+        c)#creating a zero Array of size 4x3                    >>>start = np.zeros((4,3))
+          #creating a rank 1 nd array with 3 values             >>>add_rows = np.array([1,0,4])
+          #adding to each row of start using broadcasting       >>>y= start + add_rows #this addition is done using broadcasting internally and size of start is != sizeof add_rows array
+          #lly creat a 4x1 ran 1 column array to add across columns of start
+          #add_cols = np. array([1,2,3,4]) #this will not work we have to give one more q. bracket
+                                                                >>>add_cols = np.array([[1,2,3,4]])
+                                                                >>>print(add_rows)
+                                                                >>>print(add_cols)
+          #getting the column matrix by getting the transpose   >>>add_cols = add_cols.T 
+                                                                >>>print(add_cols)
+          #getting transpose using np pkg gives a diff result ==> use the above one only #>>>print(np.transpose(add_cols))      
+                                                                >>>y = start + add_cols
+                                                                >>>print(y)
+          #add a scalar                                         >>>add_scalar = np.array([1])
+                                                                >>>print(start + add_scalar)
+        d)Question : does a+b1 and a+b2 result in the same matrix.
+            code :  >>>a = np.array([[0,0],[0,0]])
+                    >>>b1 = np.array([1,1])
+                    >>>b2 = 1
+          Answer : Yes
+            
             
             
