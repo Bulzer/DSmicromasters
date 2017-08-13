@@ -71,10 +71,8 @@
         c) ==> we can use an_array[row_indices,col_indices]
         we can use it to select/chnage/modify one elemnt from each row,column,etc
  
- 
- Note:Keep this trick in mind for later in the course when we start doing Data Cleaning.
+  Note:Keep this trick in mind for later in the course when we start doing Data Cleaning.
        Slice and Array Indexing is at the heart of NumPy
-
 
 5)ndarray boolean indexing :(also called as conditional indexing)
         a)#create a 3x2 matrix ==> >>> an_array= np.array([[11,12],[21,22],[31,32]])
@@ -183,6 +181,11 @@
             >>>print( np.in1d(s1,s2)) # gives the boolean values for the elements of set1 wrt to set 2 ==>o/p = [False  True  True]
             
             
-            
+8)Broadcasting:      
+        a)The term broadcasting describes how numpy treats arrays with different shapes during arithmetic operations.Subject to certain constraints, the smaller array is “broadcast” across the larger array so that they have compatible shapes. Broadcasting provides a means of vectorizing array operations so that looping occurs in C instead of Python.
+        b) General broadcasting rules :When operating on two arrays, NumPy compares their shapes element-wise. It starts with the trailing dimensions, and works its way forward. Two dimensions are compatible when
+                 1)they are equal, or
+                 2)one of them is 1 (i.e a scalar or a 1x1 array)
+           If these conditions are not met, a ValueError: frames are not aligned exception is thrown, indicating that the arrays have incompatible shapes. The size of the resulting array is the maximum size along each dimension of the input arrays.
             
             
