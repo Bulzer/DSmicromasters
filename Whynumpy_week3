@@ -244,5 +244,23 @@
                 >>>photo_data = misc.imread('./wifire/sd-3layers.jpg)
                 >>>type(photo_data) ==> we get type as numpy.ndarray
             
-            
-            
+    11)Questions: 
+        a)Look at the following code:
+                >>>b = np.array([1,2,3])
+                >>>b[1] = 'one'
+            What error prints out after you run these two lines of code?
+            a)SyntaxError   b)NameError  c)KeyError     d)ValueError
+        Answer: (D) i.e ValueError: invalid literal for int() with base 10: 'one'
+        b) nd arrays are Mutable ==> True 
+        c)Changing an element of an array slice in numpy will NOT change the original array. ==> False
+        d)What is the correct way to access elements of an array “arr” that are less than 0?
+            a)arr[<0]   b)arr[arr<0]     c)arr[arr[,]<0]
+        Ans: (B)
+        e)Select two valid ways to get the odd values of an array “arr.”
+            a)arr[(arr % 2 != 1)]   b)arr[(arr % 2 != 0)]   c)arr[(arr % 2 == 1)] d)arr[(arr % 2 == 0)]
+        Ans: B and C
+        f)What requirement is needed to add two numeric numpy arrays?
+            a)They need to have the same or compatible dimensions. correct
+            b)They need to be of the same type.
+            c)They need to be converted to type float first.
+        And A
