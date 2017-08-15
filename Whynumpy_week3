@@ -232,9 +232,17 @@
                    >>>print("time taken by list:%f seconds" % (timer_list.timeit(timeits)))
           From these outputs we can conclude that Numpy arrays are way more faster than the Lists.
    10)Satellite Image Example:
-                   
-          
-
+        a)Each pixel is only one color, defined by a set of numbers.A simple way to describe each pixel is using a combination of three colors,
+            namely red, green, and blue.This is what we call an RGB image.
+        b)In an RGB image,each pixel is represented by three 8-bit numbers associated to the values for red, green, and blue respectively.
+            The combination of these three will, in turn,give us a specific shade of the pixel color.
+            Since each number is an 8-bit number,the values range from 0 to 255.For example, a yellow value can be identified by 255, 255, and 0 for RGB(i.e if R is 255,G is 255 and Blue is 0 ==> it is a yellow color),as we see in this diagram.If all three values are at full intensity,that means they are 255, it shows as white.If all three colors are muted,or has the value of 0, the color shows as black.
+          **Since each value can have 256 different intensity or brightness value,it makes 16.8 million total shades.
+            In Python, RGB images are ndarrays of shape height times width times three for each RGB layer(i.e height*width*3).
+            How coloured images are stored in python :
+                >>>from skimage import data
+                >>>photo_data = misc.imread('./wifire/sd-3layers.jpg)
+                >>>type(photo_data) ==> we get type as numpy.ndarray
             
             
             
