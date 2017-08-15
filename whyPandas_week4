@@ -1,1 +1,3 @@
-
+%matplotlib inline   ==> Inline means Incorporated into a body of text rather than placed as a separate section.
+Q) diff between :'<matplotlib.figure.Figure at 0x110b9c450>' and ' <matplotlib.text.Text at 0x94f9320>'
+    your code snippet should not produce <matplotlib.figure.Figure at 0x110b9c450> but <matplotlib.text.Text at 0x94f9320> (because your last line is printing a title)
