@@ -263,4 +263,350 @@
             a)They need to have the same or compatible dimensions. correct
             b)They need to be of the same type.
             c)They need to be converted to type float first.
-        And A
+        And: A
+        g)What command allows you to sum all of the elements in an Rank 2 ndarray called “a”?
+            a)a.sum() correct   b)sum(a)    c)A+a   d)a.add() 
+        Ans: A
+   
+   
+   12)code for Satellite img processing:
+   --------------------------------------
+        
+        
+        
+# coding: utf-8
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold">Loading the libraries we need: numpy, scipy, matplotlib</p>
+
+# In[47]:
+
+# insert line '%matplotlib inline' to directly view the image (or) use plt.show() extra to display image in the console
+import numpy as np
+from scipy import misc
+import matplotlib.pyplot as plt
+
+
+# <p style = "color:#2462C0; font-style:bold"> Creating a Numpy array from a Image</p>
+
+# In[32]:
+
+from skimage import data
+
+photo_data = misc.imread('A:/Naveed/DS/micromasters/week3/wifire/sd-3layers.jpg')
+#print(photo_data)
+type(photo_data)
+
+
+# <p> lets see whats this Image is </p>
+
+# In[48]:
+
+plt.figure(figsize=(10,10)) #setting up the frame size to see the image and we fit the imageinthis frame size.If we have a highresolution laptop ==> we can increase the frame siz
+plt.imshow(photo_data)
+plt.show()
+
+#import matplotlib.pyplot as plt
+#import matplotlib.image as mpimg
+
+#imgplot = plt.imshow(mpimg.imread('animal.png'))
+#plt.ion()
+#plt.show()
+#animal_name = raw_input("What is the name?: ")
+#plt.close()
+
+
+# In[5]:
+
+
+photo_data.shape
+
+
+# The shape of the ndarray show that it is a three layered matrix. The first two numbers here are length and width, and the third number (i.e. 3) is for three layers: Red, Green and Blue 1 for each layer.
+# 
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold">
+# RGB Color Mapping in the Photo:</p> <br>
+# <ul>
+# <li><p style="font-family: Arial; font-size:1.75em;color:red; font-style:bold">
+# RED pixel indicates Altitude</p>
+# <li><p style="font-family: Arial; font-size:1.75em;color:blue; font-style:bold">
+# BLUE pixel indicates Aspect
+# </p>
+# <li><p style="font-family: Arial; font-size:1.75em;color:green; font-style:bold">
+# GREEN pixel indicates Slope
+# </p>
+# </ul>
+# <br>
+# Like many other visualizations, the colors in each rgb layer mean something.For example, the intensity of the red will be
+# an indication of altitude of the geographical data point in the pixel.
+# 
+# 
+# 
+# <p style = " color : blue">The higher values denote higher altitude, aspect and slope.</p>
+# 
+# 
+
+# In[9]:
+
+photo_data.size
+
+
+# In[22]:
+
+photo_data.min(), photo_data.max()
+#its important to check the max and min values because  the eight bit color intensity is, can not be outside of the 0 to 255 range.
+
+
+# In[11]:
+
+photo_data.mean() #gives the average value of the pixels
+
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold"><br>
+# 
+# RGB value for a Pixel on the 150th Row and 250th Column</p>
+
+# In[23]:
+
+photo_data[150,250] #==> give the values of R,G and B
+
+
+# In[25]:
+
+#We could have also selected one of R or G or B values. at the a particular pixel
+photo_data[150,250,1] #==> give the values of G(scond index ==> using value as 1) at that pixel
+
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold"><br>
+# Set a Pixel to All Zeros</p>
+# <br/>
+# Similarly, we can change individual values of each pixel by assigning specific values to pixels.
+# We can set all three layer in a pixel at once by assigning zero globally to that (row,column) pairing. However, setting one pixel to zero is not noticeable.
+
+# In[29]:
+
+#photo_data = misc.imread('./wifire/sd-3layers.jpg')
+photo_data[150, 250] = 0 # in this line , We just set all three layers to be zero for te pixel at 150th row and 250th column
+#==> setting them to zero means all the 3 values R,G and B are zeros ==> we get black color now at that pixel
+plt.figure(figsize=(10,10))
+plt.imshow(photo_data)
+plt.show()
+
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold"><br>
+# We can also try to change a range of pixels ==> Changing colors in a Range<p/>
+# <br/>
+# We can also use a range to change the pixel values. As an example, let's set the green layer for rows 200 t0 800 to full intensity.
+
+# In[31]:
+
+#photo_data = misc.imread('./wifire/sd-3layers.jpg')
+
+photo_data[200:800, : ,1] = 255 #i.e '200:800' means rows from 200 to 800, ':' means all the columns, '1' means the second indes i.e green here
+plt.figure(figsize=(10,10))
+plt.imshow(photo_data)
+plt.show()
+
+
+# In[36]:
+
+#I'll reload the image because we just changed the image,I was to set it back to it's originals.
+photo_data = misc.imread('A:/Naveed/DS/micromasters/week3/wifire/sd-3layers.jpg')
+
+photo_data[200:800, :] = 255
+plt.figure(figsize=(10,10))
+plt.imshow(photo_data)
+plt.show()
+
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold"><br>
+# Pick all Pixels with Low Values</p>
+# 
+# <p style="font-family: Arial; font-size:2em;color:#2462C0; font-style:bold"><br>
+# **Below 2 cells code has some good logic and important methods of dealing</p>
+# 
+# 
+
+# In[38]:
+
+photo_data = misc.imread('A:/Naveed/DS/micromasters/week3/wifire/sd-3layers.jpg')
+print("Shape of photo_data:", photo_data.shape)
+low_value_filter = photo_data < 200  #select all values that are less than 200.This will create a boolean ndarray of same shape with our original array.
+print("Shape of low_value_filter:", low_value_filter.shape)
+#Now we can use this new ndarray to filter pixels with low intensity or I can call them points of less interest.
+#So how the do we go filtering using this new low value filter array?
+#==> we'll now use this array as an index to set those low values to zero.
+
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold">
+# Filtering Out Low Values</p><br/>
+# Whenever the low_value_filter is True, set value to 0.
+
+# In[40]:
+
+#import random
+plt.figure(figsize=(10,10))
+plt.imshow(photo_data)
+plt.show()
+photo_data[low_value_filter] = 0 #applying filter
+plt.figure(figsize=(10,10))
+plt.imshow(photo_data)
+plt.show() #==> we can see that the low intensity values are removed
+
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold">
+# More Row and Column Operations</p><br>
+# You can design complex patters by making cols a function of rows or vice-versa. Here we try a linear relationship between rows and columns.
+
+# In[42]:
+
+rows_range = np.arange(len(photo_data))
+cols_range = rows_range
+print(len(photo_data))
+print(rows_range)
+print(type(rows_range))
+
+
+# In[43]:
+
+photo_data[rows_range, cols_range] = 255
+#We are using these two range arrays and setting all the values in those pixels to 255.Let's see our image now.
+
+
+# In[46]:
+
+plt.figure(figsize=(15,15))
+plt.imshow(photo_data)
+plt.show()
+#We'll see a diagonal line, white line, because those are the values we set going through a virtual square in the left part of the image.
+#==> all the pixels at (0,0),(1,1),(2,2).... till (3274,3274) are set to max intensity ==> while colour
+
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold"><br>
+# Masking Images</p>
+# <br>Now let us try something even cooler...a mask that is in shape of a circular disc.
+
+# <img src="./1494532821.png" align="left" style="width:550px;height:360px;"/>
+
+# In[50]:
+
+total_rows, total_cols, total_layers = photo_data.shape
+#now we'll use the ogrid function to help us vectorize the distance from the center,which will be a function of the two variables.Ogrid returns as an ndarray.
+#So what will ogrid return?
+#We'll give the range of total rows and range of total columns,and it's going to give us,let's comment this line with the print,it's going to give us two vectors, x and y,
+#which will have, the x will have the total number of rows,and y will have the total number of columns.
+#So ogrid is a compact method of creating a multidimensional ndarray operationsin single lines.
+X, Y = np.ogrid[:total_rows, :total_cols]
+print("X = ", X.shape, " and Y = ", Y.shape)
+
+
+# In[56]:
+
+center_row, center_col = total_rows / 2, total_cols / 2  #total no. of rows/ 2 and total no. of columns/2 gives centre coordinates
+#print(X - center_row) #gives the difference of values of X and centre_row for all values of X
+#print(Y - center_col)
+dist_from_center = (X - center_row)**2 + (Y - center_col)**2
+#print(dist_from_center.shape)
+#print(dist_from_center)
+radius = (total_rows / 2)**2 #doing square of radius since we are not using sq.root while finding dist_from_center in above line
+#print("Radius = ", radius)
+circular_mask = (dist_from_center > radius) #if distance from center is greater than the radius ==> value falls under circular mask
+#print(circular_mask)
+#print(circular_mask[1500:1700,2000:2200]) # check the values in this range ==> we see the values as false
+#****as circular_mask is a boolean array with same shape as that of dist_from_center.
+
+
+# In[57]:
+
+#now we can chck our changs
+#==> loading the image a fresh
+photo_data = misc.imread('A:/Naveed/DS/micromasters/week3/wifire/sd-3layers.jpg')
+photo_data[circular_mask] = 0  #making all the layers of photo_data(where circular_mask = true ) as zero (i.e black)
+plt.figure(figsize=(10,10))
+plt.imshow(photo_data)
+plt.show()
+
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold">
+# Further Masking</p>
+# <br/>You can further improve the mask, for example just get upper half disc.
+
+# In[58]:
+
+X, Y = np.ogrid[:total_rows, :total_cols]
+half_upper = X < center_row # this line generates a mask for all rows above the center
+
+half_upper_mask = np.logical_and(half_upper, circular_mask) #using Logical_and operator of Numpy add both the masks(i.e if both are true then only it willtake)
+
+
+# In[63]:
+
+#import random
+photo_data = misc.imread('A:/Naveed/DS/micromasters/week3/wifire/sd-3layers.jpg')
+photo_data[half_upper_mask] = 255
+#photo_data[half_upper_mask] = random.randint(200,255) #this will give random values b/w 200 to 255 ==> w wont get perfect white
+plt.figure(figsize=(15,15))
+plt.imshow(photo_data)
+plt.show()
+
+
+# <p style="font-family: Arial; font-size:2.75em;color:purple; font-style:bold"><br>
+# Further Processing of our Satellite Imagery </p>
+# 
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold">
+# Processing of RED Pixels</p>
+# 
+# Remember that red pixels indicate the height. Let us try to highlight all the high altitude areas. We will do this by detecting high intensity RED Pixels and muting down other areas.
+
+# In[66]:
+
+photo_data = misc.imread('A:/Naveed/DS/micromasters/week3/wifire/sd-3layers.jpg')
+
+red_mask   = photo_data[:, : ,0] < 150 #i.e all rows and all columns and '0' is to get red indexes only as Red layer is at zeroth position
+#creating a boolean array red_mask of same shape as that of photo_data where all the values of Red which are below are kept as True
+photo_data[red_mask] = 0
+plt.figure(figsize=(10,10))
+plt.imshow(photo_data)
+
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold"><br>
+# Detecting Highl-GREEN Pixels</p>
+
+# In[67]:
+
+photo_data = misc.imread('A:/Naveed/DS/micromasters/week3/wifire/sd-3layers.jpg')
+green_mask = photo_data[:, : ,1] < 150
+
+photo_data[green_mask] = 0
+plt.figure(figsize=(15,15))
+plt.imshow(photo_data)
+#lly we can detect blue pixels as well
+
+
+# <p style="font-family: Arial; font-size:1.75em;color:#2462C0; font-style:bold"><br>
+# 
+# Composite mask that takes thresholds on all three layers: RED, GREEN, BLUE     
+# 
+# i.e let's create a composite mask for point with high elevation, high aspect, and low slope</p>
+
+# In[68]:
+
+photo_data = misc.imread('A:/Naveed/DS/micromasters/week3/wifire/sd-3layers.jpg')
+
+red_mask   = photo_data[:, : ,0] < 150
+green_mask = photo_data[:, : ,1] > 100
+blue_mask  = photo_data[:, : ,2] < 100
+
+final_mask = np.logical_and(red_mask, green_mask, blue_mask)
+photo_data[final_mask] = 0
+plt.figure(figsize=(15,15))
+plt.imshow(photo_data)
+
+
+# **bold**
+
+# In[ ]:
+
+
+
+
+     
