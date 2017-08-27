@@ -30,182 +30,186 @@ It provides almost all major data-wrangling capabilities that data scientists ne
         We can think of it as a container/dictionary for series objects,where each row is a series.
  
  3)Pandas Series:
-        #creating a series object,Which is like an numpy array but we can define the index labels,together with the data.
-        >>>ser = pd.Series( data= [100, 'foo', 300, 'bar', 500], index= ['tom', 'bob', 'nancy', 'dan', 'eric'])
-        >>>print(ser)
-        ==> o/p = 
-        tom      100
-        bob      foo
-        nancy    300
-        dan      bar
-        eric     500
-        dtype: object
-        #So, instead of indices being zero through four,we have a five-element series with indexes defined as tom, bob, nancy, etc.
-        #Although, I defined the data and index using a clear format in this example,we could have skipped data and index equals.
-        #i.e we can also write it as 
-        >>>ser = pd.Series([100, 'foo', 300, 'bar', 500], ['tom', 'bob', 'nancy', 'dan', 'eric'])
-        #Another thing to recognize about the series compared to NumPy array is that the data types can be heterogeneous.
-        (i.e in above 'SER'objet we can see that we have values as 100 , 'foo', 'bar' etc i.e int,string etc ==> heteregeneous data)
-        >>>print(ser.index)   #==> gives the list of all indices present in that object.
-        #We can use any of the indices by using it within rectangular brackets to access data at that location.
-        Eg:>>>print(ser['nancy'])  ==> o/p = 300
-        Alternatively,we could have used a loc fn(location fn)of the series object to get the value out of the location.
-        So instead of ser['nancy'],if I said ser.loc['nancy'], ==> we get same o/p i.e o/p = 300
-        #Now, if we wanted to access multiple locations,we have to use one extra sq. bracket i.e 
-        >>>print(ser.loc[['nancy','bob','eric']])
-        o/p:
-        nancy    300
-        bob      foo
-        eric     500 
-        dtype: object
-        #Another way to access data at the series location is to use a numeric indices.Here we access elements for three and one in ser.
-        >>>print(ser[[4, 3, 1]])
-        o/p:
-        eric    500
-        dan     bar
-        bob     foo
-        dtype: object
-        #A reminder that, like all other array indices,series indices also start by zero.
-        #We can use the iloc fn(index location fn) to get only the value without index
-        >>>print(ser.iloc[2]) ==> o/p = 300
-        #to check if an index is present in an object
-        >>>'bob' in ser   #returns true or false
-        #lly we can do all the operations on series
-        >>>ser * 2 
-        ==> o/p :
-        tom         200
-        bob      foofoo
-        nancy       600
-        dan      barbar
-        eric       1000
-        dtype: object
-        **Notice that string values also got repeated 2 times
-        #calculating the squares
-        >>> ser **2
-        ==> we get error,coz it dosnt knowhow to evaluate the squares of the strings
-        (TypeError: unsupported operand type(s) for ** or pow(): 'str' and 'int')
-        ==> instead we can get the locations of the numeric values ang get the squares of those
-        >>>ser[['nancy', 'eric']] ** 2
-        
-        
-        DataFrames:
-		pandas DataFrame is a 2-dimensional labeled data structure.
-		There are many ways to create data frames .We often just read and ingest data into a data frame,
-	1)creating a Data frame:
-	a)creating a data frame out of a dictionary of series of objects.
-		Remember, we are adding another dimension to our data structure,so we need to label each series object.
-		==> first we willl create a dictionary and then we create a data frame from that dictionary
-		>>>#creating a dictionary
-		>>>d = {'one' : pd.Series([100., 200., 300.], index=['apple', 'ball', 'clock']),
-		>>>     'two' : pd.Series([111., 222., 333., 4444.], index=['apple', 'ball', 'cerill', 'dancy'])}
-		#creating a DF:
-		>>>df = pd.DataFrame(d)
-		>>>print(df)
-		>>>df
-		==> O/P: we will a tabular structure i.e llr to a table with rows and columns i.e 
-					one     two
-			apple   100.0   111.0
-			ball    200.0   222.0
-			cerill    NaN   333.0
-			clock   300.0     NaN
-			dancy     NaN  4444.0
-		**Notice:1)the values 'NaN'(That means not a number, to indicate there was no value
-						for that or that value was indefined for the index in that series.)
-				 2) check out the difference b/w outputs of >>>df and >>>print(df)
-		>>>df.index  	#gives indexes i.e o/p = Index(['apple', 'ball', 'cerill', 'clock', 'dancy'], dtype='object')
-		>>>df.columns 	#gives columns i.e o/p = Index(['one', 'two'], dtype='object')
-	b)Creating a DF from Dictionary based on conditions
-		a)based on row labels
-		>>>pd.DataFrame(d, index=['dancy', 'ball', 'apple'])
-		==>o/p:
-					one		two
-			dancy	NaN		4444.0
-			ball	200.0	222.0
-			apple	100.0	111.0
-		b)based on column labels
-		i.e I pick the row labels 'dancy', 'ball', 'apple'just like I did in the line above,
-			but I'm adding new columns to it.Remember my dictionary had 'one' and 'two' as columns.
-			Instead, I'm asking,give me columns 'two' and 'five.'
-		>>>pd.DataFrame(d, index=['dancy', 'ball', 'apple'], columns=['two', 'five'])
-		==>o/p:
-					two		five
-			dancy	4444.0	NaN
-			ball	222.0	NaN
-			apple	111.0	NaN
-		==>we selected the label that doesn't exist i.e 'five',so all values in that column will show up as NaN.
-	c)We can also create DF from regular Python dictionaries rather than a series.
-		a)here we have a data array(list) of 2 dictionaries
-		>>>data = [{'alex': 1, 'joe': 2}, {'ema': 5, 'dora': 10, 'alice': 20}]
-		>>>type(data)
-		#creating a DF from list called data which contains 2 dictionaries(make sure to use pd.DataFrame(case sensitive)
-		>>>pd.DataFrame(data)
-		o/p :
+       #creating a series object,Which is like an numpy array but we can define the index labels,together with the data.
+       >>>ser = pd.Series( data= [100, 'foo', 300, 'bar', 500], index= ['tom', 'bob', 'nancy', 'dan', 'eric'])
+       >>>print(ser)
+       ==> o/p = 
+       tom      100
+       bob      foo
+       nancy    300
+       dan      bar
+       eric     500
+       dtype: object
+       #So, instead of indices being zero through four,we have a five-element series with indexes defined as tom, bob, nancy, etc.
+       #Although, I defined the data and index using a clear format in this example,we could have skipped data and index equals.
+       #i.e we can also write it as 
+       >>>ser = pd.Series([100, 'foo', 300, 'bar', 500], ['tom', 'bob', 'nancy', 'dan', 'eric'])
+       #Another thing to recognize about the series compared to NumPy array is that the data types can be heterogeneous.
+       (i.e in above 'SER'objet we can see that we have values as 100 , 'foo', 'bar' etc i.e int,string etc ==> heteregeneous data)
+       >>>print(ser.index)   #==> gives the list of all indices present in that object.
+       #We can use any of the indices by using it within rectangular brackets to access data at that location.
+       Eg:>>>print(ser['nancy'])  ==> o/p = 300
+       Alternatively,we could have used a loc fn(location fn)of the series object to get the value out of the location.
+       So instead of ser['nancy'],if I said ser.loc['nancy'], ==> we get same o/p i.e o/p = 300
+       #Now, if we wanted to access multiple locations,we have to use one extra sq. bracket i.e 
+       >>>print(ser.loc[['nancy','bob','eric']])
+       o/p:
+       nancy    300
+       bob      foo
+       eric     500 
+       dtype: object
+       #Another way to access data at the series location is to use a numeric indices.Here we access elements for three and one in ser.
+       >>>print(ser[[4, 3, 1]])
+       o/p:
+       eric    500
+       dan     bar
+       bob     foo
+       dtype: object
+       #A reminder that, like all other array indices,series indices also start by zero.
+       #We can use the iloc fn(index location fn) to get only the value without index
+       >>>print(ser.iloc[2]) ==> o/p = 300
+       #to check if an index is present in an object
+       >>>'bob' in ser   #returns true or false
+       #lly we can do all the operations on series
+       >>>ser * 2 
+       ==> o/p :
+       tom         200
+       bob      foofoo
+       nancy       600
+       dan      barbar
+       eric       1000
+       dtype: object
+       **Notice that string values also got repeated 2 times
+       #calculating the squares
+       >>> ser **2
+       ==> we get error,coz it dosnt knowhow to evaluate the squares of the strings
+       (TypeError: unsupported operand type(s) for ** or pow(): 'str' and 'int')
+       ==> instead we can get the locations of the numeric values ang get the squares of those
+       >>>ser[['nancy', 'eric']] ** 2
+       
+ 4)DataFrames:
+	pandas DataFrame is a 2-dimensional labeled data structure.
+	There are many ways to create data frames .We often just read and ingest data into a data frame,
+  1)creating a Data frame:
+   a)creating a data frame out of a dictionary of series of objects.
+	Remember, we are adding another dimension to our data structure,so we need to label each series object.
+	==> first we willl create a dictionary and then we create a data frame from that dictionary
+	>>>#creating a dictionary
+	>>>d = {'one' : pd.Series([100., 200., 300.], index=['apple', 'ball', 'clock']),
+	>>>     'two' : pd.Series([111., 222., 333., 4444.], index=['apple', 'ball', 'cerill', 'dancy'])}
+	#creating a DF:
+	>>>df = pd.DataFrame(d)
+	>>>print(df)
+	>>>df
+	==> O/P: we will a tabular structure i.e llr to a table with rows and columns i.e 
+			one     two
+		apple   100.0   111.0
+		ball    200.0   222.0
+		cerill    NaN   333.0
+		clock   300.0     NaN
+		dancy     NaN  4444.0
+	**Notice:1)the values 'NaN'(That means not a number, to indicate there was no value
+				for that or that value was indefined for the index in that series.)
+		2) check out the difference b/w outputs of >>>df and >>>print(df)
+	>>>df.index  	#gives indexes i.e o/p = Index(['apple', 'ball', 'cerill', 'clock', 'dancy'], dtype='object')
+	>>>df.columns 	#gives columns i.e o/p = Index(['one', 'two'], dtype='object')
+   b)Creating a DF from Dictionary based on conditions
+	a)based on row labels
+	>>>pd.DataFrame(d, index=['dancy', 'ball', 'apple'])
+	==>o/p:
+			one	two
+		dancy	NaN	4444.0
+		ball	200.0	222.0
+		apple	100.0	111.0
+	b)based on column labels
+	i.e I pick the row labels 'dancy', 'ball', 'apple'just like I did in the line above,
+		but I'm adding new columns to it.Remember my dictionary had 'one' and 'two' as columns.
+		Instead, I'm asking,give me columns 'two' and 'five.'
+	>>>pd.DataFrame(d, index=['dancy', 'ball', 'apple'], columns=['two', 'five'])
+	==>o/p:
+			two	five
+		dancy	4444.0	NaN
+		ball	222.0	NaN
+		apple	111.0	NaN
+	==>we selected the label that doesn't exist i.e 'five',so all values in that column will show up as NaN.
+   c)We can also create DF from regular Python dictionaries rather than a series.
+	a)here we have a data array(list) of 2 dictionaries
+	>>>data = [{'alex': 1, 'joe': 2}, {'ema': 5, 'dora': 10, 'alice': 20}]
+	>>>type(data)
+	#creating a DF from list called data which contains 2 dictionaries(make sure to use pd.DataFrame(case sensitive)
+	>>>pd.DataFrame(data)
+	o/p :
+		alex	alice	dora	ema	joe
+	0	1.0	NaN	NaN	NaN	2.0
+	1	NaN	20.0	10.0	5.0	NaN
+	
+	*Note that all the labels in the dictionaries are assigned as columns(column indexex/labels) of DF
+	*We can also give separate row labels to DF i.each
+	>>>pd.DataFrame(data, index=['orange', 'red'])
+	o/p :
 			alex	alice	dora	ema	joe
-		0	1.0		NaN		NaN		NaN	2.0
-		1	NaN		20.0	10.0	5.0	NaN
-		
-		*Note that all the labels in the dictionaries are assigned as columns(column indexex/labels) of DF
-		*We can also give separate row labels to DF i.each
-		>>>pd.DataFrame(data, index=['orange', 'red'])
-		o/p :
-				alex	alice	dora	ema	joe
-		orange	1.0		NaN		NaN		NaN	2.0
-		red		NaN		20.0	10.0	5.0	NaN
-		**lly we can select some of the elements from the dictionary as columns to constrain the data set we've worked with.
-		>>>pd.DataFrame(data, columns=['joe', 'dora','alice'])
-		o/p:
-			joe	dora	alice
-		0	2.0	NaN		NaN
-		1	NaN	10.0	20.0
-		>>>#pd.DataFrame(data, index=['joe', 'dora','alice']) (this will throw error but this worked fine when we tried with series dictionaries ! find reason et concept)
-		(ValueError: Shape of passed values is (5, 2), indices imply (5, 3))
-		>>>pd.DataFrame(data, index=['joe', 'dora']) (but this will give us the o/p)
-		o/p:
-				alex	alice	dora	ema	joe
-		joe		1.0		NaN		NaN		NaN	2.0
-		dora	NaN		20.0	10.0	5.0	NaN
-		
-	2)Basic DF operations(geting data out of DF):
-		a)Numerical Operations:
-			>>>df['one']  ==> gives the values in the column named 'one' in DF named 'df'(which we have already ceated) and their row labels
-			>>>df['three'] = df['one'] * df['two'] ==> adds a column to DF whose values are product of other 2 columns	
-			#now print DF ==> we get 3 columns ==> >>>print(df)
-		b)Logical operations:
-			#we can also have logical operations which results in a boolean value being generated.
-			>>>df['flag'] = df['one'] > 250		
-			#It's going to give us true for the values that are greater than 250 in column one.
-			#And NaN, again, we can't compare that to any number,NaN will be false by nature.
-			>>>df
-			o/p:
-					one		two		three	flag
-			apple	100.0	111.0	11100.0	False
-			ball	200.0	222.0	44400.0	False
-			cerill	NaN		333.0	NaN		False
-			clock	300.0	NaN		NaN		True
-			dancy	NaN		4444.0	NaN		False
-		c)remove or delete data from data frames:
-			(i)pop():is used to return the column,it's provided with its I.D.and delete or drop that column from the frame.along with its respective row labels.
-			==> we can pop out a column from a DF and assign it to a variable
-			>>>three = df.pop('three') ==> this will remove the column from DF 'df' as well.
-			(if we disply 'df' ==> we can see that the column 'three' is not present )
-			(ii)del()
-			>>>del df['two'] ==> removes column 'two' but that removed column will not be stored in memory.
-		   *(iii)insert():
-			>>>df.insert(2, 'copy_of_one', df['one'])  ==> creates a replica/copy of another column
-			>>>df
-			o/p:
-					one		flag	copy_of_one
-			apple	100.0	False	100.0
-			ball	200.0	False	200.0
-			cerill	NaN		False	NaN
-			clock	300.0	True	300.0
-			dancy	NaN		False	NaN
-			>>>df['one_upper_half'] = df['one'][:2]		==>we will create a new column by selecting the first two rows of another column.
-	   
-			
-			
-
-		
-        
-
+	orange		1.0	NaN	NaN	NaN	2.0
+	red		NaN	20.0	10.0	5.0	NaN
+	**lly we can select some of the elements from the dictionary as columns to constrain the data set we've worked with.
+	>>>pd.DataFrame(data, columns=['joe', 'dora','alice'])
+	o/p:
+		joe	dora	alice
+	0	2.0	NaN	NaN
+	1	NaN	10.0	20.0
+	>>>#pd.DataFrame(data, index=['joe', 'dora','alice']) (this will throw error but this worked fine when we tried with series dictionaries ! find reason et concept)
+	(ValueError: Shape of passed values is (5, 2), indices imply (5, 3))
+	>>>pd.DataFrame(data, index=['joe', 'dora']) (but this will give us the o/p)
+	o/p:
+			alex	alice	dora	ema	joe
+	joe		1.0	NaN	NaN	NaN	2.0
+	dora		NaN	20.0	10.0	5.0	NaN
+	
+  2)Basic DF operations(geting data out of DF):
+	a)Numerical Operations:
+	>>>df['one']  ==> gives the values in the column named 'one' in DF named 'df'(which we have already ceated) and their row labels
+	>>>df['three'] = df['one'] * df['two'] ==> adds a column to DF whose values are product of other 2 columns	
+	#now print DF ==> we get 3 columns ==> >>>print(df)
+	b)Logical operations:
+	#we can also have logical operations which results in a boolean value being generated.
+	>>>df['flag'] = df['one'] > 250		
+	#It's going to give us true for the values that are greater than 250 in column one.
+	#And NaN, again, we can't compare that to any number,NaN will be false by nature.
+	>>>df
+	o/p:
+			one		two		three	flag
+	apple		100.0		111.0		11100.0	False
+	ball		200.0		222.0		44400.0	False
+	cerill		NaN		333.0		NaN	False
+	clock		300.0		NaN		NaN	True
+	dancy		NaN		4444.0		NaN	False
+	c)remove or delete data from data frames:
+	(i)pop():is used to return the column,it's provided with its I.D.and delete or drop that column from the frame.along with its respective row labels.
+	==> we can pop out a column from a DF and assign it to a variable
+	>>>three = df.pop('three') ==> this will remove the column from DF 'df' as well.
+	(if we disply 'df' ==> we can see that the column 'three' is not present )
+	(ii)del()
+	>>>del df['two'] ==> removes column 'two' but that removed column will not be stored in memory.
+	  *(iii)insert():
+	>>>df.insert(2, 'copy_of_one', df['one'])  ==> creates a replica/copy of another column
+	(* 2 means insert at colum index no.2,
+	'copy_of_one' in the name of the column,
+	df['one'] means,replicate column name 'one'
+	>>>df
+	o/p:
+			one		flag	copy_of_one
+	apple		100.0		False	100.0
+	ball		200.0		False	200.0
+	cerill		NaN		False	NaN
+	clock		300.0		True	300.0
+	dancy		NaN		False	NaN
+	>>>df['one_upper_half'] = df['one'][:2]	
+	==>we will create a new column by selecting the first two rows of another column.
+	(adding a new column named 'one_upper_half' containing first 2 values of column named 'one' in DF named df)
+	o/p:
+		one	flag	copy_of_one	one_upper_half
+	apple	100.0	False	100.0		100.0
+	ball	200.0	False	200.0		200.0
+	cerill	NaN	False	NaN		NaN
+	clock	300.0	True	300.0		NaN
+	dancy	NaN	False	NaN		NaN
     
