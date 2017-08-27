@@ -213,3 +213,43 @@ It provides almost all major data-wrangling capabilities that data scientists ne
 	clock	300.0	True	300.0		NaN
 	dancy	NaN	False	NaN		NaN
     
+5)Pandas :Data Ingestion:
+	In this lesson we'll be focused on importing data into Python.
+	One of the biggest advantages of using pandas is its ability to ingest data from a variety of sources
+	in a variety of data types and formats.i.e
+	a)Files in the csv format can be ingested into Python as Dataframes using the pandas read_csv fn.
+	  (Csv is a simple file format used to store tabular data such as a spreadsheet or a database.)
+	 input:path to a csv file
+	 o/p: pandas DF object containing the contents of the file.
+	b)Using the read_json fn in Python pandas we can ingest the structure and contents of a JSON file
+	  as a pandas Dataframe or a series data structure.
+	 (JSON is a format for structuring data and it's commonly used for communication within web applications.)
+	 input:path to a JSON file or a valid SON string
+	 o/p: pandas DF or a series object containing the contents
+	c)The data in an html document gets stored as a list of pandas DataFrames using the read_html fn.
+	 (Html, is a hyper text markup language,and it's a file format used as the basis of every webpage.)
+	  input:a URL or a a file or a raw HTML string
+	  o/p: a list of pandas DataFrames
+	d)The read_sql_query fn in pandas provides us a way to subset and load data from a RDBMS to Python.
+	 i.e input1 = sql query
+	     input2 = database connection
+	     o/p = pandas DF object containing contents of the file
+	 lly, we can load a whole relational table using the pandas read_sql_table fn.
+	 i.e input1 = name of table in DB
+	     input2 = database connection
+	     o/p = pandas DF object containing contents of the table
+	  Then it will simply show in tabular format,as a pandas DataFrame data structure.
+	  (SQL is used to communicate with a database using queries)
+	e)there are also other methods to ingest data like :
+	 Google big query,SAS files,Excel tables,clip board contents,pickle files etc
+	 (find at http://pandas.pydata.org/pandas-docs/stable/api.html#input-output)
+
+Live Code :Data Ingestion:
+--------------------------
+	we will use a movie data set from the MovieLens website.
+	 
+	
+	
+	
+	
+	
