@@ -28,6 +28,64 @@ It provides almost all major data-wrangling capabilities that data scientists ne
         A DataFrame is a 2-D elastic labelled DS that supports heterogeneous data (with labeled axis for rows and columns).
         Arithmetic operations can appear on both row and column labels.
         We can think of it as a container/dictionary for series objects,where each row is a series.
-
+ 
+ 3)Pandas Series:
+        #creating a series object,Which is like an numpy array but we can define the index labels,together with the data.
+        >>>ser = pd.Series( data= [100, 'foo', 300, 'bar', 500], index= ['tom', 'bob', 'nancy', 'dan', 'eric'])
+        >>>print(ser)
+        ==> o/p = 
+        tom      100
+        bob      foo
+        nancy    300
+        dan      bar
+        eric     500
+        dtype: object
+        #So, instead of indices being zero through four,we have a five-element series with indexes defined as tom, bob, nancy, etc.
+        #Although, I defined the data and index using a clear format in this example,we could have skipped data and index equals.
+        #i.e we can also write it as 
+        >>>ser = pd.Series([100, 'foo', 300, 'bar', 500], ['tom', 'bob', 'nancy', 'dan', 'eric'])
+        #Another thing to recognize about the series compared to NumPy array is that the data types can be heterogeneous.
+        (i.e in above 'SER'objet we can see that we have values as 100 , 'foo', 'bar' etc i.e int,string etc ==> heteregeneous data)
+        >>>print(ser.index)   #==> gives the list of all indices present in that object.
+        #We can use any of the indices by using it within rectangular brackets to access data at that location.
+        Eg:>>>print(ser['nancy'])  ==> o/p = 300
+        Alternatively,we could have used a loc fn(location fn)of the series object to get the value out of the location.
+        So instead of ser['nancy'],if I said ser.loc['nancy'], ==> we get same o/p i.e o/p = 300
+        #Now, if we wanted to access multiple locations,we have to use one extra sq. bracket i.e 
+        >>>print(ser.loc[['nancy','bob','eric']])
+        o/p:
+        nancy    300
+        bob      foo
+        eric     500 
+        dtype: object
+        #Another way to access data at the series location is to use a numeric indices.Here we access elements for three and one in ser.
+        >>>print(ser[[4, 3, 1]])
+        o/p:
+        eric    500
+        dan     bar
+        bob     foo
+        dtype: object
+        #A reminder that, like all other array indices,series indices also start by zero.
+        #We can use the iloc fn(index location fn) to get only the value without index
+        >>>print(ser.iloc[2]) ==> o/p = 300
+        #to check if an index is present in an object
+        >>>'bob' in ser   #returns true or false
+        #lly we can do all the operations on series
+        >>>ser * 2 
+        ==> o/p :
+        tom         200
+        bob      foofoo
+        nancy       600
+        dan      barbar
+        eric       1000
+        dtype: object
+        **Notice that string values also got repeated 2 times
+        #calculating the squares
+        >>> ser **2
+        ==> we get error,coz it dosnt knowhow to evaluate the squares of the strings
+        (TypeError: unsupported operand type(s) for ** or pow(): 'str' and 'int')
+        ==> instead we can get the locations of the numeric values ang get the squares of those
+        >>>ser[['nancy', 'eric']] ** 2
+        
 
     
