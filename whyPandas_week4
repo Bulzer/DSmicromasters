@@ -247,6 +247,39 @@ It provides almost all major data-wrangling capabilities that data scientists ne
 Live Code :Data Ingestion:
 --------------------------
 	we will use a movie data set from the MovieLens website.
+Q) how to use below commands in jupyter ? 
+	>>>!ls ./movielens  (shows the contents of the folder movielens)
+	>>>!cat ./movielens/movies.csv (shows thw contents of csv file)
+	>>>!cat ./movielens/movies.csv | wc -l ( shows no. of lines in the csv file i.e gives idea about the size of data)
+	>>>!head -5 ./movielens/ratings.csv ( displays first 5 lines of csv file(headings+ 4 data lines) i.e gives idea about the data presentin csv)
+I am getting error like this==>'ls' is not recognized as an internal or external command,operable program or batch file.
+
+	a)Here are the links to the data source and location:
+	Data Source: MovieLens web site (filename: ml-20m.zip)
+	Location: https://grouplens.org/datasets/movielens/
+	  ratings.csv contains: userId,movieId,rating, timestamp
+	  tags.csv : userId,movieId, tag, timestamp
+	  movies.csv : movieId, title, genres 
+	  Using the read_csv function in pandas, we will ingest these three files.
+	  loading the csv files into a DF
+	>>>movies = pd.read_csv('./movielens/movies.csv', sep=',')
+	>>>print(type(movies)) ==> type is of class Dataframe
+	>>>movies.head() ==> default displays first 5 rows
+	>>>movies.head(15) #displays top 15 lines of data,gives idea about the data present in csv.
+	lly loading other csv files(tags and ratings)
+	>>>#Timestamps(a column in csv files) represent seconds since midnight Coordinated Universal Time (UTC) of January 1, 1970
+	>>>tags = pd.read_csv('./movielens/tags.csv', sep=',')
+	>>>ratings = pd.read_csv('./movielens/ratings.csv', sep=',', parse_dates=['timestamp']) #converting the timestamp in ratings
+	>>># For current analysis, we will remove timestamp (we will come back to it!)
+	>>>del ratings['timestamp']
+	>>>del tags['timestamp']
+	#Let's review how we can interact with the object using series and DataFrame functions.
+	>>>#Extract 0th row: notice that it is infact a Series
+	>>>row_0 = tags.iloc[0]
+	>>>type(row_0)  ==> o/p = pandas.core.series.Series
+	
+	
+	
 	 
 	
 	
