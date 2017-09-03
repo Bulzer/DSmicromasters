@@ -478,8 +478,36 @@ Functions used for Data Cleaning :
  There are also other methods for interpolation,but we will leave till linear interpolation 
  for this intro class(like polynomial interpolation)
  we can also use Regex for replacement
+ 
 Live Code : Data Cleaning : Handling missing data:
 --------------------------------------------------
+==> we will use movies.csv file which we have already loaded as movies
+>>>movies.shape ==> gives no. of rows and columns
+#check if any row has null/NaN values,we will use isnull() fn first and then we'll check if any of those values are true.
+This isnull function run on the whole data frame will give us a boolean data frame.
+>>>ratings.isnull().any()
+o/p:
+userId     False
+movieId    False
+rating     False
+dtype: bool
+All of them are false ==> we dont have any null values,hence checking in other datasets
+>>>tags= tags.dropna()
+o/p:
+userId     False
+movieId    False
+tag         True
+dtype: bool
+==> we have NaN//null values in tag column of Tags DF
+>>>tags= tags.dropna() ==> droping the values
+confirm by doing tags= tags.dropna() again and checking the shape of tags
+
+Let's stop here and see how we can explore these datasets through simple visualizations in Pandas.
+
+8)Pandas: Data Visualization:
+------------------------------
+
+
 
  
 
