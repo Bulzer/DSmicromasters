@@ -246,68 +246,244 @@ It provides almost all major data-wrangling capabilities that data scientists ne
 
 Live Code :Data Ingestion:
 --------------------------
-	we will use a movie data set from the MovieLens website.
+we will use a movie data set from the MovieLens website.
 Q) how to use below commands in jupyter ? 
-	>>>!ls ./movielens  (shows the contents of the folder movielens)
-	>>>!cat ./movielens/movies.csv (shows thw contents of csv file)
-	>>>!cat ./movielens/movies.csv | wc -l ( shows no. of lines in the csv file i.e gives idea about the size of data)
-	>>>!head -5 ./movielens/ratings.csv ( displays first 5 lines of csv file(headings+ 4 data lines) i.e gives idea about the data presentin csv)
+  >>>!ls ./movielens  (shows the contents of the folder movielens)
+  >>>!cat ./movielens/movies.csv (shows thw contents of csv file)
+  >>>!cat ./movielens/movies.csv | wc -l ( shows no. of lines in the csv file i.e gives idea about the size of data)
+  >>>!head -5 ./movielens/ratings.csv ( displays first 5 lines of csv file(headings+ 4 data lines) i.e gives idea about the data presentin csv)
 I am getting error like this==>'ls' is not recognized as an internal or external command,operable program or batch file.
 
-	a)Here are the links to the data source and location:
-	Data Source: MovieLens web site (filename: ml-20m.zip)
-	Location: https://grouplens.org/datasets/movielens/
-	CSV file details:
-	  ratings.csv contains: userId,movieId,rating, timestamp
-	  tags.csv : userId,movieId, tag, timestamp
-	  movies.csv : movieId, title, genres 
-	Using the read_csv function in pandas, we will ingest these three files.
-	#loading the csv files into a DF
-	>>>movies = pd.read_csv('./movielens/movies.csv', sep=',')
-	>>>print(type(movies)) ==> type is of class Dataframe
-	>>>movies.head() ==> default displays first 5 rows
-	>>>movies.head(15) #displays top 15 lines of data,gives idea about the data present in csv.
-	lly loading other csv files(tags and ratings)
-	>>>#Timestamps(a column in csv files) represent seconds since midnight Coordinated Universal Time (UTC) of January 1, 1970
-	>>>tags = pd.read_csv('./movielens/tags.csv', sep=',')
-	>>>ratings = pd.read_csv('./movielens/ratings.csv', sep=',', parse_dates=['timestamp']) #converting the timestamp in ratings
-	>>># For current analysis, we will remove timestamp (we will come back to it!)
-	>>>del ratings['timestamp']
-	>>>del tags['timestamp']
-	#Let's review how we can interact with the object using series and DataFrame functions.
-	
-	SERIES Operations(Ops):
-	>>>#Extract 0th row: notice that it is infact a Series
-	>>>row_0 = tags.iloc[0]
-	>>>type(row_0)  ==> o/p = pandas.core.series.Series
-	>>>row_0.index #gives the indexes of row_0 which is a series object,we can use these indexes to get the values as well.
-	eg : >>>row_0['userId'] ==> o/p = 18
-	>>>row_0.index		==> o/p = Index(['userId', 'movieId', 'tag'], dtype='object')
-	>>>tags.columns		==> o/p = Index(['userId', 'movieId', 'tag'], dtype='object')
-	>>>tags.index		==> o/p = RangeIndex(start=0, stop=465564, step=1)
-	
-	DF Ops:
-	>>>tags.columns		==> o/p = Index(['userId', 'movieId', 'tag'], dtype='object')
-	>>>tags.index		==> o/p = RangeIndex(start=0, stop=465564, step=1)
-	#To extract a series of rows we need to provide an area of indices.
-	>>>#Extract row 0, 11, 2000 from DataFrame
-	>>>tags.iloc[ [0,11,2000] ]
-	
-	Descriptive Statistics:(using Pandas to generate descriptive stastistics)
-	a)describe()
-	Some basic summary statistics that you should compute for your data set are min,max,mean,
-	standard deviation etc.	Pandas does this automatically through the describe function.
-	Looking at these measures will give you an idea of the nature of your data and they 
-	can tell you if there's something wrong with your data.
-	syntax ; data_Frame.describe()
-	Eg: >>>ratings['ratings'].describe()
-	b)corr()
-	Correlation or 'corr',is a function for computing Pearson coefficient, can be used to 
-	explore the dependencies between different variables and the data.	
-	
-	
-	
-	 
+a)Here are the links to the data source and location:
+Data Source: MovieLens web site (filename: ml-20m.zip)
+Location: https://grouplens.org/datasets/movielens/
+CSV file details:
+  ratings.csv contains: userId,movieId,rating, timestamp
+  tags.csv : userId,movieId, tag, timestamp
+  movies.csv : movieId, title, genres 
+Using the read_csv function in pandas, we will ingest these three files.
+#loading the csv files into a DF
+>>>movies = pd.read_csv('./movielens/movies.csv', sep=',')
+>>>print(type(movies)) ==> type is of class Dataframe
+>>>movies.head() ==> default displays first 5 rows
+>>>movies.head(15) #displays top 15 lines of data,gives idea about the data present in csv.
+lly loading other csv files(tags and ratings)
+>>>#Timestamps(a column in csv files) represent seconds since midnight Coordinated Universal Time (UTC) of January 1, 1970
+>>>tags = pd.read_csv('./movielens/tags.csv', sep=',')
+>>>ratings = pd.read_csv('./movielens/ratings.csv', sep=',', parse_dates=['timestamp']) #converting the timestamp in ratings
+>>># For current analysis, we will remove timestamp (we will come back to it!)
+>>>del ratings['timestamp']
+>>>del tags['timestamp']
+#Let's review how we can interact with the object using series and DataFrame functions.
+
+SERIES Operations(Ops):
+>>>#Extract 0th row: notice that it is infact a Series
+>>>row_0 = tags.iloc[0]
+>>>type(row_0)  ==> o/p = pandas.core.series.Series
+>>>row_0.index #gives the indexes of row_0 which is a series object,we can use these indexes to get the values as well.
+eg : >>>row_0['userId'] ==> o/p = 18
+>>>row_0.index		==> o/p = Index(['userId', 'movieId', 'tag'], dtype='object')
+>>>tags.columns		==> o/p = Index(['userId', 'movieId', 'tag'], dtype='object')
+>>>tags.index		==> o/p = RangeIndex(start=0, stop=465564, step=1)
+
+DF Ops:
+>>>tags.columns		==> o/p = Index(['userId', 'movieId', 'tag'], dtype='object')
+>>>tags.index		==> o/p = RangeIndex(start=0, stop=465564, step=1)
+#To extract a series of rows we need to provide an area of indices.
+>>>#Extract row 0, 11, 2000 from DataFrame
+>>>tags.iloc[ [0,11,2000] ]
+
+6)Pandas:Descriptive Statistics:(using Pandas to generate descriptive stastistics)
+-----------------------------------------------------------------------------------
+a)describe()
+Some basic summary statistics that you should compute for your data set are min,max,mean,
+standard deviation etc.	Pandas does this automatically through the describe function.
+Looking at these measures will give you an idea of the nature of your data and they 
+can tell you if there's something wrong with your data.
+syntax ; data_Frame.describe()
+Eg: >>>ratings['ratings'].describe()
+b)corr()
+Correlation or 'corr',is a function for computing Pearson coefficient, can be used to 
+explore the dependencies between different variables and the data.	
+syntax: data_frame.corr()
+It is used to compute pairwise pearson coefficient of columns.
+As a side note, a negative correlation score means if X becomes larger, then Y becomes smaller.
+And positive correlation means that the two variables are correlated.
+Pearson correlation coefficient(PCC)(denoted by ρ (rho)):
+  It is a measure of the linear correlation between two variables X and Y.It has a value
+  between +1 and −1, where 1 is total positive linear correlation, 0 is no linear correlation,
+  and −1 is total negative linear correlation. It is also referred to as the Pearson's r, 
+  Pearson product-moment correlation coefficient (PPMCC) or bivariate correlation.
+Definition:
+  PCC is the covariance of the two variables divided by the product of their standard deviations. 
+  The form of the definition involves a "product moment",that is, the mean (the first moment about
+  the origin) of the product of the mean-adjusted random variables,
+  hence the modifier product-moment in the name.
+formula:
+	ρ(x,y) = (cov(X,Y)) / (σ(x) * σ(y))
+	where σ = sigma or Standard Deviation(SD)
+	      ρ = PCC
+	      cov = coveriance
+SD:
+Standard deviation is a measure of spread or variability in data(how spread out they are from the average)
+.A smaller deviation is good when it comes to errors.
+
+Coveriance:
+  covariance is a measure of the joint variability of two random variables.
+  If the greater values of one variable mainly correspond with the greater values of the other variable,
+  and the same holds for the lesser values, i.e.,the variables tend to show similar behavior,the 
+  covariance is positive.In the opposite case, when the greater values of one variable mainly correspond
+  to the lesser values of the other, i.e., the variables tend to show opposite behavior,the covariance is negative.
+  The sign of the covariance therefore shows the tendency in the linear relationship between the variables. 
+
+Some other correlation coefficients are available,like Kendall and Spearman correlations
+and Pandas can offer support for those as well.
+
+c)Pandas also offers a number of statistical functions you can perform over the whole data frame,
+a part of the data frame, or individual columns.We refer to all these functions
+as 'func'.Just replace your favorite statistical operation with it,
+like max, min, mode, and median,and you'll find that function in Pandas.
+Syntax : fata_Frame.func() (where func = max(), min (), median(), mode() etc.)
+Frequently used optional parameters : axis = 0(for rows) or 1 (for columns)
+==> mean():
+syntax = data_Frame.mean(axis={0 0r 1})
+	axis = 0 : Indx
+	axis = 1 : columns
+	o/p = series or DF with mean values
+lly for std() ==> o/p = series or DF with standard deviation values,normalized by N-1
+
+d)Pandas also provides capabilities for checking a condition over a whole data frame or columns with it.
+any() :
+	o/p = Returns whether any element is true
+use: can detect if a cll matches a condition very quickly.
+all() :
+o/p :Retuens whether all element is true.
+Use:can detect if a column/row matches a condition very quickly.
+
+e)some other usefull functions
+count()
+clip()
+round()
+rank()
+
+Live Code for Descrioptive stastistics:
+#lets focus on the Ratings column of of Ratings dataset/csv
+>>>ratings['rating'].describe()
+o/p:
+count    2.000026e+07
+mean     3.525529e+00
+std      1.051989e+00
+min      5.000000e-01
+25%      3.000000e+00 ==> means 25% of the ratings are below/equal to 3.0
+50%      3.500000e+00 ==> means 50% of the ratings are below/equal to 3.5
+75%      4.000000e+00 ==> means 75% of the ratings are below/equal to 4.0
+max      5.000000e+00
+Name: rating, dtype: float64
+
+It says that we have a total of more than 2 million ratings(from count) and recorded with a mean of 3.53.
+Standard deviation is a measureof spread or variability in your data(how spread out they are from the average).
+A smaller deviation is good when it comes to errors.
+lly we can do it for whole DF
+>>>ratings.describe()
+o/p:
+	userId		movieId		rating
+count	2.000026e+07	2.000026e+07	2.000026e+07
+mean	6.904587e+04	9.041567e+03	3.525529e+00
+std	4.003863e+04	1.978948e+04	1.051989e+00
+min	1.000000e+00	1.000000e+00	5.000000e-01
+25%	3.439500e+04	9.020000e+02	3.000000e+00
+50%	6.914100e+04	2.167000e+03	3.500000e+00
+75%	1.036370e+05	4.770000e+03	4.000000e+00
+max	1.384930e+05	1.312620e+05	5.000000e+00
+
+we can calculate separately
+>>>ratings['rating'].mean() lly  ratings.mean()
+lly for min(),max(),std(),mode() etc
+
+In our data set, since we only have one column of this type,the rating, running the 
+correlation function over the data frame won't give us much information unfortunately.
+But let's do it just to show how correlation function formats its output.
+>>>ratings.corr()
+o/p:
+	userId		movieId		rating
+userId	1.000000	-0.000850	0.001175
+movieId	-0.000850	1.000000	0.002606
+rating	0.001175	0.002606	1.000000
+So as you would remember a negative correlation score,here means those features in our data sets
+are inversely correlated, so one go up one goes down,and increase in one means a decrease in other in that sense.
+>>>ratings['rating'].corr ==> we will get a error 
+TypeError: corr() missing 1 required positional argument: 'other'
+I will check if there is any rating above zero.
+So, we can do a global, logical comparison over the whole column
+resulting in a series object with Boolean values for each row of our data frame.
+chech if any value is greater than 5
+>>>filter_1 = ratings['rating'] > 5
+it's going to give us that series object with Boolean values in it.
+So if a value is greater than five,it's going to have true in that row.Else false
+>>>print(filter_1)
+>>>filter_1.any() o/p: true/false
+any() fn will tell us if any of those values in that filter_1 series is true.
+In this case we get the false as o/p because there's no rating in this data set
+that's more than or greater than five.
+lly we can check if all the values are +ve or greater than 0.
+>>>filter_2 = ratings['rating'] > 0 ( as we dont have any value below 0 ==. all are true)
+>>>filter_2.all() ==> o/p = true (checks if all the values are true)
+
+Okay, now we explored with some statistics on the data set.
+Let's move on to data cleaning and we'll first review the data cleaning functions in pandas for that.
+
+
+7)Pandas: Data Cleaning:
+-------------------------
+Q)why clean data ?
+ Real-world data is messy.It can have problems related to missing values,
+ outliers in the data,an invalid data, for instance, negative values for age,
+ and in Python we can also have records within DataFrames as NaN or none values.
+ Since we get the data downstream,we usually have no or little control
+ over how the data is collected.
+Q)So, how do we clean?
+ We can replace invalid or NaN values with more appropriate values.
+ For invalid values again or gaps we can also try to fill in the data
+ instead of removing them.Here, a best estimate for a reasonable value
+ can be used as a replacement.There can be different techniques
+ to find the best estimateand often domain knowledge is required
+ to understand what would be that best estimate.
+ For example, for a missing age value of an employee,a reasonable 
+ value can be estimated based on the employee's length of employment.
+ An interpolation of the data values can also be applied to generate estimations
+ of those missing values in both series or DF.
+ Based on how the exploratory and statistical analysis of the dataset goes,
+ we can also think of dropping some of the fields and values
+ that are not important to the task.Outliers, for example,
+ might be dropped depending on the situation.
+ 
+Functions used for Data Cleaning :
+ a)replace():
+ Using the replace function we can globally change values in a DataFrame.
+ Eg : >>>df=df.replace(9999.0,0) ==> replaces every 9999.0 with 0
+ b)fillna():
+ Fillna(pronounce as 'Fill N A') method will replace missing values(NaN values) with the
+ last known value forward and backward,meaning going up and going down in the column.
+ Eg : df = df.fillna(method = 'ffill') or df = df.fillna(method = 'backfill')
+ c)dropna()
+ dropna function will drop any row or column with a missing value in the DataFrame.
+ With the axis zero option(i.e default takes row),which is also the default for dropna,
+ any rows with missing values will be taken out of the DataFrame.
+ eg: df.dropna(axis=0) or df.dropna() will remove rows with missing/NaN values
+     df.dropna(axis=1) will remove columns with missing/NaN values
+ d)You can also interpolate values in both series and DataFrame objects.
+ The default for interpolate function is a linear interpolation,meaning the method tries
+ to fit the values to occur over line using linear polynomials.
+ Eg: df.interpolate()
+ There are also other methods for interpolation,but we will leave till linear interpolation 
+ for this intro class(like polynomial interpolation)
+ we can also use Regex for replacement
+Live Code : Data Cleaning : Handling missing data:
+--------------------------------------------------
+
+ 
+
+
 	
 	
 	
