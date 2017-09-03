@@ -257,11 +257,12 @@ I am getting error like this==>'ls' is not recognized as an internal or external
 	a)Here are the links to the data source and location:
 	Data Source: MovieLens web site (filename: ml-20m.zip)
 	Location: https://grouplens.org/datasets/movielens/
+	CSV file details:
 	  ratings.csv contains: userId,movieId,rating, timestamp
 	  tags.csv : userId,movieId, tag, timestamp
 	  movies.csv : movieId, title, genres 
-	  Using the read_csv function in pandas, we will ingest these three files.
-	  loading the csv files into a DF
+	Using the read_csv function in pandas, we will ingest these three files.
+	#loading the csv files into a DF
 	>>>movies = pd.read_csv('./movielens/movies.csv', sep=',')
 	>>>print(type(movies)) ==> type is of class Dataframe
 	>>>movies.head() ==> default displays first 5 rows
@@ -274,9 +275,35 @@ I am getting error like this==>'ls' is not recognized as an internal or external
 	>>>del ratings['timestamp']
 	>>>del tags['timestamp']
 	#Let's review how we can interact with the object using series and DataFrame functions.
+	
+	SERIES Operations(Ops):
 	>>>#Extract 0th row: notice that it is infact a Series
 	>>>row_0 = tags.iloc[0]
 	>>>type(row_0)  ==> o/p = pandas.core.series.Series
+	>>>row_0.index #gives the indexes of row_0 which is a series object,we can use these indexes to get the values as well.
+	eg : >>>row_0['userId'] ==> o/p = 18
+	>>>row_0.index		==> o/p = Index(['userId', 'movieId', 'tag'], dtype='object')
+	>>>tags.columns		==> o/p = Index(['userId', 'movieId', 'tag'], dtype='object')
+	>>>tags.index		==> o/p = RangeIndex(start=0, stop=465564, step=1)
+	
+	DF Ops:
+	>>>tags.columns		==> o/p = Index(['userId', 'movieId', 'tag'], dtype='object')
+	>>>tags.index		==> o/p = RangeIndex(start=0, stop=465564, step=1)
+	#To extract a series of rows we need to provide an area of indices.
+	>>>#Extract row 0, 11, 2000 from DataFrame
+	>>>tags.iloc[ [0,11,2000] ]
+	
+	Descriptive Statistics:(using Pandas to generate descriptive stastistics)
+	a)describe()
+	Some basic summary statistics that you should compute for your data set are min,max,mean,
+	standard deviation etc.	Pandas does this automatically through the describe function.
+	Looking at these measures will give you an idea of the nature of your data and they 
+	can tell you if there's something wrong with your data.
+	syntax ; data_Frame.describe()
+	Eg: >>>ratings['ratings'].describe()
+	b)corr()
+	Correlation or 'corr',is a function for computing Pearson coefficient, can be used to 
+	explore the dependencies between different variables and the data.	
 	
 	
 	
