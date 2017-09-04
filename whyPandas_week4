@@ -506,6 +506,26 @@ Let's stop here and see how we can explore these datasets through simple visuali
 
 8)Pandas: Data Visualization:
 ------------------------------
+The plot package offers nice visualizations for
+ a)bar charts : generated using bar()(i.e data_Frame.plot.bar()),where each column is represented by a different color,
+    and turned into a bar that goes until the value in that column.
+ b)box plots : using box()(i.e data_Frame.plot.box()),box plots,are a good way of showing data distribution.
+    So each box will have minimum and maximum,and medium for columns, if you look at this graph.
+ c)histograms : using hist()(i.e data_Frame.plot.hist()),these are another type of graph,show the distribution of data, 
+   and it can show skewness,or unusual dispersion between data values.
+ d)plot:Additionally using the plot fn(i.e data_frame()) we can create quick line graphs of our data sets.
+   Here we see each column in our data frame represented by a different line,
+   and those points connected by straight lines.
+ lly we can have data_frame.plot.X where X can be any of ==> area()(area plot),bar()(vertical bar plot),
+ barh()(horizontal bar plot),   density()(density plot),hexbin()(hexbin plot),
+ kde()(kernal density ectimate plot),   line()(line plot),pie()(pie chart),scatter()(scatter plot)
+ we can also have data_Frame.plot() --> dataframe plotting accessor and methods...
+ ,data_frame.boxplot()-->makes a boxplot of dataframe coloumns or...
+ data_frame.hist() --> draw histogram of dataframe's c...
+ 
+ Live code : Data Visualization:
+ --------------------------------
+ 
 
 
 
