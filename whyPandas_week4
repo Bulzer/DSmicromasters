@@ -523,9 +523,127 @@ The plot package offers nice visualizations for
  ,data_frame.boxplot()-->makes a boxplot of dataframe coloumns or...
  data_frame.hist() --> draw histogram of dataframe's c...
  
- Live code : Data Visualization:
- --------------------------------
- 
+Live code : Data Visualization:
+--------------------------------
+Matplotlib is a plotting library for Python and Pandas leverages matplotlib underneath for its plots.
+So if you want Jupyter to plot the graphs inside the notebooks we'll have to tell Jupyter
+to plot inline as we see here.Using the below command
+>>>%matplotlib inline  #Inline means Incorporated into a body of text rather than placed as a separate section.
+Notice the percentage sign before the matplotlib,this is a symbol for a special class of functions
+in Jupyter called magic functions.
+#plotting a histogram for the column named rating in the datafram names ratings
+>>>ratings.hist(column='rating', figsize=(15,10))
+
+9)Pandas:most frequent Operations:
+---------------------------------
+#selct all the rows where rating > 0
+>>>ratings[ratings['rating' ]> 0 ]
+#insrting a new column
+>>>say we have a DF named 'df' with 3 columns
+>>>df['col4']=df['col3']**2
+#add an new row
+>>>df.loc[10] = [1,2,3,4]
+#delete a row
+>>>df.drop(df.index[[5]])
+#delete a column
+>>>del df['col1']
+GROUPBY and AGGREGATE:
+Say we have a DF named 'df' with columns studentid,phy,che,maths
+say we want to get the average marks of students as students can take more than 1 exams 
+>>>df.groupby('studentid').mean()
+
+10)Live code : frequent data operations:
+-------------------------------------
+Let's look at the first few rows of tag column in the table tags.
+>>>tags['tag'].head() 			 #gives first few rows of tag column in tags DF(default is 5 rows)
+>>>tags['tag'].tail()			#gives the last few rows
+>>>tags[['tag','timestamp']].head()	#gives first few rows of mentioned 2 columns
+>>>tags.head()				#gives first few rows of tags DF
+#get ratings from 1000 to 1010.
+>>>ratings[1000:1010] #includes 1000th row and excludes 1010th row
+>>>ratings[:10]			#gives first 10 rows
+>>>ratings[-10:]		#gives last 10 rows
+
+#count the no. occurances
+Value_counts fn will let you find out the count of each unique value occurring in the input.
+>>>tag_counts= tags['tag'].value_counts() #stored in the descending order
+>>>print(tag_counts[:2])		#gives top 2 occuring words in tag colunm in tags DF
+>>>print(tag_counts[-2:])		#gives last 2 occuring words in tag colunm in tags DF
+#plot a graph for top 5 occurances
+>>>tag_counts[:5].plot(kind='bar',figsize=(15,10))
+What was filtering?
+Filtering is where you select data that matches your criteria.
+Think of it as two steps.
+First we need to develop a filter that encodes our criteria.
+Then filter will be applied as a mask to our data frame.
+*The filter criteria will label each row in our filter as true or false.
+#we will create a filter(bascically a series)
+>>>is_highly_rated = ratings['rating'] >= 4.0
+#applying it as a filter to the ratings table
+>>>ratings[is_highly_rated][:5]		#gives first 5 rows where rating is greater than or equal to 4.0
+#creating a filter to get the movies whose genres column contains word Animation in the sentence
+>>>is_animation = movies['genres'].str.contains('Animation')
+#applying
+>>>movies[is_animation][:5]
+GROUPBY and AGGREGATE:
+**a) get 2 columns from ratings and group by column named 'ratings' and count no. of rows grouped in each o/p row
+>>>ratings_count = ratings[['movieId','rating']].groupby('rating').count()
+ratings_count
+lly we can get the mean of the all values in the columns grouped by ratings column
+Note:this mean fn will be applied to all mentioned columns except the groupby column
+i.e groupby column ideally becomes an index for the data frame
+>>>ratings_count = rats[['userId','movieId','rating']].groupby('rating').mean()
+#get the avg rating for each movie
+>>>average_rating = ratings[['movieId','rating']].groupby('movieId').mean()
+>>>average_rating.tail()
+>>>average_rating.head()
+# count how many ratings are there in our database for each movieID.
+>>>movie_count = ratings[['movieId','rating']].groupby('movieId').count()
+
+11)Pandas: Mege DataFrames(similar to Joins in RDBMS)
+a)concat:
+say if df1 and df2 are 2 dataframes have 4 rows and 4 cols each while 2 col names being same for both
+(i)>>>pd.concat([df1,df1]) ==> o/p = df with sum of rows of df1+df1
+==> o/p = 8 rows with same columns(i.e 4 columns)
+	while indexes will be in format : 0 to 3 for first 4 rows and again 0 to 3 for next 4 rows
+(ii)>>>pd.concat([df1,df2]) ==> o/p = DF with sum of rows of df1+df2,while we will be having all the different column names
+				from the both if that col in DF2 is not there if df1(say) ==> o/p will have that that column
+				for df1 rows with NaN/missing values values lly applies for DF2.
+==> o/p = 8 rows and 6 columns(as 2 col nams are same)
+	while indexes will be in format: 0 to 3 for first 4 rows of df1 and again 0 to 3 for next 4 rows of df2
+
+**Instead of having Nan/Missing values we can have inner Joins:
+(iii)>>>pd.concat([df1,df2],axis = 1 ,join = 'inner')
+Note :In the above case, the concatenated DataFrames were stacked vertically.
+Here, they are placed next to each other horizontally.
+In the horizontal stacking unfortunately,this isn't the perfect merge for our data either,
+as the key columns have been duplicated when they were merged into the new DataFrame separately.
+==> o/p : 4 rows with separate indexex starting from 0 to 3 and no. of columns = 8 
+
+b)Append:
+	An alternative to concat is append.
+It behaves similarly to the concat function,but it is a function of the DataFrame itself.
+>>>df1.append(df2)
+==> o/p = 8 rows and 6 columns(with NaN values)
+	while indexes will be again in format: 0 to 3 for first 4 rows of df1 and again 0 to 3 for next 4 rows of df2
+
+The operation which will give us a true combination of these two frames is called merge.
+c)Merge:
+==> inner join using merge
+>>>pd.merge(df1,df2,how = 'inner')
+==> o/p = 4 rows and 6 columns and indexes format : 0 to 3
+The benefit of using the merge operation,is that it can eliminate the duplicate columns
+between the DataFrames it joins.It behaves like concat with inner join except that it removes
+duplicate column names.
+
+Live : code:
+#we merged both the tag data and the movies data all into one frame.
+t = movies.merge(tags, on='movieId', how='inner')
+t.head()
+Inner Join : The INNER JOIN  selects records that have matching values in both tables.(i.e intersection)
+Outer Join : gives all the records(matching records are combined into one + other records from both the table with Nan/missing values)
+
+Combine aggreagation, merging, and filters to get useful analytics:
 
 
 
