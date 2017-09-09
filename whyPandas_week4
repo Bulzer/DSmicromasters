@@ -629,7 +629,7 @@ It behaves similarly to the concat function,but it is a function of the DataFram
 
 The operation which will give us a true combination of these two frames is called merge.
 c)Merge:
-==> inner join using merge
+==> inner join using merge(also called as Inner merge soome times)
 >>>pd.merge(df1,df2,how = 'inner')
 ==> o/p = 4 rows and 6 columns and indexes format : 0 to 3
 The benefit of using the merge operation,is that it can eliminate the duplicate columns
@@ -644,11 +644,19 @@ Inner Join : The INNER JOIN  selects records that have matching values in both t
 Outer Join : gives all the records(matching records are combined into one + other records from both the table with Nan/missing values)
 
 Combine aggreagation, merging, and filters to get useful analytics:
+>>>avg_ratings = ratings.groupby('movieId', as_index=True).mean()
+>>>avg_ratings.head()
+If as_index is set as false ==> a separate index is taken as it it set as true ==> movieId is only taken as index
+If we dont give anything ==> by default it is set as True i.e movieId is taken as index.
+>>>box_office = movies.merge(avg_ratings, on='movieId', how='inner')
+>>>is_highly_rated = box_office['rating'] >= 4.0
+>>>is_comedy = box_office['genres'].str.contains('Comedy')
+>>>box_office[is_comedy & is_highly_rated][-5:]
 
 
 
- 
-
+12)Pandas: Frequent String Operations
+-------------------------------------
 
 	
 	
