@@ -724,7 +724,140 @@ Eg:>>>greater_than_t = tags['parsed_time'] > '2015-1-22'
    >>>tags.shape, selected_rows.shape
 Sorting table in chronological column
 >>>tags.sort_values(by = 'parsed_time',ascending=True)[:10]
-Therefore sort_values fn is used to sort the time series based inputs.It is a DF fn
+Therefore sort_values fn is used to sort the time series based inputs.It is a DF fn.
+
+Average Movie Ratings over Time ?
+Do some years look better for the boxoffice movies than others?
+Are Movie ratings related to the year of launch?
+Does any data point seem like an outlier in some sense?
+==> find below
+>>>average_rating = ratings[['movieId','rating']].groupby('movieId', as_index=False).mean()
+>>>average_rating.tail()
+>>>joined = movies.merge(average_rating, on='movieId', how='inner')
+>>>yearly_average = joined[['year','rating']].groupby('year', as_index=False).mean()
+>>>yearly_average[-20:].plot(x='year', y='rating', figsize=(15,10), grid=True)
+
+
+pandas: Summary of Movie Rating Notebook :
+------------------------------------------
+
+
+
+Optimising pandas video : https://www.youtube.com/watch?v=HN5d490_KKk
+
+Q)What are the 2 main data structures in pandas?
+a)Series
+b)Data Frame
+c)Atomic Vector
+d)List
+e)Array
+Ans : A and B
+Q)Which is NOT a way you can access data at a certain location using pandas series? As an example, let’s say the series (called ser) has indices ‘apple’ and ‘orange’.
+ser.loc['apple']
+ser.loc['apple','orange'] correct
+ser.loc[['apple']]
+ser.loc[['apple','orange']]
+Answer : B
+
+Q)Given the following code has run successfully,
+import pandas as pd
+ser = pd.Series([100, 200, 300, 400, 500], index = ['tom', 'bob', 'nancy', 'dan', 'eric'])
+Which of the following calls have the same output?
+ser.loc[['tom','bob']]
+ser[[0,1]]
+ser.iloc[[0,1]]
+ser[['tom','bob']]
+
+Answer: all 4
+
+Q)If you create a DataFrame using pandas by accessing a column label that doesn’t exist, what values are present in that column?
+NULL
+0
+NaN correct
+No values; error message is printed
+Answer : c
+
+Q)Which of the following will display the first 7 rows in a data frame object named df?
+df.head(n=7)
+df.head(7)
+df.head([7])
+df.head(x=7)
+df[:7]
+Answer : A,B and E
+
+Q)Which of the following statistics does the describe() function NOT return on dataframe columns?
+Median correct
+Min
+Mean
+Count
+Ans : A
+
+Q)What is the general syntax for calling the mode() function on a dataframe?
+data_frame.mode() correct
+mode(data_frame)
+data_frame[mode]
+Answer : A
+
+Q)What will be the output of the following lines of code?
+d = {'one' : pd.Series([100.,200.], index=['apple','orange']),
+    'two' : pd.Series([111.,211], index=['apple','orange'])}
+df = pd.DataFrame(d)
+filter = df['one']>100
+filter.any()
+A.True correct
+B.False
+Answer : A
+
+Q)What does a negative correlation score mean?
+A.those features in our dataset are inversely correlated correct
+B.all the values of those features in our dataset are negative
+C.there is no correlation between those features in our data set
+
+Answer : A
+
+Q)What is the symbol that denotes Magic Functions in Jupyter?
+% correct
+$
+#
+//
+
+Answer : A
+
+Q)What does the parameter unit refer to in the to_datetime function?
+A.The unit of the output
+B.The unit of the input correct
+
+Answer : B
+
+Q)What is the function call to find cells in a dataframe df with timestamp on 2007-02-04, given the dataframe has a parsed time column labelled ‘parsed_time’?
+A.df['parsed_time'] == '2007-02-04' correct
+B.df['parsed_time'] = '2007-02-04'
+C.'2007-02-04' >= df['parsed_time'] >= '2007-02-04'
+D.'2007-02-05' > df['parsed_time'] > '2007-02-03'
+Answer : A
+
+Q)If you have a dataframe titled ‘dat’ with 5 rows and 2 columns and you run the following line of code, how many boolean values are returned?
+dat.isnull().any()
+A.2 correct
+B.5
+C.10
+D.1
+Answer : A
+
+Q)How do we show the histogram created with graph.hist(...)?
+A.It will automatically show once you call the hist() function
+B.Call “graph.show()”
+C.Call “hist.show()”
+D.Include “%matplotlib inline” correct
+
+Answet : D
+
+Q)What does calling the function dropna() return from a dataframe?
+A.dataframe with the rows containing the NA values
+B.dataframe omitting NA values correct
+C.dataframe with the columns containing the NA values
+D.dataframe with changed NA values by replacing NA values with 0
+Answer B
 
 	
 	
