@@ -1,4 +1,11 @@
 Use magic fn timeit before any statement to know the average time and SD of that code line
 i.e %timeit df.mean()
 to run it on whole cell ==> use %%timeit at the start of cell
-Data Visualization:
+
+Data Visualization(DV):
+Book preffered : Data Visualisation by Andy Kirk (a hand book for data driven design)
+according to him a good DV is 1) trust worthy 2) accessible 3)elegant
+DV is o 2 types
+a)conceptual or data driven
+b)declarative or exploratory
+
