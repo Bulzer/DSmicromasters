@@ -1,0 +1,4 @@
+Use magic fn timeit before any statement to know the average time and SD of that code line
+i.e %timeit df.mean()
+to run it on whole cell ==> use %%timeit at the start of cell
+Data Visualization:
