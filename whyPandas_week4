@@ -655,8 +655,76 @@ If we dont give anything ==> by default it is set as True i.e movieId is taken a
 
 
 
-12)Pandas: Frequent String Operations
--------------------------------------
+12)Pandas: Frequent String Operations(also called as vectorized string operations)
+--------------------------------------
+a) split ==> splits the string basedon a delimiter
+Eg: we have a column named city in a DF with values as [city_0,city_1,city_2]
+==> >>>df['city'].str.split('_') ==> not that column contains array of strings n each row i.e [city, 1],[city, 2]... etc
+b) contains ==> checks if a string has a given character in it
+Eg: ==> >>>df['city'].str.contains('2') ==> result will be a boolean series.
+c)str.Replace fn ==> 
+==> >>>df['city'].str.replace('_','##')
+d) str.extract fn 
+	==> will return the first match for a Regular expression it finds.
+>>>df['city'].str.extract('([a-z]\w{0,})') #returns/extracts first match(here we are searching for only words) found in each row
+>>>df['city'].str.extract('(\d)') #extacts single digits
+
+Live code:
+we will start by the split function to convert each value in the genres
+into a separate column for each movie.
+>>>movie_genres = movies['genres'].str.split('|', expand=True)
+Note : Normally, the split function will return a series of lists
+by providing expand true option here that we have given to the split operation.
+We make sure the output is not just a series of lists, but it's an actual dataframe.
+==> movie_genres is a data frame now
+#Extracting the year from the title and moving it to a separate column(Eg : toy story (1995))
+>>>movies['year'] = movies['title'].str.extract('.*\((.*)\).*', expand=True)
+
+More here: http://pandas.pydata.org/pandas-docs/stable/text.html#text-string-methods 
+
+13)Pandas: Parsing Timestamps
+-------------------------------
+By the end of it, you should be able to explain what Unix time, POSIX time, and epoch time is,
+describe data types for datetime,
+select rows based on timestamps,
+and sort tables in chronological order.
+
+Unix/posix/epoch Time:
+Unix time tracks the progress of time by counting the number of seconds
+since a specific time instant.That instant is the start of the year 1970
+as per UTC time zone.Notice that this is an integer.
+We need to find a way to convert this to a readable date and time.
+i.e no. of seconds ellapsed since thursday 1st anuary 1970 00:00:00
+
+UTC: coordinated Universal time
+Data Types for timestamps:
+Generic :datetime64[ns] is a general data type for datetime.
+This general data type maps to specific data types
+called M8, or,before M8, or after M8, depending on your machine.
+Therefore we need to convert int64(integer time stamp in unix) to either M8[ns] or > M8[ns] or < M8[ns]
+Eg:
+>>>tags.dtypes
+==> o/p :
+userId        int64
+movieId       int64
+tag          object
+timestamp     int64
+dtype: object
+There we need to convert the int64 dtype of timestamp column to python understandable format
+we can do this by using to_datetime() fn. i.e pd.to_datetime()
+
+>>>tags['parsed_time'] = pd.to_datetime(tags['timestamp'],units = 's')
+==> a new column will be created as yyyy-mm-dd hh:mm:ss. ==> now tags['parsed_time'].dtypes ==> o/p = <M8
+The unit argument is most important here as it tells the function what the unit of the input is.
+here the inpt was in seconds.
+Once time is converted to Python format,you can use it to create filters.
+The filter will select only the rows that will match your criteria.
+Eg:>>>greater_than_t = tags['parsed_time'] > '2015-1-22'
+   >>>selected_rows = tags[greater_than_t]
+   >>>tags.shape, selected_rows.shape
+Sorting table in chronological column
+>>>tags.sort_values(by = 'parsed_time',ascending=True)[:10]
+Therefore sort_values fn is used to sort the time series based inputs.It is a DF fn
 
 	
 	
