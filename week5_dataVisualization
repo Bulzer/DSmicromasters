@@ -25,9 +25,11 @@ This is slightly modified version from the dataset that's actually available fro
 The first step(Step 1) with any dataset is to perform an initial exploration.
 So first, let's import pandas, numpy, random,and matplotlib.pyplot.
 Next,let's read the csv file into a pandas data frame and display the shape of the data.
->>>data = pd.read_csv('./world-development-indicators/Indicators.csv')
+(https://www.kaggle.com/worldbank/world-development-indicators?)
+>>>#data = pd.read_csv('./world-development-indicators/Indicators.csv')
+>>>data = pd.read_csv('A:/Naveed/DS/micromasters/week5/Indicators.csv')
 >>>data.shape
->>>data.head(10) # to know th column names and type of values they hold
+>>>data.head(10) # to know the column names and type of values they hold
 I'm also curious how many countries are in this dataset.I can test that by using the unique method
 on a column of the data frame to find out how many unique entries are in the column.
 >>>countries = data['CountryName'].unique().tolist()
@@ -37,3 +39,12 @@ If we've got 247 countries,we should have 247 country codes.
 >>>countryCodes = data['CountryCode'].unique().tolist()
 >>>len(countryCodes)
 #yes we have 247 codes
+lly get the the unique indicators
+# How many years of data do we have ?
+>>>years = data['Year'].unique().tolist()
+>>>len(years)
+#Range of YEARS
+>>>print(min(years)," to ",max(years))
+
+Now we will Start with the Basic Plotting in Matplotlib : Part1:
+----------------------------------------------------------------
