@@ -9,3 +9,31 @@ DV is o 2 types
 a)conceptual or data driven
 b)declarative or exploratory
 
+Matplotlib:(https://matplotlib.org/)
+Matplotlib is a fairly low-level tool for plotting.There are a ton of other tools out there,including 
+1.Seaborn, 
+2.ggplot, 
+3.Altair,
+4.Bokeh, 
+5.Plotly, and 
+6.Folium, among many others.
+For us, we use a library that fits our visualization needs best, based on those needs.
+Before we start,remember that I said visualizations have little to no meaning without a context.
+we'll start working with the World Development Indicators Dataset which is an open dataset on Kaggle.
+This is slightly modified version from the dataset that's actually available from the World Bank.
+
+The first step(Step 1) with any dataset is to perform an initial exploration.
+So first, let's import pandas, numpy, random,and matplotlib.pyplot.
+Next,let's read the csv file into a pandas data frame and display the shape of the data.
+>>>data = pd.read_csv('./world-development-indicators/Indicators.csv')
+>>>data.shape
+>>>data.head(10) # to know th column names and type of values they hold
+I'm also curious how many countries are in this dataset.I can test that by using the unique method
+on a column of the data frame to find out how many unique entries are in the column.
+>>>countries = data['CountryName'].unique().tolist()
+>>>len(countries)
+Looks like we've got about 247 countries.I'd like to do a quick sanity check on the data.
+If we've got 247 countries,we should have 247 country codes.
+>>>countryCodes = data['CountryCode'].unique().tolist()
+>>>len(countryCodes)
+#yes we have 247 codes
