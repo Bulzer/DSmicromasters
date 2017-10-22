@@ -48,3 +48,194 @@ lly get the the unique indicators
 
 Now we will Start with the Basic Plotting in Matplotlib : Part1:
 ----------------------------------------------------------------
+Lets pick a country and an indicator to explore: CO2 Emissions per capita and the USA.
+# select CO2 emissions for the United States
+>>>hist_indicator = 'CO2 emissions \(metric'
+>>>hist_country = 'USA'
+>>>mask1 = data['IndicatorName'].str.contains(hist_indicator) 
+>>>mask2 = data['CountryCode'].str.contains(hist_country)
+# stage is just a temporary dataset for those indicators matching the USA for country code and CO2 emissions over time.
+>>>stage = data[mask1 & mask2]
+>>>stage.head()  (or) >>>stage.head both will work but 'stage.head()' will give the bolded heading names of columns.
+
+So, now let's explore how these have changed over time using MatplotLib.
+#grab the years from Stage(temporary data set for USA co2 emissions)
+>>>years = stage['Year'].values
+(** .values returns the Numpy nd array of that data and we cant use head() method for Numpy array)
+# grab the C02 emission for that year
+>>>co2 = stage['Value'].values
+#plot these values on a bar plot
+>>>plt.bar(years,co2)
+>>>plt.show()
+Lets make this plot a bit more appealing like adding title,axes names etc
+Lets use Line plot this time
+# switch to a line plot
+>>>plt.plot(stage['Year'].values, stage['Value'].values)
+# Label the axes
+>>>plt.xlabel('Year')
+>>>plt.ylabel(stage['IndicatorName'].iloc[0])
+#label the figure
+>>>plt.title('CO2 Emissions in USA')
+==> we can see that Y-axis starts from 15 and that could be misleading
+let's fix that by making a call to axis and passing the ranges we want plotted.
+# to make more honest, start the y axis at 0
+>>>plt.axis([1959, 2011,0,25])
+>>>plt.show()
+
+Next,lets use Histograms to Explore the data.
+# If you want to just include those within one standard deviation fo the mean, you could do the following
+# lower = stage['Value'].mean() - stage['Value'].std()
+# upper = stage['Value'].mean() + stage['Value'].std()
+# hist_data = [x for x in stage[:10000]['Value'] if x>lower and x<upper ]
+
+# Otherwise, let's look at all the data
+>>>hist_data = stage['Value'].values
+>>>print(len(hist_data))
+# the histogram of the data
+>>>plt.hist(hist_data, 10, normed=False, facecolor='green')
+hist_data is Numpy Nd array,10 is the no. of bins
+Setting the Norm to be false to make sure it doesnt scale data
+>>>plt.xlabel(stage['IndicatorName'].iloc[0])
+>>>plt.ylabel('# of Years')
+>>>plt.title('Histogram Example')
+>>>plt.grid(True) #adding grid to get better understanding/reading of graph
+>>>plt.show()
+This is really telling me that most years fall between 18.5 and 20, with some outliers.
+Given that we usually fall between 19 and 20 metric tons per capita,
+I'm curious how the US stacks up,relative to other countries.
+==> comparing for all the countries data for year 2011
+# select CO2 emissions for all countries in 2011
+>>>hist_indicator = 'CO2 emissions \(metric'
+>>>hist_year = 2011
+>>>mask1 = data['IndicatorName'].str.contains(hist_indicator) 
+>>>mask2 = data['Year'].isin([hist_year])
+# apply our mask
+>>>co2_2011 = data[mask1 & mask2]
+>>>co2_2011.head()
+You know, just looking at these values,4.7,6.9, 5.8,5.3, I am already suspecting
+the US might produce more CO2 per person than other countries.But lets plot
+>>>print(len(co2_2011)) #total no. of countries including US
+# let's plot a histogram of the emmissions per capita by country
+# subplots returns a touple with the figure, axis attributes.
+>>>fig, ax = plt.subplots()
+>>>ax.annotate("USA",
+>>>            xy=(18, 5), xycoords='data',
+>>>            xytext=(18, 30), textcoords='data',
+>>>            arrowprops=dict(arrowstyle="->",
+>>>                            connectionstyle="arc3"),
+>>>            )
+>>>plt.hist(co2_2011['Value'], 10, normed=False, facecolor='green')
+>>>plt.xlabel(stage['IndicatorName'].iloc[0])
+>>>plt.ylabel('# of Countries')
+>>>plt.title('Histogram of CO2 Emissions Per Capita')
+#plt.axis([10, 22, 0, 14])
+>>>plt.grid(True)
+>>>plt.show()
+**Calling plt.subplots gives back the figure and the axis separately.
+I wanna use the axis reference with annotate.
+I added an annotation to the string USA.I placed it at the coordinates 18, 30.
+And then drew a line from corners 18, 30 to 18, 5.You know,there are more parameters
+to the annotate method if you wish to read the documentation more.
+Hence we can do more advanced stuff using MatplotLib as well.
+But before we look at annotate,let's look at the plot that hist call.
+And see that we're setting up basically the same histogram as our last one.
+Except this time, we're counting the number of countries
+with a certain amount of emissions per person rather than a number of years.
+Wow, it looks like the vast majorityof countries have CO2 emissions
+in the range of zero to 10 metric tons per capita.
+The US, at around 17, in 2011,is actually a real outlier.
+
+HEnce th common features of MatplotLib are :
+1)Chart Type : bar,line and hist
+2)Axes data Ranges : we have the ranges for the x and the y values.
+3) we can Label Axes,figure tself as well
+4) we can also provide Legends as well
+5)And then lastly, aesthetics, like font size,line size, plot size.
+Even more complex things like, annotations, can be added.
+
+Basic Plotting in Matplotlib : Part 2
+we will create line charts and scattered plots using Matplotlib.
+Now lets see how the CO2 emissions are related to GDP per capita over time.
+First we will see the GDP over time:
+>>># switch to a line plot
+>>>plt.plot(gdp_stage['Year'].values, gdp_stage['Value'].values)
+>>># Label the axes
+>>>plt.xlabel('Year')
+>>>plt.ylabel(gdp_stage['IndicatorName'].iloc[0])
+>>>#label the figure
+>>>plt.title('GDP Per Capita USA')
+>>># to make more honest, start they y axis at 0
+>>>#plt.axis([1959, 2011,0,25])
+>>>plt.show()
+By seeing this plot we can roughly tell that CO2 and GDP are not that related,
+but before we come to conclusions lets check the scatter plot
+For Scater plot  first,we have to make sure the time frames
+are the same ==>by calling min and max in these columns.
+And the reason I wanna make sure these are the same,
+is that scatter plots require the same number of years in the data set.
+>>>print("GDP Min Year = ", gdp_stage['Year'].min(), "max: ", gdp_stage['Year'].max())
+>>>print("CO2 Min Year = ", stage['Year'].min(), "max: ", stage['Year'].max())
+o/p :
+GDP Min Year =  1960 max:  2014
+CO2 Min Year =  1960 max:  2011
+==>We have 3 extra years of GDP data, so let's trim those off so the scatterplot has 
+equal length arrays to compare (this is actually required by scatterplot).
+To do this trimming,I'll just ask for,the years before 2012.
+>>>gdp_stage_trunc = gdp_stage[gdp_stage['Year'] < 2012]
+>>>print(len(gdp_stage_trunc))
+>>>print(len(stage))
+o/p:
+52
+52
+==> now we will plot
+>>>%matplotlib inline
+>>>import matplotlib.pyplot as plt
+>>>fig, axis = plt.subplots()
+>>># Grid lines, Xticks, Xlabel, Ylabel
+>>>axis.yaxis.grid(True)
+>>>axis.set_title('CO2 Emissions vs. GDP \(per capita\)',fontsize=10)
+>>>axis.set_xlabel(gdp_stage_trunc['IndicatorName'].iloc[0],fontsize=10)
+>>>axis.set_ylabel(stage['IndicatorName'].iloc[0],fontsize=10)
+>>>X = gdp_stage_trunc['Value']
+>>>Y = stage['Value']
+>>>axis.scatter(X, Y)
+>>>plt.show()
+Now when I run this,what I get back is a pretty weak relationship.
+It looks like when,GDP and CO2 emissions were climbing in the 60's
+they track together.But after that there doesn't seem to be
+much of a relationship at all.
+
+We could also test this using correlation.
+I'll use the correlation coefficient function
+in num pi to get back the relationship between these two arrays.
+>>>np.corrcoef(gdp_stage_trunc['Value'],stage['Value'])
+o/p:
+array([[ 1.        ,  0.07676005],
+       [ 0.07676005,  1.        ]])
+The main diagonal is each against itself.
+So we expect to see 1.0 there or perfect correlation.
+But on the other diagonal,we see zero point,seven 0.077.
+That's a really weak correlation between these two indicators.
+==>So, we just got to start looking at these relationships
+but if someone were to argue we need more CO2 production, per capita
+to boost our economy,this initial data analysis would not support that claim.
+I have more ideas for what to do with this data set.Could we look at the 
+relationship between CO2 emissions per capita and GDP for other countries?
+
+We can also provide 3D plots,bubble plots.
+Bubble plots can be really helpful when you want to graph three dimensions easily.
+You can have an x, and a y, and a size of each point.
+In this example, we also use color code to provide a fourth dimension.
+So on this image we have: angle, distance from the center,
+size of the bubble, and color all coded here.
+In addition to histograms, I frequently use box plots
+when I'm trying to understand distributions.
+Boxplots tell you the median,values within the interquartile range,
+and elements above the third quartile, and below the first.
+As well as the maximum and minimum values.
+That's a lot of useful information all in one figure.
+So please be sure to check out these additional notebooks,
+as well as other examples online.
+
+Folium Example:
+----------------
