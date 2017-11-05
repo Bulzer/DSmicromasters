@@ -1,3 +1,16 @@
+PyPI - the Python Package Index(similar to CRAN in R):
+-------
+The Python Package Index is a repository of software for the Python programming language.
+There are currently 120999 packages here.
+Link :https://pypi.python.org/pypi 
+Link for CRAN:https://cran.r-project.org/web/packages/
+-----------------------------------------------------------------------------------
+To install a package using Jupyter:
+***!pip install PackageName  (type this commandin jupyter cell)
+Eg:!pip install folium ==> it will directly go to the website and download that package
+   !pip install crypto-exchange-apis
+Now we can use import folium.
+----------------------------------------------------------------------
 Use magic fn timeit before any statement to know the average time and SD of that code line
 i.e %timeit df.mean()
 to run it on whole cell ==> use %%timeit at the start of cell
@@ -239,3 +252,9 @@ as well as other examples online.
 
 Folium Example:
 ----------------
+we can use the Folium library to create geographic overlays.
+First install folium package in jupyter
+>>>!pip install folium
+now import 
+>>>import folium
+
