@@ -318,6 +318,14 @@ https://plot.ly/python/choropleth-maps/
 Q)what are geograohic overlays ?
 
 
+Q)True or False: Outliers can be critical to finding convincing answers when analyzing data.
+Ans: True (spread of cholera use case,well was contaminated,people near that well area are have more cases
+but one brewery family folks which is is near by the well are not,coz they had their own well and drank water from that well(which is an outlier).
+
+
+
+
+
 Visualization Libraries:
 The following list provides a few plotting libraries for you to get started based on their use case(s).
 The foundation: Matplotlib, most used plotting library, best for two-dimensional non-interactive plots.
