@@ -257,6 +257,57 @@ First install folium package in jupyter
 >>>!pip install folium
 now import 
 >>>import folium
+Folium provides interactive maps with the ability to create sophisticated overlays for data visualization.
+#importing a Json file which contains country coordinates for plotting
+>>>country_geo = 'A:/Naveed/DS/micromasters/week5/world-countries.json'
+Now we'll use the built-in method called choropleth
+to attach the country's geographic json and the plot data.
+# choropleth maps bind Pandas Data Frames and json geometries in python.This allows us to quickly visualize data combinations
+==> first we Setup a folium map at a high-level zoom
+>>>map = folium.Map(location=[100, 0], zoom_start=1.5)
+now using chloropleth() method
+>>>map.choropleth(geo_path=country_geo, data=plot_data,
+>>>             columns=['CountryCode', 'Value'],
+>>>             key_on='feature.id',
+>>>             fill_color='YlGnBu', fill_opacity=0.7, line_opacity=0.2,
+>>>             legend_name=hist_indicator)
+where country_geo contains a Json file which contains country  coordinates for plotting. 
+and plot_data is a Dataframe with just the country codes and the values we want plotted.
+We need to specify the relevant columns.
+'Key on' 'feature ID' refers to the label in the json object
+which has the country code as the feature ID attached to each country's border information.
+i.e Our country code in the data frame matches the feature ID in the json object.
+Next, we specify some of the asthetics,like the color scheme and the opacity
+and then we label the legend.
+So the output of this plot is gonna be saved as a html file.
+And the html file is actually interactive.So what we'll need to do is save it
+and read it back into the notebook in order to interact with it on the map.
+>>># Create Folium plot
+>>>map.save('plot_data.html')
+>>># Import the Folium interactive html file
+>>>from IPython.display import HTML
+>>>HTML('<iframe src=plot_data.html width=700 height=450></iframe>')
+==> we will get a map showing the co2 emissions and we can zoom in nd out the map.
+
+Note: got this error when I gave wrong path "choropleth() got an unexpected keyword argument 'geo_path'"
+we can directly give paths of Json and dataframe as inputs to chloropleth() as below:
+map.choropleth(
+    geo_str = open('A:/Naveed/DS/micromasters/week5/world-countries.json').read(),
+    data = pd.read_csv("US_unemployment.csv"),
+    columns = ['State', 'Unemployment'],
+    key_on = 'feature.id',
+    fill_color = 'YlGn',
+)
+
+ChloroPleth:
+A choropleth map is a thematic map in which areas are shaded or patterned in 
+proportion to the measurement of the statistical variable being displayed on
+the map,such as population density or per-capita income.
+The choropleth map provides an easy way to visualize how a measurement varies 
+across a geographic area or it shows the level of variability within a region.
+Thematic Map:
+A thematic map is a type of map specifically designed to "show a particular theme connected with a specific geographic area.
+
 
 Q)what are geograohic overlays ?
 
