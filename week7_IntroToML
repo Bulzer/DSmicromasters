@@ -1,0 +1,37 @@
+Machine learning: is a field of study that focuses on computer systems that can learn from data.
+That is, these systems, often called models,can learn to perform a specific task
+by analyzing lots of examples for a particular problem.
+
+Eg:identify a cat after analysisng lots of image of cats
+The Machine Learning algorithm is programmed to learn from the data that 
+there's nothing in the algorithm or program which directly aims to learn the given task.
+** i.e Machine Learning models are not given the step by step instructions on how to recognize
+the image of a cat.Instead, the model learns on its own what features
+are important in determining that a picture contains a cat from the data that it has analyzed.
+
+*Because the model learns to perform this task from data,it's good to note that the amount and quality of data
+available for building the model are important factors in how well the model learns from the task.
+
+Therefore,Machine Learning models learn from data to perform a task
+without being explicitly programmed.
+
+Clasification:
+In classification,the goal is to predict the category of the input data.
+The categories to be predicted are called classifications.
+Eg:predicting the weather as being sunny,rainy, windy or cloudy.
+If the predicted output is b/w 2 values ==> it is called binary Classification.
+
+Regression:
+When your model has to predict a numeric value instead of a category,
+then the task becomes a regression problem.
+Eg:predict the price of a stock.
+The stock price is a numeric value,not a category, so this is a regression task.
+If you were to predict whether the stock price will rise or fall,then that would 
+be a classification problem but if you're predicting the actual price of the stock,
+then that's a regression problem.
+
+To summarize,in classification you're predicting a category,
+and in regression,you're predicting a numeric value.
+
+Clustering:
+In cluster analysis,the goal is to organize similar items in your dataset into groups.
