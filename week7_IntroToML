@@ -35,3 +35,116 @@ and in regression,you're predicting a numeric value.
 
 Clustering:
 In cluster analysis,the goal is to organize similar items in your dataset into groups.
+A very common application of cluster analysis is referred to as customer segmentation.
+This means that you're separating your customer base into different groups or segments
+based on customer types.
+For example,
+it would be beneficial to segment your customers into seniors, adults and teenagers.
+
+association analysis:
+The goal here is to come up with a set of rules
+to capture associations between items or events.
+The rules are used to determine when items or events occur together.
+A common application of association analysis is known as market basket analysis,
+which is used to understand customer purchasing behavior.
+For example,
+->association analysis can reveal that banking customers
+who have checking or deposit accounts also tend to be interested 
+in other investment vehicles such as money market accounts.
+->Other common applications can be recommendation of similar items
+based on purchasing or browsing history of customers.
+->Identification of web pages that are often accessed together
+can also provide us a good basis for association analysis.
+
+For the techniques we've discussed here,there are two ways of conducting 
+the learning itself.These categories are referred to as 
+A)supervised Learning and B)unsupervised Learning
+
+In supervised approaches,(Target is available)
+the target, which is what the model is predicting,is provided.
+This is referred to as having labeled data because the target is 
+labeled for every sample that you have in your dataset.
+Referring back to our example of predicting the weather category
+of sunny, windy, rainy or cloudy,every sample in the dataset
+is labeled as being one of these four categories.
+So, the data is labeled and predicting the weather category is a supervised task.
+**In general,classification and regression are supervised approaches.
+
+In unsupervised approaches,(Target is not available)
+on the other hand,the target that the model is predicting
+is unknown or unavailable.This means that you have unlabeled data,
+so you can't train using these labels.Going back to our cluster 
+analysis example of segment customers into different groups,the samples
+in your data are not labeled with the correct group.
+Instead, the segmentation is performed using a clustering technique
+to group items based on characteristics of what they have in common.
+Thus, the data is unlabeled and the task of grouping customers
+into different segments is an unsupervised one.
+**In general, cluster analysis and association analysis are unsupervised approaches.
+
+Terminology in ML:
+Sample:
+It is an instance/example of an entity in your data.It is typically a row in your dataset.
+
+ID    Name     mat     phy 
+1     A1        11      20
+2     A2        14      28
+3     A3        18      22
+
+==> row's with ID's 1,2,3 are called Samples
+and coloumns(ID,Name,Mat and Phy) are called Variables/features of sample.
+and Each sample has 4 values(variables) associated with it.
+We call these different values as variables of the sample
+and sometimes refer to them as features of the sample.
+A variable captures specific characteristics of each entity.
+
+There are many names for variables in addition to feature.
+like: feature, column,dimension, attribute and field etc.
+
+A variable holding Numerical values is called as Numerical/quantitative variable.
+A variable holding characters/strings ar called as categorial/nominal/qualitative variable.
+
+Scikit-learn: 
+->An open source ML library in Python
+->It is built on top of NumPy, SciPy, and matplotlib like many other Python libraries.
+->It can be used for end to end Machine Learning in python.
+i.e entire data science process including Machine Learning,
+data cleaning, and data transformations,.etc can be done by scikit-learn.
+
+Scikit Learn Provides fns for preprocessing such as:
+->fns for converting raw feature vectors into suitable formats
+-> it providea API's for
+  ->scaling of features: remove mean and keep unit variance
+  ->Normalization to have unit form
+  ->binarization to turn data into 0 or 1 form
+  ->One hot encoding for categorial features
+  ->handlin of missing values
+  ->generating higher order features
+  ->built custom transformations
+Scikit-learn also provides built-in functions for many
+Machine Learning algorithms ready for modeling and analysis.
+Although it requires some expertise to use these algorithms
+appropriately for the right tasks, there are many resources
+online that make the learning curve easier.
+Additionally the documentation on the website for
+Scikit-learn includes tutorials to get started.
+We find those documentation really easy to follow.
+For example, the clustering part of the documentation
+nicely overviews the available algorithms, their metrics,
+scalability, parameters and even potential use cases.
+Scikit-learn also includes specialized implementations
+for dimensionality reduction algorithms.
+
+Dimentionality Reduction:
+->Enables you to reduce featureswhile preserving variance.
+->scikit-learn has capabilities for:
+  ->principal component Analysis(PCA)
+  ->singular value decomposition
+  ->Factor Analysis
+  ->Independent Component Analysis
+  ->Matrix factorization
+  ->Latent Dirichled allocation(LDA)
+
+Classification:
+----------------
+
