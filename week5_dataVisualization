@@ -322,6 +322,49 @@ Q)True or False: Outliers can be critical to finding convincing answers when ana
 Ans: True (spread of cholera use case,well was contaminated,people near that well area are have more cases
 but one brewery family folks which is is near by the well are not,coz they had their own well and drank water from that well(which is an outlier).
 
+Q)You are given a data set that contains crime reports for different neighborhoods in New York City and told to analyze it. 
+Would you consider this a declarative or explorative example?
+Options:a)Explorative b)Declarative
+Ans: Explorative
+
+Q)Which is an example of conceptually driven data visualization?
+Options:A)Physicists visualize the well-understood relationship between force and acceleration to teach introductory physics students.
+        B)Doctors try to explore the relationship between a drug and the effect it has on their patients using data visualization.
+        C)Realtors visualize a data set containing rental listings and the amount of interest they attract.
+Ans: A
+
+Q)What is the first step with any dataset?
+Options:A)Research all of the background information.
+        B)Perform an initial exploration. 
+        C)Verify the findings that others have found.
+Ans: B
+
+Q)Which command allows you to edit the view of the axes on a matlibplot plot?
+Options:A)grid()
+        B)plot()
+        C)axis() 
+        D)arange()
+Ans:C
+
+Q)Which graphing method should you use to visualize the correlation between two arrays?
+Options:A)Histogram
+        B)Barplot
+        C)Scatter plot correct
+        D)Line plot
+Ans: C
+
+Q)Which of the following does a boxplot NOT show you?
+Options:A)Median
+        B)Interquartile range
+        C)Min and max values
+        D)Mean
+Ans:D
+One of the pioneering educators of Data Visualization, Professor 
+Hans Rosling's videos on world development have inspired a whole generation of data scientists.
+Please feel free to watch this short clip from BBC below:
+200 Countries, 200 Years, 4 Minutes - The Joy of Stats
+https://www.youtube.com/watch?v=jbkSRLYSojo
+https://www.theguardian.com/global-development/2017/feb/07/hans-rosling-obituary
 
 
 
