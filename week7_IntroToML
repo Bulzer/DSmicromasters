@@ -147,4 +147,67 @@ Dimentionality Reduction:
 
 Classification:
 ----------------
+In a classification problem, the input data is presented to the machine learning model,
+and the task is to predict the target corresponding to the input data.
+The target is a categorical variable. So the classification task is to predict
+the category or label of the target given the input data.
+Eg: we have to predict weather b/w windy,sunny,rainy
+==> Since a target is provided, we have label data,
+and so classification is a supervised task.Recall that in a supervised task, the target,
+or design output for each sample is given.Note that the target variable goes by many names
+such as target, label, output,class variable, category, and class.
+A classification problem can be binary,or multi-class.
+With the binary classification, the target variable has two possible values, for example yes and no.
+With multi-class classification, the target variable has more than two possible values, for example
+the target can be short, medium, and tall.
+Multi-class classification is also referred to as multinomial or multi-label classification.
+Note:
+1)Remember,the target is always a categorical variable in classification.
+2)The target is provided for each sample,classification is a supervised task.
 
+**In building a model, we need to adjust the parameters in order to reduce the model's error.
+==> we need to form decision boundaries.
+In the case of supervised tasks, such as classification,
+this means getting the model's outputs to match the targets,
+or desired outputs, as much as possible.
+
+Building a classification model then means using the data
+to adjust a model's parameters in order to form decision
+boundaries to separate the target classes.(eg: in a graph we can say that all the 
+elements falling in area 1 are squares,area 2 are circles etc hence
+the area boundries of there areas(1 and 2) are nothing but decision boundaries) 
+Note that the term classifier is often used to mean classification model.
+Training phase: train data + learning Algotithm = build model ==> o/p = model
+Testing phase: test data +model = apply model ==> o/p result
+To adjust a model's parameters, we need to apply a learning algorithm.
+commonly used algorithms for building a classification model:
+kNN or k-nearest neighbors(kNN stands for K-nearest Neighbors),
+Decision Trees
+and Naïve Bayes.
+KNN:
+This technique relies on the notion that samples
+with similar characteristics, that is samples with similar
+values for input, likely belong to the same class.
+So classification of a sample is dependent
+on the target values of the neighboring points.
+Decision Tree:
+A Decision Tree is a classification model that uses a tree-like structure to represent multiple decision paths.
+Traversing each path leads to a different way to classify an input sample.
+Eg:
+               |---->non mamals
+warm blooded---|                  |-----> non mammals
+               |---->live birth --|                    |----->Non-Mammals
+                                  |----->vertebrate ---|
+                                                       |----->Mammals
+Naive Bayes:
+Naïve Bayes model uses a probabilistic approach to classification.
+Bayes' Theorem is used to capture the relationships within the input data and the output class.
+Bayes Theorem:
+         P(B|A) * P(A)
+P(A|B)= ---------------
+            P(B)
+The Bayes Theorem compares the probability of an event in the 
+presence of another event.Here we see the probability of A if B is present.
+An example for this is probability of having a fire if the weather is hot.
+You can imagine event B depending on more than one variable,
+e.g. weather is hot and windy.
