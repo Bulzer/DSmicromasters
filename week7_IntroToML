@@ -604,3 +604,66 @@ Zero here is one of the internal states
 used to build a decision tree.
 Although, just like random seed before,
 this one's also can have random values.
+Hence we created a decision tree classifier object
+called humidity classifier, and we have used fit() method of this 
+object to make the classifier tune itself
+to learn from the samples.
+==> owr model is built now
+>>>type(humidity_classifier)
+o/p :sklearn.tree.tree.DecisionTreeClassifier
+i.e it is of type decision tree clasifier
+other arguments of decisionTreeClasifier () are as below:
+(below are are the arguments our fn took)
+DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+            max_features=None, max_leaf_nodes=10, min_impurity_split=1e-07,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, presort=False, random_state=0,
+            splitter='best')
+
+Now we will use the test data to test the model we have built
+We will use the predict function of the decision tree
+classifier object which was our humidity classifier.
+This function will accept our test data.
+Let's run this and display the first 10 values
+in those predictions 
+>>>predictions = humidity_classifier.predict(X_test)
+>>>type(predictions)
+o/p it is an numpy array
+>>>predictions[:10]
+==> o/p : array([0, 0, 1, 1, 1, 1, 0, 0, 0, 1])
+therefore these predictions array is out predicted labels for the test data of X.
+Hence,now we compare this predicted values with already
+existing labels of test data of X i.e test data of Y.
+==> comapring first 10 values predicted with first 10 values of y_test
+>>>y_test['high_humidity_label'][:10]
+o/p :
+     0
+     0
+     1
+     1
+     1
+     1
+     1
+     0
+     1
+     1
+==> we can see that there are some errors i.e 7th value 
+of predictions is '0' while 7th valuue of y_test is '1'            
+lly 9th and 10th values are also different.
+For the classification task an error occurs, just like this,
+when the model's prediction of the class label
+is different from the true class label.
+We can measure these errors by calculating
+the number of correct labels just like I've done now.
+We had 3 wrong, so if we had 10 rows
+it would be that many wrong in it
+and we can turn it into an error measure.
+but we can't count always right? as the data might be huge sometimes.
+Therefore we have a fn to check the acuraccy of the model.
+>>>accuracy_score(y_true = y_test, y_pred = predictions)
+o/p:0.81534090909090906
+It's called accuracy score and if you look at that,
+the accuracy of our algorithm here is about 81%.
+We can also define the different types of error
+in the classification depending of the predicted
+and true labels.
