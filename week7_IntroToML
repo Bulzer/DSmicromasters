@@ -429,8 +429,8 @@ The decision tree is constructed by repeatedly
 splitting the data, and partitioning the data
 into successively more homogenous subsets.
 
-Live code Decision Tree:
--------------------------
+Live code Decision Tree:(weather classification using decission trees)
+-----------------------------------------------------------------------
 we will perform a decision tree base classification of metadata.
 This metadata was curated from sensor data
 of a weather station located in San Diego, California
@@ -443,3 +443,164 @@ to September 2014 and this ensures also
 that sufficient data for different seasons
 and weather conditions are captured.
 
+>>>import pandas as pd
+>>>from sklearn.metrics import accuracy_score
+>>>from sklearn.model_selection import train_test_split
+>>>from sklearn.tree import DecisionTreeClassifier
+The task of classification,is a supervised learning task
+where we supervise the algorithm to learn how to label a given 
+sample by training it.
+Here we will leverage existing methods in the scikit library.
+>>>data = pd.read_csv('./weather/daily_weather.csv')
+#cross check the data
+>>>data.columns   #see the columns
+>>>data           #see the actual data
+Below is the columns(total 11 columns) descriptions
+Each row, or sample, consists of the following variables:
+
+1>number: unique number for each row
+2>air_pressure_9am: air pressure averaged over a period from 8:55am to 9:04am (Unit: hectopascals)
+3>air_temp_9am: air temperature averaged over a period from 8:55am to 9:04am (Unit: degrees Fahrenheit)
+4>air_wind_direction_9am: wind direction averaged over a period from 8:55am to 9:04am (Unit: degrees, with 0 means coming from the North, and increasing clockwise)
+5>air_wind_speed_9am: wind speed averaged over a period from 8:55am to 9:04am (Unit: miles per hour)
+6>max_wind_direction_9am: wind gust direction averaged over a period from 8:55am to 9:10am (Unit: degrees, with 0 being North and increasing clockwise)
+7>max_wind_speed_9am: wind gust speed averaged over a period from 8:55am to 9:04am (Unit: miles per hour)
+8>rain_accumulation_9am: amount of rain accumulated in the 24 hours prior to 9am (Unit: millimeters)
+9>rain_duration_9am: amount of time rain was recorded in the 24 hours prior to 9am (Unit: seconds)
+10>relative_humidity_9am: relative humidity averaged over a period from 8:55am to 9:04am (Unit: percent)
+11>relative_humidity_3pm: relative humidity averaged over a period from 2:55pm to 3:04pm (Unit: percent )
+
+Checkif the data has any null values
+>>>data[data.isnull().any(axis=1)] #we can see NaN values
+Now lets clean data:
+We will not need number for each row so we can clean it.
+>>>del data['number']
+Now let's drop null values using the *pandas dropna* function.
+>>>before_rows = data.shape[0]
+>>>print(rows before dropping null values)
+>>>data = data.dropna()
+>>>after_rows = data.shape[0]
+>>>print(after_rows)
+We will use a classifier to predict humidity on a given
+afternoon by looking at the weather in the morning.
+
+Remember we use the dropna function
+to generate a slice of the data and assign that
+to the DataFrame instead(above).Now we'll copy 
+the slice into a new DataFrame that is not a slice.
+It's a real DataFrame or what we would call,
+the data is what we would call a view
+over the original data set, the one that we assign it
+we'll call this clean data will be real DataFrame again.
+(i.e whn we copy the data after dropna fn it is similar to a view in DB)
+>>>clean_data = data.copy()
+creating a cew column in the new clean Data frame
+**i.e Binarize the relative_humidity_3pm to 0 or 1
+and we label our target label as high_humidity_label
+>>>clean_data['high_humidity_label'] = (clean_data['relative_humidity_3pm'] > 24.99)*1
+>>>print(clean_data['high_humidity_label'])
+This new column will store 1 for relative_humidity_3pm 
+values higher than 24.99,else they store 0.
+**Bascically it gives us a true/false value.
+We multiply this true/false value generated 
+by that comparison greater than operator by 1
+to turn the column into integer values, 0 or 1.
+Going with the parametric function analogy,
+y = f(x) we will now create a new DataFrame called y
+for what we are trying to predict.
+So by looking at x we'll try to predict y,
+that's the analogy.And we will do this
+by storing our High_Humidity_Label column into y.
+>>>y=clean_data[['high_humidity_label']].copy()
+print it and check whtit stored
+>>>y
+we can also print out the first five rows of y
+and first 5 rows of clean data to compare the
+humidity values with the High Humidity Labels and 
+cross check them.
+>>>clean_data['relative_humidity_3pm'].head()
+>>>y.head()
+==> 1 in y values means corresponding value in clean data is
+higher than 24.99 
+Now we'll select the features of the data in the morning.
+==>load all these morning 9 am variables
+or features into a list called Morning Features.
+>>>morning_features = ['air_pressure_9am','air_temp_9am','avg_wind_direction_9am','avg_wind_speed_9am',
+>>>        'max_wind_direction_9am','max_wind_speed_9am','rain_accumulation_9am',
+>>>        'rain_duration_9am']
+After we run this we will create a matrix or a DataFrame
+in this case with only these morning features as columns.
+We will literally copy the values
+in those morning-related columns into a DataFrame called x.
+Remember again we are trying to do y = fx.
+>>>X = clean_data[morning_features].copy()
+So given the x we'll try to come up with the y values.
+That's what we are trying to do.
+Here the values in clean data are now in x
+are pretty standard data types.
+However, if they were lists or other more complex data types
+we might have had to use a deep copy.
+**In that case we would have said inside those parentheses
+in the copy 'deep = true' for the copy function
+that will ensure if you have any complicated data types
+like arrays or lists in your input matrix
+they'll be copied over to x in this situation. i.e copy(deep = trye)
+
+Now we will start building a model, our first model,
+a classification model using Decision Trees.
+To do that we will split the data set
+into tests and training samples.
+To do this,we use train test split function
+to generate these two data sets.
+Now these two data sets
+will be slices of our original data set stored in x
+and labels stored in y.
+>>>X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=324)
+Let's discuss a little bit the arguments here.
+We have the train test split, we give it the x, our input,
+and y, the labels for training.
+i.e for these values of X(morning weather) we got these values of Y(afternoon weather)
+In addition to these 2 we provide a value
+for how much of the data we want to test with
+called the test size.
+==>we are telling this function to store 33% of the data,
+keep it, don't show it to the trainer
+as we'll use it for testing later.
+We also have the random state seed here set as 324.
+Although the seed is changeable
+it will lead to different partitioning
+of the original data set
+and later leading to different prediction accuracy.
+(we can change seed randomly to get different accuracy)
+
+Therefore,Train test split here takes two DataFrames
+and returns four DataFrames, right?
+It's the x train, x test, y train, and y test.
+
+Have a look of data and the data types
+#type(X_train)
+#type(X_test)
+#type(y_train)
+#type(y_test)
+#X_train.head()
+#y_train.describe()
+
+Now let's use a decision tree classifier
+to train on the training data set.
+and we will name this training data set 
+(our decision tree in that sense)as humidity classifier.
+>>>humidity_classifier = DecisionTreeClassifier(max_leaf_nodes=10, random_state=0)
+>>>humidity_classifier.fit(X_train, y_train)
+==> we have created a classifier and applied/fitted our train data to it.
+we have set max leaf nodes to 10.
+So this is our stopping criteria for the tree induction.
+If you left it as default it would have been unlimited,
+making it potential over fit the tree to the training data.
+We don't want that
+but in general you need to experiment with it a little bit.
+And the random state argument in this algorithm
+is used for splitting the nodes.
+Zero here is one of the internal states
+used to build a decision tree.
+Although, just like random seed before,
+this one's also can have random values.
