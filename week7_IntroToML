@@ -199,6 +199,9 @@ warm blooded---|                  |-----> non mammals
                |---->live birth --|                    |----->Non-Mammals
                                   |----->vertebrate ---|
                                                        |----->Mammals
+According to this decision tree,if an animal is warm-blooded, gives live birth,
+and has a vertebrae, then it is a mammal.
+If an animal does not have any of these three characteristics, then it's not a mammal.                                                       
 Naive Bayes:
 Naïve Bayes model uses a probabilistic approach to classification.
 Bayes' Theorem is used to capture the relationships within the input data and the output class.
@@ -211,3 +214,121 @@ presence of another event.Here we see the probability of A if B is present.
 An example for this is probability of having a fire if the weather is hot.
 You can imagine event B depending on more than one variable,
 e.g. weather is hot and windy.
+
+Decision Tree Models:
+The idea behind decision trees for classification
+is to split the data into subset,where each subset belongs to only one class.
+This is accomplished by dividing the input space into pure regions.
+That is, regions with samples from only one class.
+With real data, completely pure subsets may not be possible,
+so the goal is to divide the data into subsets that are as pure as possible.
+That is, each subset contains as many samples as possible of a single class.
+Graphically, this is equivalent to dividing the input space
+into regions that are as pure as possible.Boundaries separating these regions
+are called decision boundaries,and the decision tree model makes classification decisions
+based on these decision boundaries.
+
+A decision tree is a hierarchical structure with nodes and directed edges.
+The node at the top is called a root node.The nodes at the bottom are called leaf nodes.
+Nodes that are neither the root node or the leaf nodes are called internal nodes.
+The root and internal nodes have test conditions.
+Each leaf node has a class label associated with it.
+A classification decision is made by traversing the decision tree, 
+starting with the root node.At each node, the answer to the test condition
+determines which branch to traverse to.When a leaf node is reached, 
+the category at the leaf node determines the classification decision.
+
+The depth of a node is the number of edges from the root node to that node.
+The depth of the root node is zero.The depth of a decision tree is the number of edges
+in the longest path from the root node to the leaf node.
+The size of a decision tree is the number of nodes in the tree.
+==> above mammal example has tree depth= 3 and tree size = 6
+
+Creating a Decision tree:
+At high level,constructing a decision tree consists of following steps.
+Start with all samples at a node.
+Partition the samples into subsets based on the input variables.
+Here, the goal is to create subsets of records that are purest.
+That is, each subset contains as many samples as possible
+belonging to just one class.Another way to say this is that the subsets
+should be homogenous, or as pure as possible.
+Repeat to partition data into successively pure subsets
+until stopping criteria are satisfied.
+And an algorithm for constructing a decision tree model
+is referred to as induction algorithm,
+so you may hear the term tree induction
+used to describe the process of building a decision tree.
+Note that at each split,the induction algorithm only considers the best way
+to split the particular portion of the data.
+This is referred to as a greedy approach.
+
+Greedy algorithms solve a subset of the problem at the time,
+and is a necessary approach when solving the entire problem is not feasible.
+And by feasible, I mean computable in a reasonable amount of time or space.
+Using a greedy algorithm is necessary for decision trees.
+
+It is not feasible to determine the best tree given a dataset,
+so the tree has to be built in a piecemeal fashion by determining
+the best way to split the current node at each step,and combining
+these decisions together to form a final decision tree.
+we need a way to measure the purity of a split
+in order to compare different ways to partition a set of data.
+It turns out that it works better mathematically
+if you measure the impurity,rather than the purity, of a split.
+So the impurity measure of a node specifies how mixed the resulting subsets are.
+Since we want the resulting subsets to have homogenous class labels,
+not mixed class labels,we want the split that minimizes the impurity measure.
+i.e when a node is split ==> we need to make sure that split is pure.
+    hence we have a measure to check the purity of that split.
+    
+A common impurity measure used for determining
+the best split is Gini index.The lower the Gini index,
+the higher the purity of the split, so the decision 
+tree will select the split that minimizes the Gini index.
+Besides Gini index, other impurity measures include
+entropy/information gain and misclassification rate.
+*The other factor in determining the best way
+to partition a node is which variable to split on.
+The decision tree will test all variables
+to determine the best way to split the nodes,
+using a purity measure such as the Gini index
+to compare the various possibilities.
+Recall that the tree induction algorithm repeatedly
+splits nodes to get more and more homogenous datasets.
+
+So when does this process stop building subsets?
+When does the algorithm stop growing the tree?
+There are several criteria that can be used to determine
+when a node should no longer be split into subsets.
+-->The induction algorithm can stop expanding a node
+when all samples in the node have the same class label.
+This means that this set of data is as pure as possible,
+and further splitting will not result
+in any better partition of the data.
+And since getting completely pure subsets
+is difficult to achieve with real data,
+this stopping criterion can be modified
+to when a certain percentage of the samples in the node,
+say 90%, for example, have the same class labels.
+-->The algorithm can stop expanding a node when the number
+of samples in the node falls below a certain minimum value.
+At this point, the number of samples is too small
+to make much difference in the classification results
+with further splitting.
+-->The induction algorithm can also stop expanding a node
+when the improvement in impurity measure is too small
+to make much of a difference in classification results.
+-->Additionally, the tree, or the algorithm, can stop expanding
+a node when the maximum tree depth is reached.
+This is to control the complexity of the resulting tree.
+-->There can be other criteria that can be used
+to determine when tree induction should stop.
+Therefore typically we have 4 points to stop a tree from expanding further i.e
+-->All(or X% of) samples have same class label.
+-->no. of samples in node reaches a minimum value.
+-->change in impurity measure is smaller than the threshold.
+-->max tree depth is reached.
+
+
+
+
