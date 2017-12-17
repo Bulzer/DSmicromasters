@@ -329,6 +329,107 @@ Therefore typically we have 4 points to stop a tree from expanding further i.e
 -->change in impurity measure is smaller than the threshold.
 -->max tree depth is reached.
 
+Eg:
+Let's say we want to classify loan applicants as being
+likely to repay a loan, or not likely to repay a loan,
+based on their income and amount of debt they have.
+Building a decision tree for this classification problem
+could proceed as follows:
 
+One way to split this dataset into a more homogenous subset
+is to consider the decision boundary where income is t1.
+To the right of this decision boundary are mostly red(repayers)
+samples, and to the left are mostly blue samples(defaulters).
+The subsets are not completely homogenous,
+but that is the best way to split the original dataset
+based on the variable income.
+The decision tree boundary is represented
+in the decision tree by the condition
+income is greater than t1 at the root node.
+Samples with income greater than the threshold value of t1
+are placed in the right subset, and samples with income
+less than or equal to t1 are placed in the left subset,
+just as shown in the left diagram.
+Because the right subset almost perfectly predicts
+that lenders will repay properly,
+the right subset is now labeled as red.
+The second step, then, is to determine
+how to split the left region.
+the best way to split this data is specified
+(***we draw a Debt vs Income graph and we create the boundaries manually by seeing the graph)
+by the second decision boundary, with debt equals t2(threshold 2).
+Now the right region contains all blue samples,
+and so the corresponding node is labeled blue,
+meaning that the loan applicant
+is not likely to repay the loan.
+The third and final split looks at how to split
+the region outlined in red in the diagram(graph Debt vs Income).
+The best split is specified by the boundary with income equals t3.
+This splits the red region into two pure subsets.
+The split is represented in the decision tree
+by adding a node with condition income is greater than t3,
+and the left resulting node is labeled blue,
+and the right resulting node is labeled red,
+corresponding to the resulting subsets
+with the red border in the diagram(graph)
+
+
+             |--->Red(contains all red samples)
+income >T1---|               |--->Blue(contains all blue samples)
+             |--->Debt >T2---|                 |--->Red(contains all red samples)
+                             |--->income >T3---|
+                                               |--->Blue(contains all Blue samples)
+                                               
+You may have noticed that the decision boundaries of a decision tree are parallel
+to the axes formed by the variables.(in graph)
+This is referred to as being rectilinear.
+The boundaries are rectilinear because each split
+considers only a single variable.
+There are variants of the tree induction algorithm
+that consider more than one attribute
+when splitting a value.
+However, each split has to consider all combinations
+of combined variables, and so such induction algorithms
+are more computationally intensive,
+or we can also call them more computationally expensive.
+
+There are a few important things to note
+about the decision tree classifier.
+The resulting tree is often simple to understand
+and interpret, and this is one of the biggest advantages
+of decision trees for classification.
+It is often possible to look at the resulting tree
+to see which variables are important
+to the classification problem,
+and understand how the classification is performed.
+For this reason,many people will start out with a decision
+tree classifier to get a feel for the classification problem, even if
+they end up using a more sophisticated model later on.
+The tree induction algorithm, as described in this lesson,
+is relatively computationally inexpensive,
+so training a decision tree for classification
+can be relatively fast.
+
+Note:The greedy approach used by the tree induction algorithm
+determines the best way to split the proportion
+of the data at a node, but does not guarantee
+the best solution overall for the entire dataset.
+
+Decision boundaries are rectilinear,
+and this can limit the expressiveness
+of the resulting model, which means it may not be able
+to solve complicated classification problems
+that require more complex decisions,
+or decision boundaries, to be formed.
+
+In summary, the decision tree classifier
+uses a tree-like structure to specify a series of conditions
+that are tested to determine the class label for a sample.
+The decision tree is constructed by repeatedly
+splitting the data, and partitioning the data
+into successively more homogenous subsets.
+
+Live code Decision Tree:
+-------------------------
 
 
