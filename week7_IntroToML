@@ -667,3 +667,246 @@ the accuracy of our algorithm here is about 81%.
 We can also define the different types of error
 in the classification depending of the predicted
 and true labels.
+
+------------------------------------------------------------------------------------
+CLUSTERING(It is an unsupervised task):
+---------------------------------------
+A very common application of cluster analysis
+that we have discussed before is to divide 
+your customer base into segments
+based on their purchase histories.Some other 
+examples of cluster analysis are;characterization
+of different weather patterns for a region,
+grouping the latest new articles into topics
+to identify the trending topics of the day,
+and discovering hot spots for different types of crime
+from police reports in order to provide sufficient
+police presence for problem areas.
+
+Cluster analysis divides all the samples in a data set
+into groups.The goal of cluster analysis is to segment data
+so that the differences between samples in the same
+cluster are minimized.And the differences between samples of
+different clusters are maximized.
+Cluster analysis requires some sort of metric
+to measure similarity between two samples.
+Some common similarity measures are:
+
+A)Euclidean distance, which is the distance along
+a straight line between two points, A and B.
+B)Manhattan distance, which is calculated on a strictly
+horizontal and vertical path,you can only step along 
+either the X axis or the Y axis
+in the two-dimensional case.
+So the path to calculate the Manhattan distance
+crosses two segments along the axis,
+instead of along a diagonal path
+as with the Euclidean distance.
+C)Cosine similarity measures the Cosine of the angle
+between points A and B.
+Since distance measures such as Euclidean distance
+are often used to measure similarity between samples
+in clustering algorithms, note that it may be necessary
+to normalize the input variables so that no one value
+dominates the similarity calculation.
+As we have learnt about scaling and normalizing earlier.
+**Normalizing is one method to scale variables.
+Essentially scaling with input variables
+puts the variables on the same scale so that all variables
+have equal weighting in the calculation to determine
+similarity between samples.
+Scaling is necessary when you have variables that have
+very different scales, such as weight and height.
+The magnitude of the weight values which are in pounds,
+will be much larger than the magnitude of the height values
+which are in feet and inches.
+So scaling both variables to a common value range
+will make the contributions
+from both weight and height equal.
+
+Things to note about cluster analysis are:
+first, unlike classification and regression in general,
+cluster analysis is an unsupervised task.
+This means that there is no target label for any sample
+in the data set.
+In general, there is no correct clustering results.
+The best set of clusters is highly dependent
+on the application,
+how the resulting clusters will be used.
+There are numerical measures to compare
+two different clusters,but since there are no
+labels to determine whether a sample has been correctly 
+clustered,there's no grounds to determine if a
+set of clustering results are truly correct or
+incorrect.Clusters don't come with labels.You may end
+up with five different clusters at the end of cluster 
+analysis process, but you don't know what each cluster 
+represents.Only by analyzing the samples in each 
+cluster further,you can come up with reasonable labels
+for your clusters.
+***It is important to keep in mind
+that interpretation and analysis of the clusters
+are required to make sense of and make use of the
+results of cluster analysis.
+There are several ways that the results of cluster analysis
+can be used.
+The most obvious is data segmentation
+Clusters can also be used to classify new data samples.(scince elements,customers etc based on properties).
+Once cluster labels have been determined(say child,young,old groups are labels)
+samples in each cluster can be used as label data
+for another classification task.
+The samples would be the input to the classification model,
+and the cluster label will be the target class
+for each sample.
+Another use of cluster results is
+as a basis for anomaly detection.
+If a sample is very far away or very different
+from any of the cluster centers/groups/segmnts,
+then that sample is a cluster outlier and can be flagged
+as anomaly.However, these anomalies require further analysis.
+Depending on the application,these anomalies can be considered noise
+and should be removed from the data set.
+An example of this would be a sample with value of 150
+for age.
+For other cases, these anomalies cases should be studied
+more carefully.
+Examples of this are in a credit card fraud detection
+or network intrusion detection application.
+To summarize: cluster analysis is used to organize
+similar data items into groups or clusters.
+Analyzing the resulting clusters often leads to
+useful insights about the characteristics of each group
+as well as the underlying structure of the entire data set.
+Clusters require analysis and interpretation
+to make sense of the results since there are no labels
+associated with samples or clusters in a clustering task.
+
+K-Means Clustering:
+--------------------
+By the end of this topic, you should be able to:
+describe the steps in the k-means algorithm,
+explain what the k stands for in k-means,
+and define what the cluster centroid is.
+K-means is a classic algorithm used for cluster analysis.
+The algorithm is very simple.
+->The first step is to select k initial centroids.(any point in a
+graph)( and graph plotted for data of samples for which clutering is being done)
+***no. of initial centroid = no. of clusters at last
+Therefore K = no. of clusters
+A centroid is simply the center of a cluster.
+->Next, assign each sample in a data set
+to the closest centroid.
+This means you calculate the distance
+between the sample and each cluster center
+and assign the sample to the cluster
+with the closest centroid.
+->Then you calculate the mean or average of each cluster
+to determine a new centroid.
+First two steps are done repeatedly
+until some stopping criteria is reached.
+
+Note:the final clusters are sensitive to initial centroids.
+This means that if cluster results with one set
+of initial centroids can be different from results
+with another set of initial centroids.
+
+How are initial centroids selected?
+There are many approaches to selecting
+the initial centroids for k-means
+varying in levels of sophistication.
+The easiest and most widely used approach
+is to apply k-means several times with different
+initial centroids randomly chosen to cluster your data set
+and then select the centroids that give you
+the best clustering results.
+
+To evaluate the cluster results an error measure known
+as the Within-Cluster Sum of Squared Error can be used.
+The error associated with a sample within a cluster
+is the distance between the sample and the cluster centroid.
+The squared error for the sample then is the square of that distance.
+i.e error = dist b/w sample and centroid
+    squared error = error*error
+We then do the same thing for all clusters
+to get the final calculation
+for the Within-Cluster Sum of Squared Error(WSSE)
+for all clusters in the results of a cluster analysis run.    
+i.e if we have 4 clusters ==> we will have 4 WSSE's
+Say if we have two clustering results(WSSE1 and WSSE2),
+the one with the smaller WSSE provides the better solution numerically.
+i.e if WSSE1<WSSE2 ==> WSSE1 is better
+Note :1)This does not cluster set 1 is more correct that cluster set 2
+      2)Larger values for K will always reduce WSSE
+Therefore, as we've discussed before, there's no ground truth
+to mathematically determine which set of clusters
+is more correct than the other.
+In addition, note that increasing the number of clusters
+that is a value for k always reduces the WSSE.
+So WSSE should be used with caution.
+It only makes sense to use WSSE to compare two sets
+of clusters with the same value for k
+and generated from the same data set.
+
+There are several methods to determine the value for k
+-->Visualization techniques can be used to examine the
+data set to see if there are natural groupings of the samples.
+Scatterplots and the use of dimensionality reduction
+are useful here to visualize the data.
+-->A good value for k is application dependent (method).
+So domain knowledge of the application can drive
+the selection for the value of k.
+-->There are also Data-Driven methods
+for determining the value of k.
+These methods calculate some metric for different values
+of k to determine the best selection for k.
+One such method is the Elbow method.
+The Elbow method for determining the value of K.
+If you plot WSSE for different values for k,
+we can see how this error measure changes
+as the value of k changes as seen in the plot.
+The bend in this error curve indicates a drop
+in gain by adding more clusters.
+This Elbow in the curve provides a suggestion
+for a good value of k.
+X axis = k(no. of clusters)
+Y axs = WSSE results
+Note that the elbow cannot
+always be unambiguously determined
+especially for complex data.
+In many cases, the error curve will not have
+a clear suggestion for one value but multiple values.
+This can be used as a guideline
+for the range of values to try for k.
+
+Let's now look at when to stop.
+How do you know when to stop iterating
+when using k-means?
+->One obvious stopping criteria is when
+there are no changes to the centroids.
+This means that no samples will change cluster assignments,
+and re-calculating the centroids
+will not result in any changes.
+Additional iterations will not bring any more changes
+to the cluster results.It's time to stop.
+->The second stopping criteria is when the number of 
+samples change in clusters is below a certain threshold,
+say one percent for example.At this point, the clusters 
+are changing only by a few samples resulting in only 
+minimal changes to the final clustering results.
+The algorithm can be stopped here as well.
+
+Interpreting Results:
+Each centroid is the mean of the samples
+assigned to that cluster.
+You can think of the centroid
+as a representative sample for that cluster.
+So to interpret the cluster analysis results,
+we can examine the cluster centroids.
+Comparing the values of the variables between the centroids
+will reveal how different or alike clusters are
+and provide insight into what each cluster represents.
+
+Live code:Clustering:
+-----------------------------------------
+
+
