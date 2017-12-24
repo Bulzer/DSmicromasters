@@ -908,5 +908,241 @@ and provide insight into what each cluster represents.
 
 Live code:Clustering:
 -----------------------------------------
+We will use cluster analysis to generate a big picture model of the weather at a local station using a minute-graunlarity data. 
+In this dataset, we have in the order of millions records. we create 12 clusters our of them.
+we will use K-means for clustering
+
+>>>from sklearn.preprocessing import StandardScaler
+>>>from sklearn.cluster import KMeans
+>>>import utils
+>>>import pandas as pd
+>>>import numpy as np
+>>>from itertools import cycle, islice
+>>>import matplotlib.pyplot as plt
+>>>from pandas.tools.plotting import parallel_coordinates
+>>>%matplotlib inline
+Note: utils ws not present ==> installed it using !pip instal utils command and then ran import utils command
+>>>data = pd.read_csv('./weather/minute_weather.csv')
+
+Minute Weather Data Description:
+The minute weather dataset comes from the same source as the daily weather dataset that we used in the decision tree based classifier notebook. The main difference between these two datasets is that the minute weather dataset contains raw sensor measurements captured at one-minute intervals. Daily weather dataset instead contained processed and well curated data. The data is in the file minute_weather.csv, which is a comma-separated file.
+As with the daily weather data, this data comes from a weather station located in San Diego, California. 
+The weather station is equipped with sensors that capture weather-related measurements such as air temperature, air pressure, and relative humidity. Data was collected for a period of three years, from September 2011 to September 2014, to ensure that sufficient data for different seasons and weather conditions is captured.
+
+Each row in minute_weather.csv contains weather data captured for a one-minute interval. 
+Each row, or sample, consists of the following variables:
+
+rowID: unique number for each row (Unit: NA)
+hpwren_timestamp: timestamp of measure (Unit: year-month-day hour:minute:second)
+air_pressure: air pressure measured at the timestamp (Unit: hectopascals)
+air_temp: air temperature measure at the timestamp (Unit: degrees Fahrenheit)
+avg_wind_direction: wind direction averaged over the minute before the timestamp (Unit: degrees, with 0 means coming from the North, and increasing clockwise)
+avg_wind_speed: wind speed averaged over the minute before the timestamp (Unit: meters per second)
+max_wind_direction: highest wind direction in the minute before the timestamp (Unit: degrees, with 0 being North and increasing clockwise)
+max_wind_speed: highest wind speed in the minute before the timestamp (Unit: meters per second)
+min_wind_direction: smallest wind direction in the minute before the timestamp (Unit: degrees, with 0 being North and inceasing clockwise)
+min_wind_speed: smallest wind speed in the minute before the timestamp (Unit: meters per second)
+rain_accumulation: amount of accumulated rain measured at the timestamp (Unit: millimeters)
+rain_duration: length of time rain has fallen as measured at the timestamp (Unit: seconds)
+relative_humidity: relative humidity measured at the timestamp (Unit: percent)
+
+==>lets examine the data set
+>>>data.shape  ==> gives no. of rows and columns
+>>>data.head() ==> gives first 5 rows
+>>>data[data.isnull().any(axis=1)] ==> displays the Null value roes and gives their count
+Data Sampling:
+As there are lots of rows,let us sample down by taking every 10th row.
+i.e For analysis sake now we sample this data
+down to every 10 minutes difference
+instead of one minutes.
+>>>sampled_df = data[(data['rowID'] % 10) == 0]
+>>>sampled_df.shape
+==> divided the row id by 10
+So sampled_df will have one tenth of the number of rows
+in the original data set after we do this.
+Stastical analysis:
+So let's describe this data set.
+>>>sampled_df.describe().transpose()
+we are transposing here coz
+Recall, if I didn't say transpose ,
+the original columns would be displayed as columns.
+==> this 'describe' gives all the statstistics like mean,std etc
+Lets have a look at the stastictical values now
+the mean for air pressure is 916,for
+air temperature it is 61 in Fahrenheit,for 
+average wind direction it is 162 degrees and things like that.
+==>We noticed that some readings are in hundreds,
+while others are in decimals.
+It's a large difference, especially if you make it
+a measure of clustering when you're creating
+clustering metrics.
+
+Let's see how many rows have the value zero for columns,
+for rain accumulation and rain duration for example.
+Rain accumulation is how much it rain and accumulated,
+and rain duration is how long it rained for.
+>>>sampled_df[sampled_df['rain_accumulation'] == 0].shape
+>>>sampled_df[sampled_df['rain_duration'] == 0].shape
+==>it looks like a significant number of rows are zero
+compared to the size of the data.
+So I'd say let's drop these columns,
+and also clean any missing values for data cleaning.
+So we'll drop the lead sampled_df rain accumulation
+and rain duration, because they were mostly zero,
+and we also here drop the null values.
+>>>del sampled_df['rain_accumulation']
+>>>del sampled_df['rain_duration']
+>>>rows_before = sampled_df.shape[0]
+>>>sampled_df = sampled_df.dropna()
+>>>rows_after = sampled_df.shape[0]
+>>>rows_before - rows_after
+Now let's see what columns/features are left in our
+sampled_df data frame.
+Out of these features we will now select
+a list of features to declare the columns
+that we want our algorithm to make use of.
+Let's tour those features in a list
+that I'll call features here.
+==> selecting features fo interest for clustering
+>>>features = ['air_pressure', 'air_temp', 'avg_wind_direction', 'avg_wind_speed', 'max_wind_direction', 
+>>>        'max_wind_speed','relative_humidity']
+So out of about 11 columns we are selecting about seven.
+I will use these features to create a data frame
+called select data frame.
+So remember we had our data,
+we put it in the sample data frame,
+which was a tenth of our data.
+Now we are reducing the data,
+the number of columns in the data, not rows,
+we get the seven columns that we listed in the feature,
+and put it in select_df.
+>>>select_df = sampled_df[features]
+>>>select_df.columns
+
+Scale the data:
+now remember our scalability or scale discussion.
+To keep values of different columns comparable,
+we scale the values in these features.
+So we will use standard scaler sub library for that.
+It's an object, and if we give a data frame to it,
+(to a function of it in this case)
+we'll get a nicely scaled input data
+for our clustering operation.
+So we have the standard scaler,
+and we use the fit_transform function of it,
+and we give the select_df.
+The fit_transform function here combines
+fit and transform operations,
+which means it first calculates how much
+the data set should be transformed to be scaled.
+So it looks at different values and finds
+how to scale that.
+Then it's going to apply that transformation
+to the data frame we give it, in this case select_df,
+and it's gonna apply the transformation it came up with
+to that data frame.
+
+We will assign the output of this function to Variable(say X)
+and that X that we are creating in a nicely scaled fashion
+will be an input for our k-Means modeling later.
+
+If we display X we can see nicely scaled values.
+they are at the certain scale between a minimum
+and a maximum number.So feel free to explore
+X further,and compare to the other operations,
+other values in the select_df.
+
+>>>X = StandardScaler().fit_transform(select_df)
+>>>X
+
+Invoking K-means:
+Now we will be invoking the k-Means 
+clustering algorithm to create 12 clusters.
+==>create a k-Means object called Kmeans,
+and give number of clusters for it as 12.
+>>>kmeans = KMeans(n_clusters=12)
+Now generate the  model by using
+the fit operation of that k-Means object,
+and input for it is our input data X,
+which is the scaled version of the selected data values.
+>>>model = kmeans.fit(X)
+If you look at the type of this model object,
+it is a k-Means object.
+>>>print("model\n", model)
+o/p:model
+    KMeans(algorithm='auto', copy_x=True, init='k-means++', max_iter=300,
+        n_clusters=12, n_init=10, n_jobs=1, precompute_distances='auto',
+        random_state=None, tol=0.0001, verbose=0)
+
+==>Once clustering is done, we can look at
+each of the cluster centers.
+**It will be a list of seven floating point numbers,
+which denote where the cluster center stands
+in the 7 dimensions of our feature space.
+(as we have used 7 features to perform clustering)
+>>>centers = model.cluster_centers_
+(we are getting the model and assigning
+the cluster centers of that model into
+a variable called centers)
+**cluster_centers_ fn is the attribute of the model.
+When we created the model ,it got stored as a part of that model.
+>>>centers
+(centers(variable) will be an array containing 
+12 values,each value is a list containing 7 
+values(since 7 features) representing the respective cluster centers)
+
+Now we have the cluster centers for each 
+12 clusters, but how do we interact with it?,
+how do we visualize it ?
+It'll be great to plot these cluster centers
+so we can actually examine which clusters
+are close to each other and what separates
+different clusters from each other.
+==>For these here we will create two functions
+that help us transform the data
+to make it easier for plotting.
+Function one here is called pd_centers.
+It takes in the cluster centers generated by the model,
+the ones that we just displayed in centers,
+and creates a Pandas data frame.
+and returns that data frame(here P).
+Where the header in this dataframe
+is the name of the each feature.
+It also adds a new column
+that denotes the number of the cluster itself.
+This new column here is called prediction.
+>>># Function that creates a DataFrame with a column for Cluster Number
+>>>def pd_centers(featuresUsed, centers):
+>>>	colNames = list(featuresUsed)
+>>>	colNames.append('prediction')
+>>>
+>>>	# Zip with a column called 'prediction' (index)
+>>>	Z = [np.append(A, index) for index, A in enumerate(centers)]
+>>>
+>>>	# Convert to pandas data frame for plotting
+>>>	P = pd.DataFrame(Z, columns=colNames)
+>>>	P['prediction'] = P['prediction'].astype(int)
+>>>	return P
+So we have the cluster centers,
+and the number of the cluster nicely in a data frame,
+and we return that as a part of this function.
+
+The second utility function we have here is 
+for plotting,and it's called parallel_plot.
+It takes in the data for plotting,
+which is the data frame that we just generated,
+using pd_centers,and generates a colorful graph
+with different colors to each cluster.
+>>># Function that creates Parallel Plots
+>>>
+>>>def parallel_plot(data):
+>>>	my_colors = list(islice(cycle(['b', 'r', 'g', 'y', 'k']), None, len(data)))
+>>>	plt.figure(figsize=(15,8)).gca().axes.set_ylim([-3,+3])
+>>>	parallel_coordinates(data, 'prediction', color = my_colors, marker='o')
+Note that this function,also sets the size of 
+the plot and controls the range of the Y axis.
+i.e We have the figure size and the Y axis limits.
+
+
 
 
