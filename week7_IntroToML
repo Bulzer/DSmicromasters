@@ -82,6 +82,38 @@ Thus, the data is unlabeled and the task of grouping customers
 into different segments is an unsupervised one.
 **In general, cluster analysis and association analysis are unsupervised approaches.
 
+Smple defination for easy understanding:
+----------------------------------------
+Supervised Learning:
+Supervised learning is the machine learning task of inferring 
+a function from labeled training data. The training data consist
+of a set of training examples. In supervised learning, each example
+is a pair consisting of an input object (typically a vector) and a 
+desired output value (also called the supervisory signal)
+Since in supervised learning in the training set we hav the values for target
+i.e we will have the data which states:"for these inuts we had these outputs"
+Unsupervised learning:
+is a type of machine learning algorithm used to draw inferences
+from datasets consisting of input data without labeled responses.
+The most common unsupervised learning method is cluster analysis,
+which is used for exploratory data analysis to find hidden patterns or grouping in data.
+--------------------------
+==> Regression and classification are a supervised learning task
+==> in case of a supervised learnigntask we will have
+a Test data set and a Train data set and we built a model and test it.
+
+Training Data:
+Used to adjust Model parameters
+
+Test Data:
+Evaluate performance on new data
+
+there is also something called Valdation data
+Validation data:
+The validation dataset
+is used to determine when to stop the 
+training in order to avoid model overfitting.
+
 Terminology in ML:
 Sample:
 It is an instance/example of an entity in your data.It is typically a row in your dataset.
@@ -1142,6 +1174,88 @@ with different colors to each cluster.
 Note that this function,also sets the size of 
 the plot and controls the range of the Y axis.
 i.e We have the figure size and the Y axis limits.
+Now create a data frame
+>>>P = pd_centers(features, centers)
+==>now we can plot using this P
+(we will have a parallel plot first)
+a parallel coordinates plot is a quick way
+to visualize cluster centers along
+all the seven dimensions, of our features space,
+that's why we created these functions.
+>>>parallel_plot(P[P['relative_humidity'] < -0.5])
+(above code line gives us the dry days)
+i.e gives us the plots for the clusters where avg/scaled value of relative humidity is less than -0.5
+and the corrsponding other features for those clusters
+==> if rel. humidity is less than -0.5
+==> its graph is present in plot and we can see 
+other 6 values/features like avg wing speed,temp etc
+in the same plot
+lly we can get plots for warm day and cold day
+>>>parallel_plot(P[P['air_temp'] > 0.5])
+(gives warm days details)
+>>>parallel_plot(P[(P['relative_humidity'] > 0.5) & (P['air_temp'] < 0.5)])
+(for cold day)
+
+------------------------------------------------------------------
+
+                    Regression:
+-------------------------------------------
+When the model has to predict a numeric value
+instead of a category(for classification we predict category),
+then the task becomes a regression problem.
+An example of regression
+is to predict the price of a stock.
+The stock price is numeric and not a category,
+so this is regression task
+instead of a classification task.
+Note that if you were to predict
+not the actual price of the stock
+but whether the stock price will go up or go down,
+then that would be a classification task.
+That is the main difference
+between classification and regression.
+In classification you're predicting a category
+and in regression,
+you're predicting a numeric value.
+Recall that in a supervised task,
+the target is provided,
+while for an unsupervised task,
+the target is not available or not known.
+Since the target label is provided for each sample,
+as a numeric value here,
+the regression task is a supervised one
+similar to classification.(doubt get clarified)
+Since in supervised learning in the training set we hav the values for target
+i.e we will have the data which states:"for these inuts we had these outputs"
+---------------------
+Supervised Learning:
+Supervised learning is the machine learning task of inferring 
+a function from labeled training data. The training data consist
+of a set of training examples. In supervised learning, each example
+is a pair consisting of an input object (typically a vector) and a 
+desired output value (also called the supervisory signal)
+Unsupervised learning:
+is a type of machine learning algorithm used to draw inferences
+from datasets consisting of input data without labeled responses.
+The most common unsupervised learning method is cluster analysis,
+which is used for exploratory data analysis to find hidden patterns or grouping in data.
+--------------------------
+==> Regression is a supervised learning task
+==> in case of a supervised learnigntask we will have
+a Test data set a Train data set and we built a model and test it.
+
+Training Data:
+Used to adjust Model parameters
+
+Test Data:
+Evaluate performance on new data
+
+there is also something called Valdation data
+Validation data:
+The validation dataset
+is used to determine when to stop the 
+training in order to avoid model overfitting.
+
 
 
 
