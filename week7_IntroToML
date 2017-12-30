@@ -1320,4 +1320,76 @@ Now, we will use regression technique
 to predict a player's overall performance
 based on their attributes.
 
+>>>import sqlite3
+>>>import pandas as pd 
+>>>from sklearn.tree import DecisionTreeRegressor
+>>>from sklearn.linear_model import LinearRegression
+>>>from sklearn.model_selection import train_test_split
+>>>from sklearn.metrics import mean_squared_error
+>>>from math import sqrt
+#Reading data from SQLite DB into Pandas
+#Create your connection.
+>>>cnx = sqlite3.connect('database.sqlite')
+>>>df = pd.read_sql_query("SELECT * FROM Player_Attributes", cnx)
+>>>df.head()
+>>>df.shape
+o/p : [183978,42]
+==> we can see that there are 42 features
+Let's declare a list of these features.
+now we'll select some of them.
+>>>df.columns
+We'll select the ones we want to use
+for predicting the overall rating.
+we select most of them,except the rating.
+>>>features = [
+          'potential', 'crossing', 'finishing', 'heading_accuracy',
+          'short_passing', 'volleys', 'dribbling', 'curve', 'free_kick_accuracy',
+          'long_passing', 'ball_control', 'acceleration', 'sprint_speed',
+          'agility', 'reactions', 'balance', 'shot_power', 'jumping', 'stamina',
+          'strength', 'long_shots', 'aggression', 'interceptions', 'positioning',
+          'vision', 'penalties', 'marking', 'standing_tackle', 'sliding_tackle',
+          'gk_diving', 'gk_handling', 'gk_kicking', 'gk_positioning',
+          'gk_reflexes']
+Lets name the prediction/target as overall rating.
+>>>target = ['overall_rating']
+Let's now start cleaning the data.
+>>>df = df.dropna()
+Extract Features and Target ('overall_rating') Values into 2 Separate Dataframes
+As we need an x(the input)and a y(output)
+to go with the analogy of y=f(x),
+with features and target values.
+X will be our input data frame.
+And we'll select the features we wanted.
+We'll load the data frame, without the null values
+into X with those features into Y.
+>>>X = df[features]
+>>>y = df[target]
+#look at the data present in X and Y once for a better understanding
+#Let us look at a typical row from our features:
+>>>X.iloc[2]
+#Let us also display our target values:
+>>>y
+Now lets start with a regression analysis task.
+We are doing the same operation using train_test_split.
+i.e We are splitting the data set
+into test and training sets so we can use one for training
+and the rest for testing of the regression algorithm.
+#splitting the data
+>>>X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=324)
+We'll perform two different modeling operations
+using different regression techniques.
+(1)First, we will use a linear regressor.
+We'll select the features and use a linear regressor
+to predict a player's overall rating.
+#Linear Regression: Fit a model to the training set 
+>>>regressor = LinearRegression()
+>>>regressor.fit(X_train, y_train)
+#Perform Prediction using Linear Regression Model
+>>>y_prediction = regressor.predict(X_test)
+>>>y_prediction
+#What is the mean of the expected target value in test set ?
+>>>y_test.describe()
+#Evaluate Linear Regression Accuracy using Root Mean Square Error
+>>>RMSE = sqrt(mean_squared_error(y_true = y_test, y_pred = y_prediction))
+>>>print(RMSE)
 
