@@ -1383,13 +1383,193 @@ We'll select the features and use a linear regressor
 to predict a player's overall rating.
 #Linear Regression: Fit a model to the training set 
 >>>regressor = LinearRegression()
+This is the linear regression module
+we selected from scikit-learn.
 >>>regressor.fit(X_train, y_train)
+Using the fit method of the regressor,
+we fine-tuned the parameters of the linear regressor
+to capture the interactions between the two sets,
+the x_train and y_train.
+i.e we are trying to fit
+x_train and y_train and create a model.
 #Perform Prediction using Linear Regression Model
+As we now have a linear-regression-based model
+We can then use the predict method of the trained model
+to perform the prediction on the test set.
 >>>y_prediction = regressor.predict(X_test)
 >>>y_prediction
-#What is the mean of the expected target value in test set ?
+#What is the mean,min,max etc of the expected target value in test set ?
 >>>y_test.describe()
+To check the accuracy of the modes
+we describe Root Mean Square Error
+to measure the prediction accuracy of our regressor.
+That's the RMSE, Root Mean Square Error, in short.
+(we can also manually check the values as well)
 #Evaluate Linear Regression Accuracy using Root Mean Square Error
 >>>RMSE = sqrt(mean_squared_error(y_true = y_test, y_pred = y_prediction))
 >>>print(RMSE)
+o/p : 2.841 (i.e RMSE value is 2.8)
+RMSE captures the variation of the predicted value,
+from the observed value.So, an RMSE score of zero
+means perfect prediction with no errors,
+which is the ideal scenario, which almost never happens.
+When comparing two regression models,
+then the one with the smaller RMSE will be better
+since its predictions will have smaller difference
+from the observed values, or the measured values.
 
+Let's see if we can improve prediction accuracy now
+by using a slightly more complex model.
+That would be a decision tree regressor.(2nd technique)
+(2)Decision Tree regressor:
+A decision tree regressor
+builds a model in a top-down manner
+by splitting data set on an attribute.
+So the algorithm chooses the attribute
+which gives maximum reduction in standard deviation.
+So now, let's use the decision tree regressor
+to capture player performance as a function of,
+again, their attributes.
+#Fit a new regression model(Decision tree regressor) to the training set.
+>>>regressor = DecisionTreeRegressor(max_depth=20)
+>>>regressor.fit(X_train, y_train)
+So we are doing the  same thing.
+We have a regressor,
+but, since this is a tree, it has a depth.
+The maximum depth of tree we gave is 20.
+And we are using that regressor
+to fit the training and
+input and output training data sets, so x_train and y_train.
+#performing prediction using decision tree regressor
+>>>y_prediction = regressor.predict(X_test)
+>>>y_prediction
+(we can see thate values changed a bit)
+>>>y_test.describe()
+>>>RMSE = sqrt(mean_squared_error(y_true = y_test, y_pred = y_prediction))
+>>>print(RMSE)
+o/p:1.44
+==> for this data Decision tree regressor is good than the linear regressor.
+Work being done at the San Diego Supercomputer Center:
+Link: https://words.sdsc.edu/projects
+
+FAQ:
+Q)What is the definition of ‘data mining’?
+a.Activities related to finding patterns in databases and data warehouses. correct
+b.Process of inspecting, cleansing, transforming, and engineering a particular dataset.
+c.Query processing and statistical analysis to summarize a dataset.
+Ans: A
+Q)When you search an incorrectly spelled term online, suggested words is an example of machine learning.
+True correct
+False
+Q)What is the correct word to describe an instance of an entity in your data?
+a.Sample correct
+b.Feature
+c.Attribute
+d.Field
+Ans : A
+Q)In building a machine learning model, why do we want to adjust the parameters?
+a.To reduce the model’s error correct
+b.To compare different model variations
+c.To provide the best graph of the model outputs
+Ans: A
+Q)Which algorithm to build classification models relies on the notion that samples with similar characteristics likely belong to the same class?
+a.kNN correct
+b.Decision Tree
+c.Naive Bayes
+Ans: A
+Q)In a decision tree, which nodes do NOT have test conditions?
+a.Root nodes
+b.Internal nodes
+c.Leaf nodes correct
+Ans: C
+Q)How do you determine the size of a decision tree?
+A.The number of edges from the root node to that node.
+B.The number of edges in the longest path from the root node to the leaf node
+C.The number of nodes in the tree correct
+Ans: C
+Q)What is the first step in constructing a decision tree?
+A.Start with all samples at a node. correct
+B.Partition the samples into subsets based on the input variables.
+C.Repeatedly partition data into successively purer subsets until stopping criteria are satisfied.
+Ans: A
+Q)It works out better mathematically to measure the impurity of a split in a decision tree, rather than the purity.
+True correct
+False
+Q)Why are decision boundaries of a decision tree parallel to the axes formed by the variables?
+A.Each split considers only a single variable correct
+B.Each subset should be as homogenous as possible
+C.The induction algorithm eventually stops expanding
+Ans: A
+Q)What is the command to get the number of rows in a data set titled “data”?
+A.data.shape[0] correct
+B.data.shape[1]
+C.data.size()
+D.data.length()
+Ans: A
+Q)What does the following method call return?
+>>>accuracy_score(data_true = data_test, data_pred = predictions)
+A.The fraction of correctly classified samples. correct
+B.The number of correctly classified samples.
+Ans: A
+Q)To use scikit-learn: DecisionTreeRegressor, train_test_split, and mean_squared_error, which of the following libraries are necessary?
+A.sklearn.metrics
+B.sklearn.model_selection
+C.sklearn.tree
+D.scikitlearn
+E.Pandas
+Ans: Except option D everything needs to be imported
+Q)What is the function call to output the name of columns of a dataframe named x?
+x.columns(0)
+x.columns correct
+columns(x)
+Q)True or False: The function call train_test_split(a, b) where a and b are dataframes will always output the same result.
+True
+False correct
+Q)Which is NOT mentioned in the course as a common similarity measure in cluster analysis?
+Euclidean distance
+Manhattan distance
+Cosine similarity
+Sine similarity correct
+Q)How would you initially handle an anomaly (apparent outlier) in cluster analysis?
+Throw it out of the dataset
+Disregard in further analysis
+Provide further analysis on the anomaly correct
+Q)How do you assign each sample in a dataset to a centroid using the k-means algorithm?
+A.Assign the sample to the cluster with the closest centroid. correct
+B.Assign the sample to the cluster with the furthest centroid.
+C.Assign the sample to a random cluster.
+Ans: A
+Q)How do you determine the new centroid of a cluster?
+A.Calculate the mean of the cluster correct
+B.Calculate the max of the cluster
+C.Calculate the mode of the cluster
+D.Calculate the min of the cluster
+Ans: A
+Q)What does the “within-cluster sum of squared error” provide?
+A>A mathematical measure of the variation within a cluster. correct
+B.An error measurement for a specific sample in relation to the centroid of a particular cluster.
+C.An answer to which cluster is the most ‘correct.’
+Ans: A
+Q)Final clusters are sensitive to initial centroids.
+True correct
+False
+Q)Which parameter in the KMeans clustering algorithm do you have to specify for the number of clusters you want?
+n_clusters correct
+clusters
+tot
+cluster_centers
+Q)In the parallel_plot function, what was represented on the y-axis of the resulting plot?
+A.Each of the features
+B.Values of each cluster center correct
+C.Location of each cluster center
+D.Min and max values in each cluster
+Ans: B
+Q)What is the appropriate input for the following line of code to make a linear regression prediction?
+y_prediction = regressor.predict(___)
+x_test correct
+x_train
+y_train
+y_test
+Q)A Root Mean Square Error (RMSE) higher than our mean value would be too high.
+True correct
+False
