@@ -1250,13 +1250,74 @@ Used to adjust Model parameters
 Test Data:
 Evaluate performance on new data
 
-there is also something called Valdation data
+there is also something called Validation data
 Validation data:
 The validation dataset
 is used to determine when to stop the 
 training in order to avoid model overfitting.
 
+We we'll discuss linear regression.
+Linear Regression:
+-------------------
+A linear regression model captures the relationships
+between a numerical output and the input variables,
+and the relationship is modeled as a linear relationship,
+hence linear in linear regression.
+Eg:
+Data set used:Iris flower dataset
+This data set has samples of different species
+of iris flowers, along with measurements
+such as petal width and petal length.
 
+we have a plot with petal width measurements
+in centimeters on the x-axis,
+and petal length measurements on the y-axis.
+Let's say that we want to predict petal length
+based on petal width.
+==> regression task is:Given a measurement for petal width,
+predict the petal length.
+y=mx+c(st.line equation (or) linear line equation)
+(this line is also ccalled Regression Line)
+where c is y intercept(point where the line cuts y-axis)
+and m = slope
+==>m and c are parameters of model
+This regression line can be determined
+using the least squares method.
 
+Least Sq. method:
+The least squares method finds the regression line
+that makes the sum of the residuals as small as possible.
+In other words, it finds the line that minimizes
+the sum of the squared errors of prediction.
+Residuals:suppose a sample lies at a certain 
+  distance from Regression line,then the
+  The square of this distance is referred to as
+  the residual associated with that sample.
+  (this distance is the error associated with the sample 
+  b/w the value of prediction(reg.Line) and the actual
+  value of sample).
+The goal of linear regression then,
+is to find the best-fitting straight line(Reg.Line)
+through the samples using the least squares method.
+Once the regression model is built,
+we can use it to make predictions.
+In linear regression, if there's only one
+input variable, then the task is referred to as
+simple linear regression.
+In cases with more than one input variable, then,
+it's referred to as multiple linear regression.
+To summarize, the linear regression captures
+the linear relationships between a numerical output
+and the input variables.
+The least squares method can be used to build
+a linear regression model by finding
+the best-fitting line through the samples.
+
+Live code(Regression):
+We now learned regression allows us
+to predict continuous variables.
+Now, we will use regression technique
+to predict a player's overall performance
+based on their attributes.
 
 
