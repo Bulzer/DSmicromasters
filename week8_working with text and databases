@@ -1,0 +1,27 @@
+The primary data structure for a relational model is a table,
+Notice that a table structure in a DB is very similar to a Python DataFrame.
+==>DataFrames can be used to load relational tables(DB tables)
+   which are also called relations.
+This DB table actually represents a set of tuples(rows).
+We were informally calling this a record before
+but now we call it a tuple.
+Therefore:Table is called as relation.
+          Row/record is called as Tuple.
+Remember the definition of sets,
+it's a collection of distinct elements
+of the same type.(remember the word 'distinct' and 'Same type')          
+In general many systems/DB's will allow duplicate tuples in their relations(tables)
+but mechanisms are provided to prevent duplicate entries.
+
+Note:It is important to understand that join
+is one of the most expensive,
+that is time and space consuming, operations.
+As data becomes larger
+and the tables contains hundreds of millions of tuples,
+the join operation can easily become a bottleneck
+in a larger analytical application.
+So, for data science
+that involves big data,when we need joins,
+it's very important to choose
+a suitable data management platform
+that makes its operation efficient.
