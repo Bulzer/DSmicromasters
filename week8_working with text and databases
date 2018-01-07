@@ -25,3 +25,92 @@ that involves big data,when we need joins,
 it's very important to choose
 a suitable data management platform
 that makes its operation efficient.
+
+Access a DB with Python:
+------------------------
+We will use the Iris Database
+from Kaggle in SQLite format.
+It features 50 iris flowers
+and their classification into three species.
+https://www.kaggle.com/uciml/iris/
+The dataset is called/named database.sqlite,
+First let's check that the sqlite database is available and display an error message if the file is not available
+(assert checks if the expression is True, otherwise throws AssertionError with the error message string provided):
+i.e check if the file is present at our location
+>>>import os
+>>>data_iris_folder_content = os.listdir("A:/Naveed/DS/micromasters/Week8")
+>>>error_message = "Error: sqlite file not available"
+>>>assert "database.sqlite" in data_iris_folder_content, error_message
+Please note that this error message operation
+shows an assertion or a good way of capturing errors
+in a program using an assert statement.
+Assert statements generally help you locate
+or identify bugs in your Python programs,
+as a way of creating such built-in tests.
+If you do a lot of testing,
+you'll actually do a lot of assert statements.
+We use the sqlite3 package from the Python standard library to connect to the sqlite database:
+SQLite comes with your standard Python,
+so it's not a library that you need to go and install separately.
+>>>import sqlite3
+>>>conn = sqlite3.connect('A:/Naveed/DS/micromasters/Week8/database.sqlite')
+Now we have a connection object,
+and we'll use this connection object
+to get a cursor object.That cursor object
+is actually our interface to the database.
+A sqlite3.Cursor object is our interface to the database, 
+llr to execute method that allows to run any SQL query on our database.
+>>>cursor = conn.cursor()
+>>>type(cursor)
+O/P:sqlite3.Cursor
+First of all we can get a list of all the tables saved into the database, 
+this is done by reading the column name from the sqlite_master metadata table with:
+SELECT name FROM sqlite_master
+The output of the execute method is an iterator that can be used
+in a for loop to print the value of each row.
+>>>for row in cursor.execute("SELECT name FROM sqlite_master"):
+>>>    print(row)
+O/P:('Iris',)
+we only have one table==>so we got that one row.
+A shortcut to directly execute the query and gather the results is the `fetchall` method:
+==>we can use FETCHALL method instead of loop
+>>>cursor.execute("SELECT name FROM sqlite_master").fetchall()
+>>>sample_data = cursor.execute("SELECT * FROM Iris LIMIT 20").fetchall()
+>>>print(type(sample_data))
+==> its of type LIST ==> easy to work,but convert it to DataFrame==> more easy to work
+>>>sample_data
+>>>[row[0] for row in cursor.description]
+(checking the colum names of the list)
+Note: This way of finding the available tables in a database is specific to sqlite, 
+other databases like MySQL or PostgreSQL have different syntax.
+Then we can execute standard SQL query on the database, 
+SQL is a language designed to interact with data stored in a relational database. 
+It has a standard specification, therefore the commands below work on any database.
+
+If you need to connect to another database, you would use another package instead of sqlite3,
+Eg:
+MySQL Connector for MySQL:https://dev.mysql.com/doc/connector-python/en/
+Psycopg for PostgreSQL :http://initd.org/psycopg/docs/install.html
+pymssql for Microsoft MS SQL :http://pymssql.org/en/stable/
+then you would connect to the database using specific host, port and authentication credentials but then you could execute the same exact SQL statements.
+https://dev.mysql.com/doc/connector-python/en/
+>>>import pandas as pd
+>>>iris_data = pd.read_sql_query("SELECT * FROM Iris", conn)
+(reading the O/P into a pandas dataframe)
+pandas.read_sql_query takes a SQL query and a connection object
+and imports the data into a DataFrame, also keeping the same data types of the database columns
+>>>iris_data.head()
+>>>iris_data.dtypes
+However, sqlite3 is extremely useful for downselecting data before importing them in pandas.
+For example you might have 1 TB of data in a table stored in a database on a server machine.
+You are interested in working on a subset of the data based on some criterion, 
+unfortunately it would be impossible to first load data into pandas and then filter them,
+therefore we should tell the database to perform the filtering and just load into pandas the downsized dataset.
+>>>iris_setosa_data = pd.read_sql_query("SELECT * FROM Iris WHERE Species == 'Iris-setosa'", conn)
+>>>iris_setosa_data
+>>>print(iris_setosa_data.shape)
+>>>print(iris_data.shape)
+
+
+
+
