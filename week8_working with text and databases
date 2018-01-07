@@ -93,7 +93,6 @@ MySQL Connector for MySQL:https://dev.mysql.com/doc/connector-python/en/
 Psycopg for PostgreSQL :http://initd.org/psycopg/docs/install.html
 pymssql for Microsoft MS SQL :http://pymssql.org/en/stable/
 then you would connect to the database using specific host, port and authentication credentials but then you could execute the same exact SQL statements.
-https://dev.mysql.com/doc/connector-python/en/
 >>>import pandas as pd
 >>>iris_data = pd.read_sql_query("SELECT * FROM Iris", conn)
 (reading the O/P into a pandas dataframe)
@@ -101,12 +100,14 @@ pandas.read_sql_query takes a SQL query and a connection object
 and imports the data into a DataFrame, also keeping the same data types of the database columns
 >>>iris_data.head()
 >>>iris_data.dtypes
+(gives datatypes of columns)
 However, sqlite3 is extremely useful for downselecting data before importing them in pandas.
 For example you might have 1 TB of data in a table stored in a database on a server machine.
 You are interested in working on a subset of the data based on some criterion, 
 unfortunately it would be impossible to first load data into pandas and then filter them,
 therefore we should tell the database to perform the filtering and just load into pandas the downsized dataset.
 >>>iris_setosa_data = pd.read_sql_query("SELECT * FROM Iris WHERE Species == 'Iris-setosa'", conn)
+we are selecting iris_setosa rather than rather than all three species.
 >>>iris_setosa_data
 >>>print(iris_setosa_data.shape)
 >>>print(iris_data.shape)
