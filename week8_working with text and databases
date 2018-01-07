@@ -111,6 +111,9 @@ we are selecting iris_setosa rather than rather than all three species.
 >>>iris_setosa_data
 >>>print(iris_setosa_data.shape)
 >>>print(iris_data.shape)
+------------------------------------------------------------------------------
+NLP:NLTK:
+-------------------------------------------------------------------------------
 
 
 
