@@ -114,7 +114,111 @@ we are selecting iris_setosa rather than rather than all three species.
 ------------------------------------------------------------------------------
 NLP:NLTK:
 -------------------------------------------------------------------------------
+Natural Language Processing, or shortly NLP,is a data science term used to refer
+to the interaction of computers,and natural language humans use.
+NLP techniques are applied in speech recognition engines,
+like Siri, Google Now, or Alexa.
+These engines are designed to learn what and how a
+human talks over time,and constantly improve their accuracy.
+Similarly, automatic translators,like Google Translate or Facebook
+automatic translation of statuses use NLP, using some recent very effective
+neural network based techniques that take not only words and phrases into account,
+but also the context, by looking at the word surrounding
+the text they are translating.
+
+NLTK is the most popular Python package for NLP.
+It is an open source library that provides modules
+for importing, cleaning, pre-processing text data,
+in human language,
+and then apply computational linguistics algorithms,
+or machine learning algorithms, like sentiment analysis,
+to these datasets.
+It also provides over 50 datasets to start working with,
+including the movie database we will be using
+in our example notebook.
+Note:We can use NLTK download function to download these datasets.
+
+Code:
+
+It also includes many easy-to-use datasets in the `nltk.corpus` package, 
+we can download for example the `movie_reviews` package using the `nltk.download` function:
+>>>import nltk
+>>>nltk.download("movie_reviews")
+o/p:true (i.e dataset is downloaded)
+You can also list and download other datasets interactively just typing:
+nltk.download() in the Jupyter Notebook.
+***Once the data have been downloaded, we can import them from `nltk.corpus`.
+>>>from nltk.corpus import movie_reviews
+(importing the movie reviews we downloaded)
+The FILE ID's `fileids` method provided by all the datasets in `nltk.corpus` 
+gives access to a list of all the files available.
+In particular in the movie_reviews dataset we have 2000 text files,
+each of them is a review of a movie, and they are already split in a 
+`neg` folder for the negative reviews and a `pos` folder for the positive reviews:
+>>>len(movie_reviews.fileids())
+o/p:2000
+NL techniques depends on large amounts of text
+or other linguistics data.
+These digital collections are called corpora all together.
+Another word you will hear is a corpus,
+which is the singular form of corpora.
+Therefore:corpus(plural corpora) is a collection of text in 
+digital form ,assembled for text processing.
+(NLTK provides a download interface to pre-processed text datasets)
+After importing nltk, we were able to interact
+with a download interface for all of these datasets
+using nltk download.
+The movie reviews corpus,
+was downloaded in your home folder.
+Now,as we have imported this dataset
+and the dataset has 2000 records(1000 +ve reviews and 1000 0ve reviews)
+>>>movie_reviews.fileids()[:5]
+(checking the first 5 files in the corpus)
+o/p:
+['neg/cv000_29416.txt',
+ 'neg/cv001_19502.txt',
+ 'neg/cv002_17424.txt',
+ 'neg/cv003_12683.txt',
+ 'neg/cv004_12641.txt']
+>>>movie_reviews.fileids()[-5:]
+(checking the last 5 fils)
+O/P:
+['pos/cv995_21821.txt',
+ 'pos/cv996_11592.txt',
+ 'pos/cv997_5046.txt',
+ 'pos/cv998_14111.txt',
+ 'pos/cv999_13106.txt']
+ ==> we can see that the files are placed in folders/folders 'neg' and 'pos'.
+
+`fileids` can also filter the available files based on their category, 
+which is the name of the subfolders they are located in. 
+Therefore we can have lists of positive and negative reviews separately.
+>>>negative_fileids = movie_reviews.fileids('neg')
+>>>positive_fileids = movie_reviews.fileids('pos')
+ (as we can see the o/p's are Lists(due to sq. braces when we displayes top 5 and last 5 files))
+ ==> we can use 'len' fn
+ i.e >>>len(negative_fileids), len(positive_fileids)
+ o/p:1000,1000
+ Lets review a file of this data set
+ ==> using 'raw' method to inspect a single file
+ >>>print(movie_reviews.raw(fileids=positive_fileids[0]))
+ Output is a lot of text data,which is the indetail review of the movie.
+ What do we do of this text ???
+ ==>The first step in Natural Language processing is generally 
+ to split the text into words, this process might appear simple
+ but it is very tedious to handle all corner cases, see 
+ for example all the issues with punctuation we have to 
+ solve if we just start with a split on whitespace.
+ ==> tokenizing
+ 
+ 
 
 
+Q)What is the correct way to show the last 2 files using movie_reviews.fileids() where movie_reviews is a downloaded dataset?
+A)movie_reviews.fileid()[-2:]
+B)movie_reviews.fileids([-2:])
+C)movie_reviews.fileids()[:-2]
+D)movie_reviews.fileids([:-2])
+Ans: (A) 
 
 
