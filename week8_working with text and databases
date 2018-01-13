@@ -206,12 +206,132 @@ Therefore we can have lists of positive and negative reviews separately.
  What do we do of this text ???
  ==>The first step in Natural Language processing is generally 
  to split the text into words, this process might appear simple
- but it is very tedious to handle all corner cases, see 
- for example all the issues with punctuation we have to 
- solve if we just start with a split on whitespace.
- ==> tokenizing
- 
- 
+ but it is very tedious to handle all corner cases,
+What are corner cases?
+They include inconsistent use of punctuation,
+or contractions, or shortened versions of words.
+They can also be hyphenated words
+that include characters like the
+'New York-based' example here.
+How do we Tokenize such cases?
+Nltk offers libraries to remedy these challenges.
+we will first use a simple white space based Tokenizer.
+Then, we will learn how to do it better and easier
+using nltk.
+
+==> tokenizing:
+simple white space based Tokenizer.
+==> use string-splitter function in Python for this
+Say we below text:
+>>>romeo_text = """Why then, O brawling love! O loving hate!
+>>>   O any thing, of nothing first create!
+>>>   O heavy lightness, serious vanity,
+>>>   Misshapen chaos of well-seeming forms,
+>>>   Feather of lead, bright smoke, cold fire, sick health,
+>>>   Still-waking sleep, that is not what it is!
+>>>   This love feel I, that feel no love in this."""
+>>>romeo_text.split()
+==> we see that punctuations like exclamations,periods,etc
+are still with the words
+==>`nltk` has a sophisticated word tokenizer trained on English
+named `punkt`, to remove these punctuations
+we first have to download its parameters: 
+>>>nltk.download("punkt")
+Then we can use the `word_tokenize` function to properly tokenize
+this text, compare to the whitespace splitting we used above.
+>>>romeo_words = nltk.word_tokenize(romeo_text)
+>>>romeo_words
+==> we can see that the words are tokenized properly now.
+i.e say we have 'then.'
+==> we have 2 tokes 1st is 'then' and 2nd is '.' using punkt
+The good news is all corpora in nltk
+already provides a way to generate Tokenized words
+for each data file.
+==>movie_reviews corpus already has direct access to tokenized text with the words method
+>>>movie_reviews.words(fileids=positive_fileids[0])
+
+==>creating Bag of words model:
+Bag of words: text as unordered collection of words.
+Bag-of-words model is a very simple representation
+of a body of text as a loose set of words.
+It flattens any text into an unordered collection of words.
+Although it disregards the sentence structure
+associated to the words, this simple technique
+is pretty useful to identify a topic or sentiment in text,
+like if a product review has
+a negative or positive sentiment,
+or what a body of text talks about.
+We can use the words in a feature matrix
+where each word is a column, and each text body
+or review in our movie example,
+is a row that has boolean data values.
+A cell in the review row gets assigned true
+if the word appears in the review,
+and false if it doesn't.
+From the bag-of-words model
+we can build features to be used by a classifier
+and here we assume that each word is a feature
+that can either be true or false.
+We implement this in Python as a dictionary,
+where each word in a sentence we associate with true,
+and if a word is missing, that would be the same
+as assigning false
+
+before further analysis it is often practice to filter our stopwords
+and maybe even the punctuations from the bag-of-words.
+Stopwords are words like the, that, and is,
+which occur a lot but don't have a big significance
+in identifying the context of the text being processed.
+>>>{word:True for word in romeo_words}
+(assigning True for each word/token in romeo words)
+So we'll have, as you see here, a dictionary
+where each word in romeo_words are assigned true,
+and there are no false values
+because we are not assigning false for anything.
+>>>type(_)
+o/p: dict
+You would remember taht underscore(_) here is the last output
+that goes into the standard out.
+So if you had assigned that dictionary to a variable,
+you need to write the name
+of that variable within this type.
+(i.e we can also do >>>dict1={word:True for word in romeo_words}
+                    >>>type(dict1)
+)
+Lets generalize it by moving this code into a python function.
+>>>def build_bag_of_words_features(words):
+>>>    return {word:True for word in words}
+==> fn name = build_bag_of_words_features
+   this will accept a set of words and return a dictionary for it.
+So let's run the function and see if we get that same output
+>>>build_bag_of_words_features(romeo_words)
+#removing the stopwords by downloading the stopword nltk corpus for english stopwords
+>>>nltk.download("stopwords")
+importing string class
+>>>import string
+these are the punctuations present in string class
+>>>string.punctuation
+O/P:'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+==> we will now remove the stopwords and the punctuations present above.
+==> capturing the useless words
+>>>useless_words = nltk.corpus.stopwords.words("english") + list(string.punctuation)
+>>>#useless_words
+>>>#type(useless_words)
+Now we will actually update our bag-of-words function
+that we built with an if statement
+to check if the word exists in useless_words
+and skip that word if it does.
+>>>def build_bag_of_words_features_filtered(words):
+>>>    return {
+>>>        word:1 for word in words \
+>>>        if not word in useless_words}
+==>using the sam sub fn 'word' as before
+   replaced True with '1' (since True is 1 and False is 0)
+   i.e for each true word,if the word is not present in useless words==> add it to the dictionary)
+>>>build_bag_of_words_features_filtered(romeo_words)   
+   
+==> Plotting Frequency of Words:
+
 
 
 Q)What is the correct way to show the last 2 files using movie_reviews.fileids() where movie_reviews is a downloaded dataset?
@@ -220,5 +340,8 @@ B)movie_reviews.fileids([-2:])
 C)movie_reviews.fileids()[:-2]
 D)movie_reviews.fileids([:-2])
 Ans: (A) 
-
+Q)True or False: We can use ‘1’ and ‘True’ interchangeably.
+a)True
+b)False
+Ans A (get it confirmed from someone once)
 
