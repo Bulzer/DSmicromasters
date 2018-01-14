@@ -331,6 +331,84 @@ and skip that word if it does.
 >>>build_bag_of_words_features_filtered(romeo_words)   
    
 ==> Plotting Frequency of Words:
+Generally we use plotting to compare 2 datasets.
+Using the `.words()` function with no argument we 
+can extract the words from the entire dataset.
+>>>all_words = movie_reviews.words()
+after extracting the words...lets count them.
+>>>len(all_words)/1e6
+O/P:1.58382
+==> we have around 1.6 million words.
+Now lets count the words after filtering stopwords.
+>>>filtered_words = [word for word in movie_reviews.words() if not word in useless_words]
+#>>>type(filtered_words)
+>>>len(filtered_words)/1e6
+O/P:0.710579 i.e .7 million
+The `collection` package of the standard library contains 
+a `Counter` class that is handy for counting frequencies 
+of words in our list.
+==>Let's create a counter object using these filtered words.
+we'll start by importing counter from collections.
+And we'll give counter this filtered words.
+And turn that into a counter object.
+>>>from collections import Counter
+>>>word_counter = Counter(filtered_words)
+Once we have this word_counter object successfully ran,
+We can use any function the counter class provides us,
+or the properties of this class.
+==>we have a method called `most_common()` from the 
+Counter class to get the words with the higher count.
+>>>most_common_words = word_counter.most_common()[:10]
+>>>most_common_words
+Now we would like to have a visualization of this using matplotlib.
+First we want to use the Jupyter magic function
+%matplotlib inline
+To setup the Notebook to show the plot embedded 
+into the Jupyter Notebook page, you can also test:
+%matplotlib notebook
+for a more interactive plotting interface which 
+however is not as well supported on all platforms and browsers.
+>>>%matplotlib notebook
+#>>>%matplotlib inline
+>>>import matplotlib.pyplot as plt
+We need to sort this list,
+before we can plot it actually.
+
+We can sort the word counts and plot their values
+on Logarithmic axes to check the shape of the distribution. 
+This visualization is particularly useful if comparing 2 
+or more datasets, a flatter distribution indicates a large
+vocabulary while a peaked distribution a restricted vocabulary
+often due to a focused topic or specialized language.
+
+==>we had sorted word_counter and the values in it.
+And we assigned that to a list called sorted_word_counts.
+We'll give those sorted word counts to 
+the loglog fn to create that logarithmic plot.
+>>>sorted_word_counts = sorted(list(word_counter.values()), reverse=True)
+>>>plt.loglog(sorted_word_counts)
+>>>plt.ylabel("Freq")
+>>>plt.xlabel("Word Rank");
+We can also plot the histogram of sorted word counts,
+which displays how many words have a count,
+in a specific range.
+Not per word but the words are bent
+to be together, if they have a similar count.
+Since we have many words with low frequencies,
+in our corpus.
+>>>plt.hist(sorted_word_counts, bins=50);
+we can see that the distribution is highly peaked at low counts
+(since we have many words whose frequency is less), i.e. most of the words
+appear with a low count, so we better display it on 
+semilogarithmic axes to inspect the tail of the distribution.
+>>>plt.hist(sorted_word_counts, bins=50, log=True);
+
+Sentiment Analysis:
+---------------------------
+We now use the bag-of-words model we created 
+in a classifier for Sentiment Analysis of movie reviews.
+
+
 
 
 
@@ -343,5 +421,10 @@ Ans: (A)
 Q)True or False: We can use ‘1’ and ‘True’ interchangeably.
 a)True
 b)False
-Ans A (get it confirmed from someone once)
+Ans: A (get it confirmed from someone once)
+Q)What is the benefit of a log graph over a graph that has not modified the scales?
+a)Log scales allow a large range of values that are compressed into one point of the graph to be shown. 83%
+b)Log scales are significantly better in representing every type of data compared to unmodified scale graphs. 14%
+c)There is no outright advantage to converting a graph into a log scale. 3%
+Ans: A (get it confirmed from someone once)
 
