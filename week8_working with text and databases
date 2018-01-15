@@ -407,7 +407,147 @@ Sentiment Analysis:
 ---------------------------
 We now use the bag-of-words model we created 
 in a classifier for Sentiment Analysis of movie reviews.
+what is Sentiment Analysis?
+The term refers to the activity of identifying attitude
+or emotion encoded in a body of text,
+like a product review(+ve or -ve) or work of literature.
+Classification using machine learning
+is a technique used for sentiment models.
+As you would remember, classification is a
+supervised activity and requires labels
+from a ground truth data.
+This is where we will take advantage of
+bag-of-words and a curated negative
+and positive reviews we downloaded.
+We will use our previously implemented bag-of-words function
+to create a positive or negative label
+for each review bag-of-words.
+We will use Naive Bayes Classifier for this task.
 
+Naive Bayesclasifier:
+is a very simple classifier with
+a probabilistic approach to classification.
+What this means is that the relationships between
+the input features and the class labels
+is expressed as probabilities.
+So, given the input features, for example,
+the probability for each class is estimated.
+The class with the highest probability
+then determines the label for the sample.
+==>Naive bayes is a simple classifier
+based on conditional probability.
+-->In training phase,it detects the probability that
+each feature(word) appears in a category(+ve or -ve).
+-->Once Trained,it collects the 'votes' for all words
+in the new review and finds the most probable label.
+
+**We will use Naive Bayes from nltk this time, not scikit-learn.
+==>Training a Classifier for Sentiment Analysis:
+Using our `build_bag_of_words_features` fn we can 
+build separately the negative and positive features.
+Basically for each of the 1000 negative and for the 
+1000 positive review, we create one dictionary of the
+words and we associate the label "neg" and "pos" to it.
+(We are lucky that the database is curated
+to separate positive and negative reviews.
+So we will use this as ground truth data
+and build two dictionaries as a bag-of-words
+for positive and negative reviews.)
+>>>negative_features = [
+>>>    (build_bag_of_words_features_filtered(movie_reviews.words(fileids=[f])), 'neg') \
+>>>    for f in negative_fileids
+>>>]
+we can print a samoke record and test
+>>>print(negative_features[3])
+lly for positive features
+>>>positive_features = [
+>>>    (build_bag_of_words_features_filtered(movie_reviews.words(fileids=[f])), 'pos') \
+>>>    for f in positive_fileids
+>>>]
+>>>print(positive_features[6])
+Now we have our 2 features and remember that
+each of these feature has 1000 labels/records in it.
+(1000 records each for +ve lable and -ve labels respectively)
+>>>from nltk.classify import NaiveBayesClassifier
+we are doing 80-20 split
+When we provide the first 800 rows
+in each feature, it's 80%, right, 1,000 times 80%.
+So we'll store that number, 800,
+in a variable called split.
+And we'll use that split to slice the first 800 for training
+and the remaining 200 for testing later on.
+>>>split = 800
+==>Now We are using the Naive Bayes Classifier
+to train it, with the first 800 positive features
+and the first 800 negative features.
+>>>sentiment_classifier = NaiveBayesClassifier.train(positive_features[:split]+negative_features[:split])
+(Remember they had labels pos and neg.)
+we'll call it Sentiment Classifier.
+We'll now check the accuracy of the model we built.
+using the classification's accuracy fn,
+it's the utility of the classification.
+Lets check after training what is the accuracy on the training set,
+i.e. the same data used for training, we expect this to be a very 
+high number because the algorithm already "saw" those data. 
+Accuracy is the fraction of the data that is classified correctly,
+we can turn it into percent.
+>>>nltk.classify.util.accuracy(sentiment_classifier, positive_features[:split]+negative_features[:split])*100
+O/p: 98.065
+==> preety good as expected
+Now lets check how the model behave on the remaining 20 %
+>>>nltk.classify.util.accuracy(sentiment_classifier, positive_features[split:]+negative_features[split:])*100
+O/p:71.75
+===>Accuracy here is around 70% which is pretty good for
+such a simple model(we can further improve our model)if we 
+consider that the estimated accuracy for a person is about 80%.
+There if there were a human instead of 
+machine he would have predicted 80% correctly.
+We can finally print the most informative features,
+i.e. the words that mostly identify a +ve or -ve review.
+
+Remember, we had a large vocabulary and
+the Sentiment Classifier used all the words,
+but which of those words gave us this highish accuracy?
+==> we have a fn for that as well to tell which 
+words were most informative in the dataset.
+>>>sentiment_classifier.show_most_informative_features()
+O/p:
+Most Informative Features
+       outstanding = 1                 pos : neg    =     13.9 : 1.0
+         insulting = 1                 neg : pos    =     13.7 : 1.0
+        vulnerable = 1                 pos : neg    =     13.0 : 1.0
+         ludicrous = 1                 neg : pos    =     12.6 : 1.0
+       uninvolving = 1                 neg : pos    =     12.3 : 1.0
+            avoids = 1                 pos : neg    =     11.7 : 1.0
+        astounding = 1                 pos : neg    =     11.7 : 1.0
+       fascination = 1                 pos : neg    =     11.0 : 1.0
+         affecting = 1                 pos : neg    =     10.3 : 1.0
+            darker = 1                 pos : neg    =     10.3 : 1.0
+==> words like outstanding,insulting etc had more effect on our output
+
+Other uses of NLP:
+1)Estimating Oscar Winner/;
+A company (I do not remember which) claims to 
+have predicted the winner at the Oscars 2016 
+(The Revenant) using only reviews posted by the
+online community on popular movie review websites. 
+is a Prime example of NLP.
+
+2)Using sentiment evaluation to target individuals
+that may have mental health issues.:
+Sentiment evaluation of social media could be used
+to target relevant advertising/websites to people 
+with mental health issues, e.g. people that repeatedly 
+post sad statuses could be targeted with a helpline advert.
+This principle is already being applied with targeted 
+marketing based on keyword searches, so why not use it
+for a good cause as well.
+
+3)Predict a natural disaster for insurers company.
+
+------------------------------------------------------------------------------------
+Accessing Twitter API:
+---------------------------
 
 
 
