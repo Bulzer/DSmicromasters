@@ -731,7 +731,7 @@ to create a better version of the same output.
 >>>import json
 >>>print((json.dumps(us_trends[:2], indent=1)))
 (#indent = 1 ==> indent the next level/parenthesis) with 1 space)
-Let's create sets of these trends
+Let's create sets(set objects) of these trends
 for each location.
 And then we'll find the commonalities between trends
 for those locations.
@@ -747,7 +747,279 @@ for all the locations
 >>>                     for trend in us_trends[0]['trends']]) 
 >>>trends_set['san diego'] = set([trend['name'] 
 >>>                     for trend in local_trends[0]['trends']]) 
+We have now this trends set object
+and there are three sets in it, one for the world,
+one for India, one for San Diego.
+Now lets create a for loop
+that joins all the trends for a particular location
+and prints them in pretty/better format.
+We'll first join the trends for world, then India,
+then San Diego.
+>>>for loc in ['world','India','san diego']:
+>>>    print(('-'*10,loc))
+>>>    print((','.join(trends_set[loc])))
+now how do we create intersections
+of these texts, sets?
+We will make use of Python set objects,
+which we have already created.
+These set objects will give us an intersection 
+function.So let's use that.
+>>>print(trends_set)
+the first one we'll give us the intersection
+of world and India, the second one will give us
+the intersection of San Diego with what's going on in India.
+>>>print(( '='*10,'intersection of world and India'))
+>>>print((trends_set['world'].intersection(trends_set['India'])))
+>>>print(('='*10,'intersection of us and san-diego'))
+>>>print((trends_set['san diego'].intersection(trends_set['India'])))
+How about if we want to search Twitter for 
+tweets related to a particular topic or hashtag?
+We will see that each tweet is not only 140 character string
+but also comes with many other information related to it.
+Those are they keys of the dictionary of each tweet.
+We will use these metadata
+to extract interesting information
+about tweets that we receive
+in response to our search query.
+>>>topic = '#MTVAwards' 
+>>>number = 100
+>>># See https://dev.twitter.com/docs/api/1.1/get/search/tweets
+>>>search_results = twitter_api.search.tweets(q=topic, count=number)
+>>>statuses = search_results['statuses']
+>>>#len(statuses)
+>>>print(statuses)
+>>>#print(statuses[0]) ==> gives the first tweet all info
+==> gives the latest 100 tweets.
+we get a bunch of records for each tweet in JSON format.
+Link whn it was created 
+and it's a retweet and things like that.
+There are lots of metadata about a particular tweet
+including the text for that tweet.
+Twitter often returns duplicate results,
+we can filter them out checking for duplicate texts.
+(as there might be same tweets,retweets etc)
+>>>all_text = []
+>>>filtered_statuses = []
+>>>for s in statuses:
+>>>    if not s["text"] in all_text:
+>>>        filtered_statuses.append(s)
+>>>        all_text.append(s["text"])
+>>>statuses = filtered_statuses     
+('text' contains the tweet message)
+i.e for each status(S) in statuses,if tweet 
+text is not present in all texts==>then append.
+>>>len(statuses)
+We can also display the statuses, all this text,
+using slicing out the text from the statuses object,
+the search results.
+>>>[s['text'] for s in search_results['statuses']]
+since this was in JSON,
+we can use the JSON dumps again.
+>>># Show one sample search result by slicing the list...
+>>>print(json.dumps(statuses[0], indent=1))
+we can also analyse individual statuses
+>>># The result of the list comprehension is a list with only one element that
+>>># can be accessed by its index and set to the variable t
+>>>t = statuses[0]
+>>>#[ status for status in statuses 
+>>>#          if status['id'] == 316948241264549888 ][0]
+>>># Explore the variable t to get familiarized with the data structure...
+>>>print(t['retweet_count'])
+>>>print(t['retweeted'])
+o/p:71
+   false
+Extracting text,hashtags,screen names etc
+>>>status_texts = [ status['text'] 
+>>>                 for status in statuses ]
+>>>screen_names = [ user_mention['screen_name'] 
+>>>                 for status in statuses
+>>>                     for user_mention in status['entities']['user_mentions'] ]
+>>>hashtags = [ hashtag['text'] 
+>>>             for status in statuses
+>>>                 for hashtag in status['entities']['hashtags'] ]
+>>># Compute a collection of all words from all tweets
+>>>words = [ w 
+>>>          for t in status_texts 
+>>>              for w in t.split() ]
+(this split() fn is from string class)
+>>># Explore the first 5 items for each list...
+>>>print(json.dumps(status_texts[0:5], indent=1))
+>>>print(json.dumps(screen_names[0:5], indent=1)) 
+>>>print(json.dumps(hashtags[0:5], indent=1))
+>>>print(json.dumps(words[0:5], indent=1))
+Next we'll find the frequencies of these words.
 
+Frequescy Analysis:
+As you remember from the last lesson,
+the collections package in the standard library
+contains the counter class,
+i.e from collections import counter
+which is handy for creating frequency distributions.
+It gets lists and counts how many times
+each items is repeated in a list.
+Its most_common() fn/method
+returns the sorted counts.
+The final output works
+but it's hard to read with all that syntax.
+We will create a nicely formatted table out of this output.
+Advanced string formatting in python:
+>>>print("{:20} | {:>6} ".format(k,v))
+{:20} format(s) pad the string to 20 spaces in the end
+{:^20} format(s) centered in the middle of 20 spaces
+{:>20} format(s) same as centered format but it is right aligned
+we can check https://pyformat.info
 
+Creating a basic frequency distribution from the words in tweets.
+Now we are going to use again the counter
+like we did in our NLP example.
+To count the frequencies of all
+the words in the Tweets.
+>>>from collections import Counter
+>>>for item in [words, screen_names, hashtags]:
+>>>    c = Counter(item)
+>>>    print(c.most_common()[:10]) # top 10
+>>>    print()
+==> we can see the most common words  from each list,
+but they are in dictionary kinda format
+The output is still hard to read.
+It is a list of tuples so it has a lot
+of syntax like parenthesis
+and the rectangular parenthesis,
+square parenthesis, codes, and things like that.
+There's actually a better way to do it in Python,
+using advanced string formatting.
+And we'll use that now to display
+the same output in a better format.
+==>Creating a prettyprint function to display 
+tuples in a nice tabular format
+>>>def prettyprint_counts(label, list_of_tuples):
+>>>    print("\n{:^20} | {:^6}".format(label, "Count"))
+>>>    print("*"*40)
+>>>    for k,v in list_of_tuples:
+>>>        print("{:20} | {:>6}".format(k,v))
+This fn takes, a list of tuples and a label.
+And writes out a nicely formatted table
+of data objects,or data structures.
+In first inner line of fn ,
+we create the labels on top.
+The second line will give us 40 stars.
+Exactly 40, padded nicely.
+And for each k and v in this list of tuples,
+they are the elements of the list of tuples
+we are going to receive.
+We will pad the k
+to be printed with 20,
+completed to 20 characters by spaces behind it.
+And let's see,
+this is going to left align the word.
+==>calling the fn
+>>>for label, data in (('Word', words), 
+>>>                    ('Screen Name', screen_names), 
+>>>                    ('Hashtag', hashtags)):
+>>>    
+>>>    c = Counter(data)
+>>>    prettyprint_counts(label, c.most_common()[:10])
+We are loading the data into a counter.
+And we are giving this counter
+and the labels to our prettyprint function.
+o/p: ==> we get count for each word
+       Word         | Count 
+****************************************
+RT                   |     34
+#MTVAwards           |     28
+the                  |     17
+de                   |     12
+to                   |     10
 
+    Screen Name      | Count 
+****************************************
+SGNewsSpain          |      9
+MTV                  |      5
+EmmaWatson           |      3
+GabrielConte         |      2
+Realisadiamond       |      2
 
+      Hashtag        | Count 
+****************************************
+MTVAwards            |     29
+SelenaBBMAs          |      9
+mtvawards            |      7
+ToyotaCHR            |      2
+Beyonce              |      1
+
+So next, we would like to find the most popular Tweets
+by ordering them by the number of RETweets.
+For this, we would like to print their count,
+author name and their complete text.
+This can be achieved by creating a list of tuples
+with those three elements,
+making sure the reTweet count is first.
+>>>retweets = [
+>>>            # Store out a tuple of these three values ...
+>>>            (status['retweet_count'], 
+>>>             status['retweeted_status']['user']['screen_name'],
+>>>             status['text'].replace("\n","\\")) 
+>>>            # ... for each status ...
+>>>            for status in statuses 
+>>>            # ... so long as the status meets this condition.
+>>>                if 'retweeted_status' in status
+>>>           ]
+now we need to create a
+prettyprint fn to start printing them.
+And finally, we can print them in tabular format.
+We can build another `prettyprint` function to 
+print entire tweets with their retweet count.
+We also want to split the text of the tweet 
+in up to 3 lines, for good view in our notebook cell.
+(as 140 characters might not fit in code cell block,
+moreover, we want to handle the k's of short Tweets
+that don't need all of the three lines
+with nested statements.)
+>>>row_template = "{:^7} | {:^15} | {:50}"
+>>>def prettyprint_tweets(list_of_tuples):
+>>>    print()
+>>>    print(row_template.format("Count", "Screen Name", "Text"))
+>>>    print("*"*60)
+>>>    for count, screen_name, text in list_of_tuples:
+>>>        print(row_template.format(count, screen_name, text[:50]))
+>>>        if len(text) > 50:
+>>>            print(row_template.format("", "", text[50:100]))
+>>>            if len(text) > 100:
+>>>                print(row_template.format("", "", text[100:]))
+because we are trying to find the most popular reTweets.
+We'll sort those ReTweets
+and we'll give the first five line as a slice
+to prettyprint Tweets.
+>>># Slice off the first 5 from the sorted results and display each item in the tuple
+>>>prettyprint_tweets(sorted(retweets, reverse=True)[:10])
+O/p:
+ Count  |   Screen Name   | Text                                              
+************************************************************
+ 12354  |       MTV       | RT @MTV: This is too precious for words. #MTVAward
+        |                 | s https://t.co/Xu7BpoZL84                         
+ 8860   |       MTV       | RT @MTV: Seeing the @Stranger_Things cast with the
+        |                 |  @13ReasonsWhy cast at the #MTVAwards is too much 
+        |                 | for my heart to handle 💗 https://t.co/p…          
+ 8595   |       MTV       | RT @MTV: Let @dylanobrien guide you through a firs
+        |                 | t look at Maze Runner: The Death Cure, exclusively
+        |                 |  for the #MTVAwards tonight at 8/7c! 💥…           
+ 6397   |   EmmaWatson    | RT @EmmaWatson: Thank you @MTV for a wonderful eve
+        |                 | ning and thank you to everyone who voted for me! ❤
+        |                 | ️🍿 #MTVAwards @beourguest                         
+ 5427   |  chrissyteigen  | RT @chrissyteigen: Yes, I do my own stunts. New ep
+        |                 | isode of @spikelsb tonight before the #mtvawards a
+        |                 | t 7:30pm EST! @zendaya vs @TomHolland19…  
+
+FAQ:
+Q)What is the reason to prefix id with an underscore for query string parameterization with the twitter object?
+a)there is no need in the function, it is there to make it easier on the reader
+b)it is needed because it is part of the parameter name
+c)it is needed for the twitter object to know the type of output from previous line
+d)without it, twitter package appends the value to the URL
+Ans: D
+Q)Which of the following code snippets is a conditional statement?
+A)for s in statuses:
+B)if not s[“text”] in all_text:
+C)[s[‘text’] for s in search_results[‘statuses’]
+D)statuses = filtered_statuses
+Ans :B
