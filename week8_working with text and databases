@@ -545,13 +545,8 @@ for a good cause as well.
 
 3)Predict a natural disaster for insurers company.
 
-------------------------------------------------------------------------------------
-Accessing Twitter API:
----------------------------
-
-
-
-
+Q&A:
+-----
 Q)What is the correct way to show the last 2 files using movie_reviews.fileids() where movie_reviews is a downloaded dataset?
 A)movie_reviews.fileid()[-2:]
 B)movie_reviews.fileids([-2:])
@@ -567,4 +562,192 @@ a)Log scales allow a large range of values that are compressed into one point of
 b)Log scales are significantly better in representing every type of data compared to unmodified scale graphs. 14%
 c)There is no outright advantage to converting a graph into a log scale. 3%
 Ans: A (get it confirmed from someone once)
+
+
+------------------------------------------------------------------------------------
+Accessing Twitter API:
+---------------------------
+Twitter offers a Web Application Programming
+Interface,or shortly API,
+to access all Tweets on their website.
+Through this API, we can send queries to Twitter
+to search for data related to various topics,
+find out about trends, user interactions,
+and many other analysis tasks spelled on Twitter data.
+
+This will require authentication on Twitter.
+So please create a Twitter account if you don't have one
+and this account won't be sufficient.
+We will also need to create an app that identifies
+all the requests we send to the platform.
+
+
+==> go to https://apps.twitter.com/ and create a new application
+==> give a project name 
+==> give URL as http://google.com
+==> application is created
+Now create access token in keys a nd access tokens tab
+while consumer key and consumer key access token are created by default.
+
+->Twitter implements OAuth 1.0A as its standard authentication mechanism,
+and in order to use it to make requests to Twitter's API, 
+you'll need to go to https://dev.twitter.com/apps and create a sample application.
+or (https://apps.twitter.com/)
+->Choose a name for your application, write a description and use http://google.com for the website.
+->Under Key and Access Tokens, there are four primary identifiers you'll need to note for an OAuth 1.0A workflow:
+consumer key,
+consumer secret,
+access token, and
+access token secret (Click on Create Access Token to create those).
+->Note that you will need an ordinary Twitter account in order to login,
+create an app, and get these credentials.
+->The first time you execute the notebook, 
+add all credentials so that you can save them in the pkl file, 
+then you can remove the secret keys from the 
+notebook because they will just be loaded from the pkl file.
+->The pkl file contains sensitive information that 
+can be used to take control of your twitter acccount, do not share it.
+
+Code:
+>>>import pickle
+>>>import os
+>>>if not os.path.exists('secret_twitter_credentials.pkl'):
+>>>    Twitter={}
+>>>    Twitter['Consumer Key'] = ''
+>>>    Twitter['Consumer Secret'] = ''
+>>>    Twitter['Access Token'] = ''
+>>>    Twitter['Access Token Secret'] = ''
+>>>    with open('secret_twitter_credentials.pkl','wb') as f:
+>>>        pickle.dump(Twitter, f)
+>>>else:
+>>>    Twitter=pickle.load(open('secret_twitter_credentials.pkl','rb'))
+
+==> first we are creating a obect called twitter
+and storing the creds in that.If the pickled 
+credentials exist,it will just load the credentials
+from the pickle file into the Twitter object.
+
+Pickle:
+->Pickle is a Python utility module
+to save any Python object or data structure on disk.
+Pickle will do something special called serialization.
+We need it to convert any Python object(in this case,
+this Twitter object) into a character stream
+so the object can be created later in Python
+Reconstruction of that object is called deserialization.
+
+==>Now Lets Install the `twitter` package to interface with the Twitter API.
+>>>!pip install twitter
+
+Now we'll create a new object called authentication, or auth.
+using the Twitter object and Twitter API
+>>>import twitter
+>>>auth = twitter.oauth.OAuth(Twitter['Access Token'],
+>>>                           Twitter['Access Token Secret'],
+>>>                           Twitter['Consumer Key'],
+>>>                           Twitter['Consumer Secret'])
+Now we use this authentication
+and create a Twitter API object called twitter_api.
+This object is what we will use to start
+accessing the data via the Twitter API.
+>>>twitter_api = twitter.Twitter(auth=auth)
+>>># Nothing to see by displaying twitter_api except that it's now a
+>>># defined variable
+>>>print(twitter_api)
+O/p:<twitter.api.Twitter object at 0x000001A03574DA58>
+(==> type of the objject is twitter)
+
+Let's now start exploring the trends in the Twitter data.
+When we talk about Twitter trends we mean popular hashtags.
+Twitter categorizes them by location
+for places like the world or United States
+or locally for San Diego.
+The world trends for example show up on the left
+when you go to Twitter.com.
+Twitter tracks trends using the 'Yahoo where On 
+Earth ID' also called (as  Yahoo WOEID) for each major location.
+i.e Twitter identifies a location with a integer 
+named WOEID,this value for world is '1'.
+Eg: >>>world_trends = twitter_api.trends.place(_id=1)
+
+Using the 'trends.place' for the Twitter API object
+we can get the top 50 trends for any location.
+You can look it up online for your location
+using the link here:
+http://woeid.rosselliot.co.nz/
+==> back to code:
+>>>WORLD_WOE_ID = 1
+>>>IND_WOE_ID = 23424848
+>>>LOCAL_WOE_ID=90883135
+>>># Prefix ID with the underscore for query string parameterization.
+>>># Without the underscore, the twitter package appends the ID value
+>>># to the URL itself as a special case keyword argument.
+>>>world_trends = twitter_api.trends.place(_id=WORLD_WOE_ID)
+>>>us_trends = twitter_api.trends.place(_id=IND_WOE_ID)
+>>>local_trends = twitter_api.trends.place(_id=LOCAL_WOE_ID)
+what we receive back is a trend object
+with a response that's in JSON.
+>>>world_trends[:2]
+We can see the response for example for world trends
+by querying the first two records.
+
+JSON:
+JSON is a file format which 
+internet applications use to communicate
+semi-structured information.
+It is similar to XML but it's more 
+concise.It is roughly equivalent
+to nested Python dictionaries and lists.
+
+WOEID:
+A WOEID (Where On Earth IDentifier) is a unique 
+32-bit reference identifier, 
+originally defined by GeoPlanet and now assigned 
+by Yahoo!, that identifies any feature on Earth.
+WOEIDs are used by a number of other projects, including 
+Flickr OpenStreetMap, Twitter, and zWeather.
+BOSS PlaceFinder API:
+BOSS PlaceFinder is a premium geocoding Web service that 
+helps developers make their applications location-aware 
+by converting street addresses or place names into 
+geographic coordinates and vice versa.
+(Access to the BOSS APIs will continue until 
+March 31, 2016. Moving forward, customers leveraging 
+the BOSS JSON Search API can instead use YPA(Yahoo partner ads), 
+a Javascript Solution that provides algorithmic web results with 
+search ads for publishers who manage their own search engine results pages (SERPs)).
+
+==>back to code:
+>>>trends=local_trends
+>>>print(type(trends))
+>>>print(list(trends[0].keys()))
+#gives the keys(generally i.e ['trends', 'as_of', 'created_at', 'locations']
+>>>print(trends[0]['trends'])
+#printing all the tresds and their info.
+Let's import that JSON module 
+and use it in something useful.
+So in this line we are using the dumps function of JSON
+to create a better version of the same output.
+>>>import json
+>>>print((json.dumps(us_trends[:2], indent=1)))
+(#indent = 1 ==> indent the next level/parenthesis) with 1 space)
+Let's create sets of these trends
+for each location.
+And then we'll find the commonalities between trends
+for those locations.
+So in other words
+we'll find the intersections of these sets.
+==> lets the name for all trends
+using a loop set trend name and for trend and world trends
+for all the locations
+>>>trends_set = {}
+>>>trends_set['world'] = set([trend['name'] 
+>>>                        for trend in world_trends[0]['trends']])
+>>>trends_set['us'] = set([trend['name'] 
+>>>                     for trend in us_trends[0]['trends']]) 
+>>>trends_set['san diego'] = set([trend['name'] 
+>>>                     for trend in local_trends[0]['trends']]) 
+
+
+
 
