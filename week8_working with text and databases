@@ -1023,3 +1023,177 @@ B)if not s[“text”] in all_text:
 C)[s[‘text’] for s in search_results[‘statuses’]
 D)statuses = filtered_statuses
 Ans :B
+Q)What happens when you join two tables in pandas using natural join? Select all that applies.
+A)The common column is represented once.
+B)The common row is represented once.
+C)The common column is represented twice.
+D)The common row is represented twice.
+Ans: A and B
+Q)The join operation works efficiently for data of all sizes.
+A)True
+B)False correct
+Ans: B
+Q)What are the two components of data retrieval mentioned in this class?
+A)The way you specify how to get the desired data out of the relational data store.
+B)The internal processing that occurs within the data management system to compute or evaluate that specified retrieval request.
+C)The way you store specific data in a data management system.
+D)How to handle the data once it has been retrieved.
+Ans: A and B
+Q)What is the output of the execute method in sqlite?
+A)an iterator correct
+B)a cursor
+C)a table
+Ans: A
+Q)Assert statements help locate bugs.
+A)True correct
+B)False
+Ans: A
+Q)Automatic translators are a natural language processing (NLP) technique. How do they work?
+A)Learn what and how a human talks over time.
+B)Takes words, phrases, and context into account to understand what is being said. correct
+C)Process questions, categorize them, and match them to existing answers.
+
+Q)What is the definition of corpus?
+A)a collection of text in digital form correct
+B)a download interface to pre-processed text datasets
+
+Q)After running nltk.download(“movie_reviews”), which of the following needs to be called to import movie_reviews?
+A)from nltk.corpus import movie_reviews correct
+B)from nltk.corpora import movie_reviews
+C)nltk.import(movie_reviews)
+D)nltk.import(“movie_reviews”)
+
+Q)What is the correct way to show the last 2 files using movie_reviews.fileids() where movie_reviews is a downloaded dataset?
+A)movie_reviews.fileids()[:-2]
+B)movie_reviews.fileids()[-2:] correct
+C)movie_reviews.fileids([:-2])
+D)movie_reviews.fileids([-2:])
+
+Q)The raw method is unique to movie_reviews, a downloaded dataset.
+A)True
+B)False correct
+
+Q)Which of the following are common corner cases in tokenization?
+A)inconsistent use of punctuation
+B)shortened use of words
+C)hyphenated words
+D)multiple spaces between words
+Ans: A,B and C
+
+Q)Assume the code line “text = New York-based” is run, what would be the output of text.split()?
+A)[‘New’,’ ‘,’York-based’]
+B)[‘New’,’York’, ‘-’, ‘based’]
+C)[‘New’,’York’,’based’]
+D)[‘New’,’York-based’] correct
+
+Q)What is the name of a sophisticated word tokenizer trained on English in nltk?
+A)punkd
+B)punked
+C)punkt correct
+D)punnet
+
+Q)The bag-of-words model counts how many times a word is used for the sentiment or overall idea.
+A)True correct
+B)False
+
+Q)In assigning true or false values in a bag-of-words model, a missing word is equivalent to assigning a false value.
+A)True correct
+B)False
+
+Q)What will type(_) return?
+A)type of output from previous line correct
+B)type that represents the underscore symbol
+C)prompt to fill in the blank for type of output
+D)error because there is no object to return the type
+
+Q)Given the python function from the video:
+"def build_bag_of_words_features(words):
+  return {word:True for word in words}"
+What is the parameter type and return type?
+A)dictionary and boolean value
+B)set of words and boolean value
+C)dictionary and set of words
+D)dictionary and boolean value
+E)set of words and dictionary correct
+
+Q)Using the string library, the code “string.punctuation” returns a list of punctuation characters.
+A)True
+B)False correct
+
+Q)The nltk corpus only supports English stopwords.
+A)True
+B)False correct
+
+Q)We can use ‘1’ and ‘True’ interchangeably.
+A)True correct
+B)False
+
+Q)When plotting word frequency, what does a peak distribution most often entail about the vocabulary?
+A)There are many unique words
+B)There is a large vocabulary
+C)There is a focused topic correct
+
+Q)What would 18490/1e3 (thousands format) result?
+A)18.49 correct
+B)18490000
+C)1.8490
+D)18490.000
+
+Q)Given a list named x, what is the object type of the output returned by Counter(x)?
+A)no return type
+B)dataset
+C)list
+D)counter correct
+
+Q)What does the most_common function of Counter return?
+A)a list of words in the form (‘word’, frequency) correct
+B)a list of words in the form (‘word’)
+C)a list of words in the form (frequency, ‘word’)
+D)a list of words in the form (frequency)
+
+Q)In the matplotlih.pyplot function hist, the bins parameter indicates to plot only elements in a list which has a number equal to bins.
+A)True
+B)False correct
+
+Q)What is the benefit of a log graph over a graph that has not modified the scales?
+A)There is no outright advantage to converting a graph into a log scale.
+B)Log scales are significantly better in representing every type of data compared to unmodified scale graphs.
+C)Log scales allow a large range of values that are compressed into one point of the graph to be shown. correct
+
+Q)Where did we import NaiveBayesClassifier from in our movie review NLP notebook?
+A)sklearn
+B)sklearn.naive_bayes
+C)nltk.corpus
+D)nltk.classify correct
+
+Q)In accessing a client using OAuth 1.0A, what are the four required identifiers to establish access to the resources?
+A)consumer key
+B)consumer secret
+C)access token
+D)access token key
+E)access token secret
+And: A,B,C and E
+
+Q)A pickle file is a python utility module that uses serialization and cannot be deserialized in a different notebook.
+A)True
+B)False correct
+
+Q)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
