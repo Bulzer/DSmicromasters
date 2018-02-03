@@ -1178,22 +1178,71 @@ Q)A pickle file is a python utility module that uses serialization and cannot be
 A)True
 B)False correct
 
-Q)
+Q)In the twitter package in python, what does the OAuth function return?
+A)list of necessary authentication
+B)authentication object correct
+C)twitter API
+D)there is no return value
 
+Q)Only authentication needs to be used to create a Twitter API object in python.
+A)True correct
+B)False
 
+Q)How does twitter identify location?
+A)city, state, and country
+B)longitude and latitude
+C)coordinates
+D)integer number correct
 
+Q)Given:
+twitter_api = twitter.Twitter(auth=auth)
+WOE = 1
+What is the correct code to find the trend?
+A)twitter_api.trends.place(id = WOE)
+B)twitter_api.trends.place(1)
+C)twitter_api.trends.place(WOE)
+D)twitter_api.trends.place(_id = WOE) correct
 
+Q)What is the reason to prefix id with an underscore for query string parameterization with the twitter object?
+A)there is no need in the function, it is there to make it easier on the reader
+B)it is needed because it is part of the parameter name
+C)it is needed for the twitter object to know the type of output from previous line
+D)without it, twitter package appends the value to the URL correct
 
+Q)What type object is the intersection function called on?
+A)set correct
+B)twitter api
+C)authentication
+D)list
 
+Q)Which of the following code snippets is a conditional statement?
+A)for s in statuses:
+B)if not s[“text”] in all_text: correct
+C)[s[‘text’] for s in search_results[‘statuses’]
+D)statuses = filtered_statuses
 
+Q)What is the correct way to use json to show the first three statuses in a list named statuses?
+A)print(json.dumps(statuses[4], indent = 1))
+B)print(json.dumps(statuses[3], indent = 1))
+C)print(json.dumps(statuses[1:4], indent = 1))
+D)print(json.dumps(statuses[0:3], indent = 1)) correct
 
+Q)Which of the following string formatting centers a string to be in the middle of 10 spaces?
+A){:^10} correct
+B){:10}
+C){:>10}
+D){:<10}
 
+Q)The strings “ABC” and “abc” will be counted as the same string using Counter.
+A)True
+B)False correct
 
-
-
-
-
-
-
-
+Q)Which of the following are examples of stop words in English?
+A)stop
+B)doing
+C)those
+D)being
+E)myself
+F)word
+Ans: B,C,D and E
 
